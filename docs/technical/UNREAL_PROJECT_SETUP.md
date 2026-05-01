@@ -35,6 +35,8 @@ Create Blueprint children from the C++ skeletons:
 
 - `BP_LDGameModeBase`
 - `BP_LDPlayerCharacter`
+- `WBP_PlayerHUD`
+- `WBP_RunResult`
 - `BP_LootContainer`
 - `BP_ExtractionTrigger_Stable`
 - `BP_ExtractionTrigger_HiddenTicketBooth`
@@ -47,6 +49,25 @@ Create Blueprint children from the C++ skeletons:
 - `BP_PlayerRunStateComponent`
 
 The first interaction pass should use `LDInteractable` implementations already present on loot containers, extraction triggers, storage actors, and the project board.
+
+## Input And HUD Contract
+
+The source scaffold includes classic UE input mappings in `Config/DefaultInput.ini`:
+
+- `WASD`: move
+- mouse: look
+- `Space`: jump
+- `E`: interact
+- `Q`: consume Almond Water
+- `K`: debug death
+
+`ALDPlayerCharacter` exposes Blueprint delegates for:
+
+- interaction prompt changes
+- HUD snapshot changes
+- player messages
+
+The first HUD widget should bind to the player character and display sanity, carried inventory stacks, interaction prompt text, player messages, and run result state.
 
 ## Data Import
 

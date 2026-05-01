@@ -33,10 +33,13 @@ This file is the build target for the first Unreal pass. The current package doe
 - Pickup feedback.
 - Extraction/death result screen.
 - Minimal faction/loadout debug selector until onboarding is built.
+- Player HUD widget bound to `ALDPlayerCharacter` HUD snapshots.
+- Run result widget for extraction/death.
 
 ## Current Source Skeletons
 
 - `ALDPlayerCharacter`: owns carried inventory, personal storage, sanity, and run state components.
+- `FLDHUDSnapshot`: Blueprint-facing UI state for sanity, carried stacks, prompts, and run status.
 - `ULDRunStateComponent`: starts runs, handles extraction, and clears carried inventory on death.
 - `ILDInteractable`: common Blueprint-facing interaction contract.
 - `ALDLootContainer`: interactable loot source.
@@ -44,6 +47,15 @@ This file is the build target for the first Unreal pass. The current package doe
 - `ALDStorageActor`: personal/shared storage placeholder.
 - `ALDProjectBoardActor`: contribution/project completion placeholder.
 - `ALDFlickerStalker`: entity state and range helper.
+
+## Default Input
+
+- Move: `WASD`
+- Look: mouse
+- Jump: `Space`
+- Interact: `E`
+- Consume Almond Water: `Q`
+- Debug death: `K`
 
 ## Smoke Test
 
