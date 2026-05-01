@@ -17,6 +17,8 @@ Then ask the user before implementing the change.
 ## Locked Core Decisions
 
 - Engine target: Unreal Engine 5.
+- Primary playable platform: Windows 10/11 PC.
+- Secondary development platform: macOS.
 - Genre: hard-loss extraction survival PvPvE.
 - Player death: carried inventory is lost.
 - Currency: Movie Tickets.
@@ -54,6 +56,8 @@ Build a graybox prototype proving this loop:
 8. Do not build full faction raids yet.
 9. Do not build full NPC compatibility matrices yet.
 10. Keep prototype implementation ugly but playable.
+11. Keep scripts and data tooling cross-platform between macOS and Windows.
+12. Treat Windows packaged builds as the playable release gate once Unreal project files exist.
 
 ## First Tasks
 
@@ -65,6 +69,7 @@ For non-Unreal data/tooling tasks, run:
 
 ```bash
 python3 scripts/validate_seed_data.py
+python3 scripts/check_dev_environment.py
 ```
 
 If Unreal project files exist later, add Unreal-specific build/test instructions here.

@@ -21,6 +21,8 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 ## Current Prototype Target
 
 - Unreal Engine 5
+- Primary playable target: Windows 10/11 PC
+- Secondary development target: macOS
 - Graybox-only
 - Data-driven items/factions
 - One faction hub shell
@@ -42,4 +44,7 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 python3 -m pip install -r requirements.txt
 python3 scripts/validate_seed_data.py
 python3 -m unittest discover -s tests -v
+python3 scripts/check_dev_environment.py
 ```
+
+See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
