@@ -50,6 +50,7 @@ python3 scripts/check_dev_environment.py
 
 See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
 See `docs/technical/UNREAL_PROJECT_SETUP.md` for the first UE5 editor open, map creation, Blueprint pass, and Windows build gate.
+See `docs/technical/INSTALL_UNREAL_MAC.md` for installing Unreal Engine through Epic Games Launcher on this Mac.
 
 ## GitHub Sync
 

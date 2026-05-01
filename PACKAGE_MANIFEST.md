@@ -18,6 +18,7 @@ Created: 2026-05-01
 - `scripts/export_unreal_datatables.py` — CSV export bridge for Unreal DataTables.
 - `scripts/check_dev_environment.py` — macOS/Windows development environment smoke check.
 - `scripts/check_unreal_scaffold.py` — validates required source-level Unreal scaffold files.
+- `scripts/find_unreal_editor.py` — detects Unreal Editor installations and can open `LiminalDominion.uproject`.
 - `tests/test_data_tools.py` — Python validation/model test coverage.
 - `requirements.txt` — Python dependency for validation.
 - `data/schemas/` — starter schemas.
@@ -27,6 +28,7 @@ Created: 2026-05-01
 - `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` — Windows-first, macOS-supported development policy and command equivalents.
 - `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.
 - `docs/technical/UNREAL_PROJECT_SETUP.md` — first Unreal open, map creation, Blueprint pass, and Windows build gate.
+- `docs/technical/INSTALL_UNREAL_MAC.md` — GUI install steps for Epic Games Launcher and Unreal Engine on macOS.
 - `Source/` — source-level Unreal Engine module scaffold and first V0.1 gameplay skeletons.
 - `Source/LiminalDominion/Public/LDDeploymentGate.h` — interactable run-start gate for the first hub-to-Level-1 transition.
 - `Config/DefaultInput.ini` — first playable input mappings for movement, interact, Almond Water, and debug death.

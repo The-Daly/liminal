@@ -50,6 +50,7 @@ def main() -> int:
 
     if platform.system() == "Darwin":
         print("Note: macOS is supported for development; Windows remains the primary playable build target.")
+        print("Run 'python3 scripts/find_unreal_editor.py' after installing Unreal Engine.")
     elif platform.system() == "Windows":
         print("Note: this is the primary playable build target.")
     else:
