@@ -42,6 +42,8 @@
 
 ## Phase 6 — Unreal Graybox
 
+- [x] Add source-level Unreal project scaffold.
+- [x] Add first C++ gameplay skeletons for inventory, sanity, loot, extraction, and Flicker Stalker.
 - [ ] Create hub shell.
 - [ ] Create personal room shell.
 - [ ] Create Level 1 Service Halls shell.

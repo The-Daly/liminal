@@ -1,0 +1,12 @@
+{
+  "FileVersion": 3,
+  "Category": "Games",
+  "Description": "Liminal Dominion V0.1 graybox extraction prototype.",
+  "Modules": [
+    {
+      "Name": "LiminalDominion",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}

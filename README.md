@@ -36,6 +36,7 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 - Expanded JSON schemas and seed data cover V0.1 items, factions, loot, entities, storage, sanity, extractions, hub upgrades, player state, and run state.
 - `scripts/validate_seed_data.py` validates schemas, duplicate IDs, and cross-data references.
 - Prototype Python modules model registries, loot rolls, inventory/storage, sanity, and extraction requirements before Unreal integration.
+- A source-level UE5 scaffold now exists in `LiminalDominion.uproject`, `Config/`, `Content/`, and `Source/`.
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
 
 ## Local Verification
@@ -48,6 +49,7 @@ python3 scripts/check_dev_environment.py
 ```
 
 See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
+See `docs/technical/UNREAL_PROJECT_SETUP.md` for the first UE5 editor open, map creation, Blueprint pass, and Windows build gate.
 
 ## GitHub Sync
 

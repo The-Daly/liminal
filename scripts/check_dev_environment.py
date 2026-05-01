@@ -42,6 +42,7 @@ def main() -> int:
         ("Seed data validation", [sys.executable, "scripts/validate_seed_data.py"]),
         ("Unit tests", [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"]),
         ("Unreal DataTable export", [sys.executable, "scripts/export_unreal_datatables.py"]),
+        ("Unreal scaffold check", [sys.executable, "scripts/check_unreal_scaffold.py"]),
     ]
 
     command_results = [run_check(label, command) for label, command in command_checks]
