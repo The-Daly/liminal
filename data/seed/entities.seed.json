@@ -1,0 +1,21 @@
+[
+  {
+    "entity_id": "entity_flicker_stalker",
+    "display_name": "Flicker Stalker",
+    "role": "Prototype light/sound/sanity enemy",
+    "mvp_behavior": [
+      "Patrol flicker corridor",
+      "React to loud sounds",
+      "Chase detected player",
+      "Attack at close range",
+      "Return to patrol after losing target"
+    ],
+    "counterplay": [
+      "Stay quiet",
+      "Avoid flicker events",
+      "Use Almond Water",
+      "Use scanner or camcorder clues",
+      "Extract or hide"
+    ]
+  }
+]

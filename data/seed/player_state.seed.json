@@ -1,0 +1,10 @@
+[
+  {
+    "player_state_id": "player_state_v0_meg",
+    "faction_id": "meg",
+    "carried_storage_id": "storage_carried_backpack_v0",
+    "personal_storage_id": "storage_personal_room_tier0",
+    "starting_sanity": 100,
+    "description": "Prototype player state for the M.E.G. starter flow."
+  }
+]

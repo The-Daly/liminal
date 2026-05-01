@@ -1,0 +1,2 @@
+Name,sanity_rule_id,display_name,min_sanity,max_sanity,base_drain_per_minute,low_sanity_threshold,almond_water_restore,description
+sanity_level1_service_halls_v0,sanity_level1_service_halls_v0,Level 1 Service Halls Sanity,0,100,4,30,25,Prototype sanity tuning for the first Level 1 run.

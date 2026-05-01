@@ -1,0 +1,43 @@
+[
+  {
+    "storage_id": "storage_carried_backpack_v0",
+    "display_name": "Starter Backpack",
+    "storage_type": "Carried",
+    "safe_from_death": false,
+    "raid_risk": false,
+    "caps": {
+      "slots": 12,
+      "weight": 25
+    },
+    "description": "Prototype carried inventory. Contents are lost on death."
+  },
+  {
+    "storage_id": "storage_personal_room_tier0",
+    "display_name": "Personal Room Storage",
+    "storage_type": "Personal",
+    "safe_from_death": true,
+    "raid_risk": false,
+    "caps": {
+      "MovieTickets": 5000,
+      "AlmondWater": 50,
+      "BulkSalvage": 200,
+      "Weapons": 18,
+      "ArmorPlates": 20,
+      "Ammunition": 1500,
+      "RelicClass": 999999
+    },
+    "description": "Safe capped storage in the player's personal room."
+  },
+  {
+    "storage_id": "storage_shared_faction_vault_v0",
+    "display_name": "Faction Vault Placeholder",
+    "storage_type": "Shared",
+    "safe_from_death": true,
+    "raid_risk": true,
+    "caps": {
+      "slots": 200,
+      "weight": 1000
+    },
+    "description": "Large shared storage placeholder for later raid-risk systems."
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LootTable",
+  "type": "object",
+  "required": [
+    "loot_table_id",
+    "entries"
+  ],
+  "properties": {
+    "loot_table_id": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item_id",
+          "weight"
+        ],
+        "properties": {
+          "item_id": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}

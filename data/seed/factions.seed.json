@@ -1,0 +1,58 @@
+[
+  {
+    "faction_id": "meg",
+    "display_name": "M.E.G.",
+    "role": "Research, safety, archive, scanner play",
+    "starting_items": [
+      "tool_meg_entity_scanner",
+      "item_flashlight",
+      "consumable_almond_water",
+      "consumable_almond_water",
+      "currency_old_movie_ticket"
+    ],
+    "hub_upgrade_focus": [
+      "ArchiveTerminal",
+      "ScannerLab",
+      "MedicalBay",
+      "SecurityCheckpoint"
+    ],
+    "description": "Research and preservation faction focused on mapping, safety, and entity documentation."
+  },
+  {
+    "faction_id": "bntg",
+    "display_name": "B.N.T.G.",
+    "role": "Trade, salvage, economy, armor/resources",
+    "starting_items": [
+      "tool_bntg_crowbar",
+      "item_flashlight",
+      "consumable_almond_water",
+      "currency_old_movie_ticket"
+    ],
+    "hub_upgrade_focus": [
+      "TraderMarket",
+      "TicketExchange",
+      "SharedArmory",
+      "Workshop"
+    ],
+    "description": "Trade and salvage faction focused on resources, shops, and armor access."
+  },
+  {
+    "faction_id": "clippers",
+    "display_name": "Clippers",
+    "role": "Runner/scout/no-clip route faction",
+    "starting_items": [
+      "tool_clippers_camcorder",
+      "item_flashlight",
+      "consumable_almond_water",
+      "item_chalk_bundle",
+      "currency_old_movie_ticket"
+    ],
+    "hub_upgrade_focus": [
+      "RouteWall",
+      "TapeBoard",
+      "ChalkNetwork",
+      "ShortcutDen"
+    ],
+    "description": "Runners who survive by recording routes, marking paths, and finding exits before the rooms shift."
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlayerState",
+  "type": "object",
+  "required": ["player_state_id", "faction_id", "carried_storage_id", "personal_storage_id", "starting_sanity"],
+  "additionalProperties": false,
+  "properties": {
+    "player_state_id": { "type": "string" },
+    "faction_id": { "type": "string" },
+    "carried_storage_id": { "type": "string" },
+    "personal_storage_id": { "type": "string" },
+    "starting_sanity": { "type": "integer", "minimum": 0 },
+    "description": { "type": "string" }
+  }
+}

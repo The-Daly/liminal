@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Faction",
+  "type": "object",
+  "required": [
+    "faction_id",
+    "display_name",
+    "role",
+    "starting_items",
+    "hub_upgrade_focus"
+  ],
+  "properties": {
+    "faction_id": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "starting_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hub_upgrade_focus": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

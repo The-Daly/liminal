@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Storage",
+  "type": "object",
+  "required": ["storage_id", "display_name", "storage_type", "safe_from_death", "caps"],
+  "additionalProperties": false,
+  "properties": {
+    "storage_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "storage_type": {
+      "type": "string",
+      "enum": ["Carried", "Personal", "Shared"]
+    },
+    "safe_from_death": { "type": "boolean" },
+    "raid_risk": { "type": "boolean" },
+    "caps": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "description": { "type": "string" }
+  }
+}

@@ -1,0 +1,96 @@
+import json
+import random
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+from jsonschema import Draft202012Validator
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from extraction_model import can_extract
+from inventory_model import InventoryContainer, InventoryError, build_player_inventory
+from item_registry import index_by, load_registry
+from loot_model import preview_table, roll_loot
+from survival_model import SanityState
+
+
+class DataToolTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.registry = load_registry()
+
+    def test_registry_loads_runtime_data(self):
+        self.assertIn("currency_old_movie_ticket", self.registry.items)
+        self.assertIn("run_level1_service_halls_v0", self.registry.run_states)
+        self.assertEqual(len(self.registry.factions), 3)
+
+    def test_duplicate_ids_fail(self):
+        records = [{"item_id": "same"}, {"item_id": "same"}]
+        with self.assertRaises(ValueError):
+            index_by(records, "item_id", "test")
+
+    def test_bad_rarity_enum_fails_schema(self):
+        schema = json.loads((ROOT / "data/schemas/item.schema.json").read_text(encoding="utf-8"))
+        bad_item = {
+            "item_id": "bad",
+            "display_name": "Bad",
+            "category": "Test",
+            "rarity": "Legendary",
+            "stackable": True,
+            "can_be_lost_on_death": True,
+        }
+        errors = list(Draft202012Validator(schema).iter_errors(bad_item))
+        self.assertTrue(errors)
+
+    def test_inventory_stacks_and_removes(self):
+        container = InventoryContainer("test", max_slots=2)
+        container.add_item(self.registry, "consumable_almond_water", 11)
+        self.assertEqual(container.quantity("consumable_almond_water"), 11)
+        self.assertEqual(len(container.stacks), 2)
+        container.remove_item("consumable_almond_water", 6)
+        self.assertEqual(container.quantity("consumable_almond_water"), 5)
+
+    def test_storage_cap_rejects_without_partial_add(self):
+        container = InventoryContainer("tiny", max_slots=1)
+        with self.assertRaises(InventoryError):
+            container.add_item(self.registry, "consumable_almond_water", 11)
+        self.assertEqual(container.quantity("consumable_almond_water"), 0)
+
+    def test_death_wipes_carried_and_preserves_personal(self):
+        inventory = build_player_inventory(self.registry)
+        inventory.carried.add_item(self.registry, "currency_old_movie_ticket", 5)
+        inventory.personal.add_item(self.registry, "relic_golden_admit_one_ticket", 1)
+        inventory.apply_death()
+        self.assertEqual(inventory.carried.quantity("currency_old_movie_ticket"), 0)
+        self.assertEqual(inventory.personal.quantity("relic_golden_admit_one_ticket"), 1)
+
+    def test_sanity_drain_and_almond_water(self):
+        rule = self.registry.sanity_rules["sanity_level1_service_halls_v0"]
+        sanity = SanityState.from_rule(rule)
+        sanity.drain_seconds(60)
+        self.assertEqual(sanity.current, 96)
+        sanity.drain_seconds(1200)
+        self.assertTrue(sanity.is_low)
+        sanity.consume_almond_water()
+        self.assertGreater(sanity.current, sanity.low_threshold)
+
+    def test_hidden_extraction_requires_ticket(self):
+        inventory = build_player_inventory(self.registry)
+        extraction_id = "extract_level1_hidden_ticket_booth"
+        self.assertFalse(can_extract(self.registry, extraction_id, inventory.carried))
+        inventory.carried.add_item(self.registry, "currency_old_movie_ticket")
+        self.assertTrue(can_extract(self.registry, extraction_id, inventory.carried))
+
+    def test_loot_roll_and_preview(self):
+        rng = random.Random(1)
+        item_id = roll_loot(self.registry, "loot_level1_basic", rng)
+        self.assertIn(item_id, self.registry.items)
+        preview = preview_table(self.registry, "loot_level1_basic")
+        self.assertTrue(any(row["item_id"] == "item_scrap_metal" for row in preview))
+
+
+if __name__ == "__main__":
+    unittest.main()

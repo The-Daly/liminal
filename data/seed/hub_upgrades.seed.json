@@ -1,0 +1,19 @@
+[
+  {
+    "hub_upgrade_id": "hub_project_board_signal_lamp_v0",
+    "display_name": "Signal Lamp Project",
+    "faction_id": "meg",
+    "contribution_requirements": [
+      {
+        "item_id": "currency_old_movie_ticket",
+        "quantity": 25
+      },
+      {
+        "item_id": "item_scrap_metal",
+        "quantity": 5
+      }
+    ],
+    "visible_unlock": "A working signal lamp appears near the deployment gate.",
+    "description": "First visible hub progression placeholder."
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Extraction",
+  "type": "object",
+  "required": ["extraction_id", "display_name", "level_id", "transition_pattern", "availability"],
+  "additionalProperties": false,
+  "properties": {
+    "extraction_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "level_id": { "type": "string" },
+    "transition_pattern": {
+      "type": "string",
+      "enum": ["SealedRoomBuffer", "AsyncPredictiveStream", "PortalGeometry", "DistortionMask"]
+    },
+    "availability": {
+      "type": "string",
+      "enum": ["Stable", "Hidden", "Conditional"]
+    },
+    "required_item_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "description": { "type": "string" }
+  }
+}

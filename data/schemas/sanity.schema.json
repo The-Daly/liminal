@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SanityRule",
+  "type": "object",
+  "required": ["sanity_rule_id", "display_name", "min_sanity", "max_sanity", "base_drain_per_minute", "low_sanity_threshold"],
+  "additionalProperties": false,
+  "properties": {
+    "sanity_rule_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "min_sanity": { "type": "integer", "minimum": 0 },
+    "max_sanity": { "type": "integer", "minimum": 1 },
+    "base_drain_per_minute": { "type": "number", "minimum": 0 },
+    "low_sanity_threshold": { "type": "integer", "minimum": 0 },
+    "almond_water_restore": { "type": "integer", "minimum": 0 },
+    "description": { "type": "string" }
+  }
+}

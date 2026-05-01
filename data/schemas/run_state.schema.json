@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RunState",
+  "type": "object",
+  "required": ["run_state_id", "level_id", "loot_table_id", "entity_ids", "extraction_ids", "sanity_rule_id"],
+  "additionalProperties": false,
+  "properties": {
+    "run_state_id": { "type": "string" },
+    "level_id": { "type": "string" },
+    "loot_table_id": { "type": "string" },
+    "entity_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "extraction_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sanity_rule_id": { "type": "string" },
+    "description": { "type": "string" }
+  }
+}

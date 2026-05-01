@@ -1,0 +1,2 @@
+Name,run_state_id,level_id,loot_table_id,entity_ids,extraction_ids,sanity_rule_id,description
+loot_level1_basic,run_level1_service_halls_v0,level1_service_halls,loot_level1_basic,"[""entity_flicker_stalker""]","[""extract_level1_stable_service_door"",""extract_level1_hidden_ticket_booth""]",sanity_level1_service_halls_v0,Prototype run definition for the first extraction loop.

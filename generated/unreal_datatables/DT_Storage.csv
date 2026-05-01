@@ -1,0 +1,4 @@
+Name,storage_id,display_name,storage_type,safe_from_death,raid_risk,caps,description
+storage_carried_backpack_v0,storage_carried_backpack_v0,Starter Backpack,Carried,False,False,"{""slots"":12,""weight"":25}",Prototype carried inventory. Contents are lost on death.
+storage_personal_room_tier0,storage_personal_room_tier0,Personal Room Storage,Personal,True,False,"{""MovieTickets"":5000,""AlmondWater"":50,""BulkSalvage"":200,""Weapons"":18,""ArmorPlates"":20,""Ammunition"":1500,""RelicClass"":999999}",Safe capped storage in the player's personal room.
+storage_shared_faction_vault_v0,storage_shared_faction_vault_v0,Faction Vault Placeholder,Shared,True,True,"{""slots"":200,""weight"":1000}",Large shared storage placeholder for later raid-risk systems.

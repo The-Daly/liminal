@@ -1,0 +1,45 @@
+# Liminal Dominion — Codex Starter Repo
+
+This package is structured for **Codex**, not Claude.
+
+Codex should use `AGENTS.md` as the persistent project instruction file, then work from `tasks/codex/000_START_HERE.md`.
+
+## What This Is
+
+A repo scaffold for starting development of Liminal Dominion Version 0.1.
+
+## What This Is Not
+
+This is not the full game. This is not a final Unreal project. This is the planning/data/tooling skeleton Codex should use before building gameplay systems.
+
+## Recommended First Codex Prompt
+
+```text
+Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 only: verify and improve the data validation pipeline. Do not build gameplay yet.
+```
+
+## Current Prototype Target
+
+- Unreal Engine 5
+- Graybox-only
+- Data-driven items/factions
+- One faction hub shell
+- One personal room shell
+- One Level 1 Service Halls raid zone
+- One entity
+- One extraction loop
+
+## Current Executable Foundation
+
+- Expanded JSON schemas and seed data cover V0.1 items, factions, loot, entities, storage, sanity, extractions, hub upgrades, player state, and run state.
+- `scripts/validate_seed_data.py` validates schemas, duplicate IDs, and cross-data references.
+- Prototype Python modules model registries, loot rolls, inventory/storage, sanity, and extraction requirements before Unreal integration.
+- `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
+
+## Local Verification
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 scripts/validate_seed_data.py
+python3 -m unittest discover -s tests -v
+```

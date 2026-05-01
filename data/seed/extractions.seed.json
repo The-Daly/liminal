@@ -1,0 +1,20 @@
+[
+  {
+    "extraction_id": "extract_level1_stable_service_door",
+    "display_name": "Service Door Return",
+    "level_id": "level1_service_halls",
+    "transition_pattern": "SealedRoomBuffer",
+    "availability": "Stable",
+    "required_item_ids": [],
+    "description": "A stable diegetic corridor back to the hub/personal room."
+  },
+  {
+    "extraction_id": "extract_level1_hidden_ticket_booth",
+    "display_name": "Hidden Ticket Booth Exit",
+    "level_id": "level1_service_halls",
+    "transition_pattern": "DistortionMask",
+    "availability": "Conditional",
+    "required_item_ids": ["currency_old_movie_ticket"],
+    "description": "A hidden theater-corner exit that requires a Movie Ticket in the prototype."
+  }
+]

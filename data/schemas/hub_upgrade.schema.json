@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HubUpgrade",
+  "type": "object",
+  "required": ["hub_upgrade_id", "display_name", "faction_id", "contribution_requirements", "visible_unlock"],
+  "additionalProperties": false,
+  "properties": {
+    "hub_upgrade_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "faction_id": { "type": "string" },
+    "contribution_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "quantity"],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "visible_unlock": { "type": "string" },
+    "description": { "type": "string" }
+  }
+}

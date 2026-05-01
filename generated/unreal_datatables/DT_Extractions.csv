@@ -1,0 +1,3 @@
+Name,extraction_id,display_name,level_id,transition_pattern,availability,required_item_ids,description
+extract_level1_stable_service_door,extract_level1_stable_service_door,Service Door Return,level1_service_halls,SealedRoomBuffer,Stable,[],A stable diegetic corridor back to the hub/personal room.
+extract_level1_hidden_ticket_booth,extract_level1_hidden_ticket_booth,Hidden Ticket Booth Exit,level1_service_halls,DistortionMask,Conditional,"[""currency_old_movie_ticket""]",A hidden theater-corner exit that requires a Movie Ticket in the prototype.

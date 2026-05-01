@@ -1,0 +1,11 @@
+Name,item_id,display_name,category,rarity,stackable,max_stack,weight,value_tickets,can_be_lost_on_death,can_display_in_room,display_location,faction_restriction,description
+currency_old_movie_ticket,currency_old_movie_ticket,Old Movie Ticket,Currency,Common,True,100,0.01,1,True,False,,,A faded movie ticket accepted by most traders.
+consumable_almond_water,consumable_almond_water,Almond Water,Consumable,Uncommon,True,10,0.25,25,True,False,,,Restores sanity and supports survival in the Backrooms.
+item_flashlight,item_flashlight,Flashlight,Tool,Common,False,1,0.5,50,True,False,,,Basic light source.
+tool_meg_entity_scanner,tool_meg_entity_scanner,M.E.G. Entity Scanner,FactionTool,Quest,False,1,1.5,0,False,True,Desk,meg,Starter scanner used to detect nearby entity activity.
+tool_bntg_crowbar,tool_bntg_crowbar,B.N.T.G. Crowbar,FactionTool,Quest,False,1,2.0,0,False,True,WallRack,bntg,"Starter salvage tool for crates, doors, and scrap."
+tool_clippers_camcorder,tool_clippers_camcorder,Clippers Camcorder,FactionTool,Quest,False,1,1.0,0,False,True,TapeShelf,clippers,Starter camcorder used to capture route evidence and reveal hidden clues.
+item_chalk_bundle,item_chalk_bundle,Chalk Bundle,Tool,Common,True,10,0.05,5,True,False,,,Used by Clippers to mark routes.
+item_battery_pack,item_battery_pack,Battery Pack,Resource,Common,True,20,0.1,8,True,False,,,Basic power source for prototype tools and lights.
+item_scrap_metal,item_scrap_metal,Scrap Metal,Resource,Common,True,50,0.2,3,True,False,,,Bulk salvage used for hub projects and trade.
+relic_golden_admit_one_ticket,relic_golden_admit_one_ticket,Golden Admit-One Ticket,Relic,RelicClass,False,1,0.01,10000,True,True,GlassCase,,A pristine gold ticket stamped with an unreadable theater name.
