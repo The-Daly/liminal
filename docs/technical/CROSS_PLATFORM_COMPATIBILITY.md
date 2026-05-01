@@ -27,6 +27,7 @@ Liminal Dominion should be developed on macOS when convenient, but the primary p
 | Validate data | `python3 scripts/validate_seed_data.py` | `py scripts/validate_seed_data.py` |
 | Run tests | `python3 -m unittest discover -s tests -v` | `py -m unittest discover -s tests -v` |
 | Export DataTables | `python3 scripts/export_unreal_datatables.py` | `py scripts/export_unreal_datatables.py` |
+| Full preflight | `python3 scripts/preflight_release.py` | `py scripts/preflight_release.py` |
 
 ## macOS Bash Basics
 
@@ -63,3 +64,5 @@ When the UE5 project exists:
 - macOS editor runs are allowed for iteration, but a macOS editor pass does not replace Windows packaged-build testing.
 - Input, UI scaling, file paths, save paths, and data import/export must be tested on both platforms.
 - Any platform-specific workaround belongs in docs or build scripts, not hidden in local machine settings.
+
+See `docs/technical/WINDOWS_UNREAL_HANDOFF.md` before moving the project to a Windows Unreal workstation.

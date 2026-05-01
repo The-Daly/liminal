@@ -19,6 +19,7 @@ Saved/
 *.opensdf
 *.sdf
 *.VC.db
+.vs/
 
 # Local-only logs and temp files
 *.log
