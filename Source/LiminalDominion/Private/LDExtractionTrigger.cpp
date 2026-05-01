@@ -1,4 +1,5 @@
 #include "LDExtractionTrigger.h"
+#include "Kismet/GameplayStatics.h"
 #include "LDInventoryComponent.h"
 #include "LDPlayerCharacter.h"
 #include "LDRunStateComponent.h"
@@ -22,6 +23,12 @@ bool ALDExtractionTrigger::Interact_Implementation(AActor* InteractingActor)
     }
 
     Player->GetRunStateComponent()->Extract();
+
+    if (bOpenLevelOnExtract && !DestinationLevelName.IsNone())
+    {
+        UGameplayStatics::OpenLevel(this, DestinationLevelName);
+    }
+
     return true;
 }
 

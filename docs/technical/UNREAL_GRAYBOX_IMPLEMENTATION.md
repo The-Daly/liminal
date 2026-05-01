@@ -18,6 +18,7 @@ This file is the build target for the first Unreal pass. The current package doe
 ## Required Gameplay Actors
 
 - Player pawn/controller with interact, pickup, consume, extract, and debug death actions.
+- Deployment gate actor that starts the Level 1 run and opens the Service Halls map.
 - Loot container actor bound to `loot_level1_basic`.
 - Extraction trigger actor bound to extraction seed data.
 - Storage actor for personal storage and shared faction vault placeholder.
@@ -44,11 +45,12 @@ This file is the build target for the first Unreal pass. The current package doe
 - `ULDSaveGameSubsystem`: local V0.1 persistence for faction, personal storage, hub upgrades, and run history.
 - `ULDRunStateComponent`: starts runs, handles extraction, and clears carried inventory on death.
 - `ILDInteractable`: common Blueprint-facing interaction contract.
+- `ALDDeploymentGate`: interactable run start and map transition gate.
 - `ALDLootContainer`: interactable loot source.
 - `ALDExtractionTrigger`: interactable extraction gate.
 - `ALDStorageActor`: personal/shared storage placeholder.
 - `ALDProjectBoardActor`: contribution/project completion placeholder.
-- `ALDFlickerStalker`: entity state and range helper.
+- `ALDFlickerStalker`: simple patrol, chase, attack, and return-to-patrol runtime behavior.
 
 ## Data Dependency
 

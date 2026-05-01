@@ -28,6 +28,7 @@ Created: 2026-05-01
 - `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.
 - `docs/technical/UNREAL_PROJECT_SETUP.md` — first Unreal open, map creation, Blueprint pass, and Windows build gate.
 - `Source/` — source-level Unreal Engine module scaffold and first V0.1 gameplay skeletons.
+- `Source/LiminalDominion/Public/LDDeploymentGate.h` — interactable run-start gate for the first hub-to-Level-1 transition.
 - `Config/DefaultInput.ini` — first playable input mappings for movement, interact, Almond Water, and debug death.
 - `Config/DefaultGame.ini` — project metadata, DataTable path hook, and local SaveGame slot config.
 - `docs/design/V0_1_PLAYER_JOURNEY.md` — first-session journey, starter loadout use, trader, project board, and relic display behavior.

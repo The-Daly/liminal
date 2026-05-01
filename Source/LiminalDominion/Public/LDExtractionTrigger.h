@@ -30,4 +30,10 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Extraction")
     TArray<FName> RequiredItemIds;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Extraction")
+    FName DestinationLevelName = FName(TEXT("LD_PersonalRoom_Greybox"));
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Extraction")
+    bool bOpenLevelOnExtract = true;
 };

@@ -33,6 +33,8 @@ REQUIRED_FILES = [
     "Source/LiminalDominion/Private/LDSanityComponent.cpp",
     "Source/LiminalDominion/Public/LDExtractionTrigger.h",
     "Source/LiminalDominion/Private/LDExtractionTrigger.cpp",
+    "Source/LiminalDominion/Public/LDDeploymentGate.h",
+    "Source/LiminalDominion/Private/LDDeploymentGate.cpp",
     "Source/LiminalDominion/Public/LDLootContainer.h",
     "Source/LiminalDominion/Private/LDLootContainer.cpp",
     "Source/LiminalDominion/Public/LDStorageActor.h",

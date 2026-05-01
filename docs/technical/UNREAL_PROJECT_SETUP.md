@@ -37,6 +37,7 @@ Create Blueprint children from the C++ skeletons:
 - `BP_LDPlayerCharacter`
 - `WBP_PlayerHUD`
 - `WBP_RunResult`
+- `BP_DeploymentGate`
 - `BP_LootContainer`
 - `BP_ExtractionTrigger_Stable`
 - `BP_ExtractionTrigger_HiddenTicketBooth`
@@ -99,12 +100,12 @@ The first editor milestone is not visual polish. It is this loop:
 
 1. Start in `LD_Hub_Greybox`.
 2. Enter personal room.
-3. Deploy into `LD_Level1_ServiceHalls_Greybox`.
+3. Interact with `BP_DeploymentGate` to start `run_level1_service_halls_v0` and open `LD_Level1_ServiceHalls_Greybox`.
 4. Pick up loot from a container.
 5. Watch sanity drain.
 6. Consume Almond Water.
-7. Trigger a Flicker Stalker chase/attack.
-8. Extract through the stable exit.
+7. Trigger a Flicker Stalker patrol/chase/attack.
+8. Extract through the stable exit and return to `LD_PersonalRoom_Greybox`.
 9. Return to personal room.
 10. Deposit loot into personal storage.
 11. Contribute Movie Tickets and scrap to the Signal Lamp Project.
@@ -130,6 +131,14 @@ Persisted V0.1 state:
 - simple run history entries
 
 In the editor, set personal-room storage Blueprints to persist as personal storage, call `LoadFromSave` on BeginPlay, and call `SaveToSaveGame` after manual storage operations that do not go through `DepositFrom`.
+
+## Entity Setup
+
+For `BP_FlickerStalker`:
+
+- Assign one or more patrol point actors in the Flicker Corridor.
+- Tune `DetectionRadius`, `AttackRange`, `PatrolSpeed`, and `ChaseSpeed`.
+- Confirm attack calls the player death path and clears carried inventory during an active run.
 
 ## Windows Build Gate
 
