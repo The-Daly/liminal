@@ -1,5 +1,7 @@
 #include "LDProjectBoardActor.h"
+#include "Engine/GameInstance.h"
 #include "LDInventoryComponent.h"
+#include "LDSaveGameSubsystem.h"
 
 ALDProjectBoardActor::ALDProjectBoardActor()
 {
@@ -55,10 +57,28 @@ bool ALDProjectBoardActor::Contribute(ULDInventoryComponent* SourceInventory)
     }
 
     bComplete = true;
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (ULDSaveGameSubsystem* SaveSubsystem = GameInstance->GetSubsystem<ULDSaveGameSubsystem>())
+        {
+            SaveSubsystem->MarkHubUpgradeComplete(HubUpgradeId);
+        }
+    }
     return true;
 }
 
 bool ALDProjectBoardActor::IsComplete() const
 {
     return bComplete;
+}
+
+void ALDProjectBoardActor::LoadCompletionFromSave()
+{
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (const ULDSaveGameSubsystem* SaveSubsystem = GameInstance->GetSubsystem<ULDSaveGameSubsystem>())
+        {
+            bComplete = SaveSubsystem->IsHubUpgradeComplete(HubUpgradeId);
+        }
+    }
 }

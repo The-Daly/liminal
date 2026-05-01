@@ -63,7 +63,7 @@ bool ULDInventoryComponent::AddItem(FName ItemId, int32 Quantity, bool bStackabl
 
 bool ULDInventoryComponent::AddItemFromData(FName ItemId, int32 Quantity)
 {
-    if (const UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
     {
         if (const ULDGameDataSubsystem* DataSubsystem = GameInstance->GetSubsystem<ULDGameDataSubsystem>())
         {
@@ -129,4 +129,9 @@ void ULDInventoryComponent::ClearInventory()
 TArray<FLDInventoryStack> ULDInventoryComponent::GetStacks() const
 {
     return Stacks;
+}
+
+void ULDInventoryComponent::SetStacks(const TArray<FLDInventoryStack>& NewStacks)
+{
+    Stacks = NewStacks;
 }

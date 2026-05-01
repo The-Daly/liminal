@@ -47,6 +47,7 @@
 - [x] Add player, interaction, run-state, storage, and project-board skeletons.
 - [x] Add input mappings and HUD-facing player delegates.
 - [x] Add item DataTable lookup subsystem for stack metadata.
+- [x] Add local SaveGame bridge for personal storage, hub upgrades, and run history.
 - [ ] Create hub shell.
 - [ ] Create personal room shell.
 - [ ] Create Level 1 Service Halls shell.

@@ -39,6 +39,9 @@ public:
     UFUNCTION(BlueprintPure, Category="Liminal Dominion|Progression")
     bool IsComplete() const;
 
+    UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Progression")
+    void LoadCompletionFromSave();
+
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Progression")
     FName HubUpgradeId = FName(TEXT("hub_project_board_signal_lamp_v0"));

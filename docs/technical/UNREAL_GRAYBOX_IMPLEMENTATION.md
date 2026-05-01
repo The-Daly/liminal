@@ -41,6 +41,7 @@ This file is the build target for the first Unreal pass. The current package doe
 - `ALDPlayerCharacter`: owns carried inventory, personal storage, sanity, and run state components.
 - `FLDHUDSnapshot`: Blueprint-facing UI state for sanity, carried stacks, prompts, and run status.
 - `ULDGameDataSubsystem`: runtime lookup for imported DataTables, starting with item stack metadata.
+- `ULDSaveGameSubsystem`: local V0.1 persistence for faction, personal storage, hub upgrades, and run history.
 - `ULDRunStateComponent`: starts runs, handles extraction, and clears carried inventory on death.
 - `ILDInteractable`: common Blueprint-facing interaction contract.
 - `ALDLootContainer`: interactable loot source.
@@ -52,6 +53,10 @@ This file is the build target for the first Unreal pass. The current package doe
 ## Data Dependency
 
 Item add paths should prefer `ULDInventoryComponent::AddItemFromData`, which asks `ULDGameDataSubsystem` for stackability and max stack size from `DT_Items`. The permissive fallback is only for early graybox use before DataTables are imported.
+
+## Save Dependency
+
+The V0.1 save layer is intentionally local. It proves personal storage persistence and hub project completion without committing to the later server-authoritative Realm model.
 
 ## Default Input
 

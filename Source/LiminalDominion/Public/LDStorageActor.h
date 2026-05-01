@@ -24,6 +24,12 @@ public:
     UFUNCTION(BlueprintPure, Category="Liminal Dominion|Storage")
     ULDInventoryComponent* GetStorageInventory() const;
 
+    UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Storage")
+    void LoadFromSave();
+
+    UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Storage")
+    void SaveToSaveGame();
+
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Storage")
     FName StorageId = NAME_None;
@@ -33,6 +39,9 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Storage")
     bool bRaidRisk = false;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Storage")
+    bool bPersistAsPersonalStorage = false;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
     TObjectPtr<ULDInventoryComponent> StorageInventory;

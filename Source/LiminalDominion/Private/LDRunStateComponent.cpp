@@ -51,3 +51,8 @@ ELDRunResult ULDRunStateComponent::GetRunResult() const
 {
     return RunResult;
 }
+
+FName ULDRunStateComponent::GetRunStateId() const
+{
+    return RunStateId;
+}

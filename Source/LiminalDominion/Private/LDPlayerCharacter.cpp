@@ -3,6 +3,7 @@
 #include "LDInventoryComponent.h"
 #include "LDInteractable.h"
 #include "LDRunStateComponent.h"
+#include "LDSaveGameSubsystem.h"
 #include "LDSanityComponent.h"
 
 ALDPlayerCharacter::ALDPlayerCharacter()
@@ -13,6 +14,16 @@ ALDPlayerCharacter::ALDPlayerCharacter()
     PersonalStorage = CreateDefaultSubobject<ULDInventoryComponent>(TEXT("PersonalStorage"));
     SanityComponent = CreateDefaultSubobject<ULDSanityComponent>(TEXT("SanityComponent"));
     RunStateComponent = CreateDefaultSubobject<ULDRunStateComponent>(TEXT("RunStateComponent"));
+}
+
+void ALDPlayerCharacter::BeginPlay()
+{
+    Super::BeginPlay();
+
+    if (RunStateComponent)
+    {
+        RunStateComponent->OnRunEnded.AddDynamic(this, &ALDPlayerCharacter::HandleRunEnded);
+    }
 }
 
 ULDInventoryComponent* ALDPlayerCharacter::GetCarriedInventory() const
@@ -215,4 +226,33 @@ void ALDPlayerCharacter::RefreshFocusedInteractable()
 void ALDPlayerCharacter::BroadcastHUDSnapshot()
 {
     OnHUDSnapshotChanged.Broadcast(BuildHUDSnapshot());
+}
+
+void ALDPlayerCharacter::HandleRunEnded(ELDRunResult Result)
+{
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (ULDSaveGameSubsystem* SaveSubsystem = GameInstance->GetSubsystem<ULDSaveGameSubsystem>())
+        {
+            const int32 TicketsExtracted = CarriedInventory ? CarriedInventory->GetQuantity(FName(TEXT("currency_old_movie_ticket"))) : 0;
+            const FName RunStateId = RunStateComponent ? RunStateComponent->GetRunStateId() : NAME_None;
+            SaveSubsystem->AddRunHistoryEntry(RunStateId, RunResultToName(Result), TicketsExtracted);
+        }
+    }
+
+    BroadcastHUDSnapshot();
+}
+
+FName ALDPlayerCharacter::RunResultToName(ELDRunResult Result) const
+{
+    switch (Result)
+    {
+    case ELDRunResult::Extracted:
+        return FName(TEXT("Extracted"));
+    case ELDRunResult::Dead:
+        return FName(TEXT("Dead"));
+    case ELDRunResult::InProgress:
+    default:
+        return FName(TEXT("InProgress"));
+    }
 }

@@ -31,6 +31,9 @@ public:
     UFUNCTION(BlueprintPure, Category="Liminal Dominion|Inventory")
     TArray<FLDInventoryStack> GetStacks() const;
 
+    UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Inventory")
+    void SetStacks(const TArray<FLDInventoryStack>& NewStacks);
+
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Inventory")
     int32 MaxSlots = 12;

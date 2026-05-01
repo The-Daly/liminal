@@ -1,5 +1,7 @@
 #include "LDStorageActor.h"
+#include "Engine/GameInstance.h"
 #include "LDInventoryComponent.h"
+#include "LDSaveGameSubsystem.h"
 
 ALDStorageActor::ALDStorageActor()
 {
@@ -40,10 +42,43 @@ bool ALDStorageActor::DepositFrom(ULDInventoryComponent* SourceInventory, FName 
         return false;
     }
 
+    SaveToSaveGame();
     return true;
 }
 
 ULDInventoryComponent* ALDStorageActor::GetStorageInventory() const
 {
     return StorageInventory;
+}
+
+void ALDStorageActor::LoadFromSave()
+{
+    if (!bPersistAsPersonalStorage || !StorageInventory)
+    {
+        return;
+    }
+
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (const ULDSaveGameSubsystem* SaveSubsystem = GameInstance->GetSubsystem<ULDSaveGameSubsystem>())
+        {
+            StorageInventory->SetStacks(SaveSubsystem->GetPersonalStorageStacks());
+        }
+    }
+}
+
+void ALDStorageActor::SaveToSaveGame()
+{
+    if (!bPersistAsPersonalStorage || !StorageInventory)
+    {
+        return;
+    }
+
+    if (UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (ULDSaveGameSubsystem* SaveSubsystem = GameInstance->GetSubsystem<ULDSaveGameSubsystem>())
+        {
+            SaveSubsystem->SavePersonalStorage(StorageInventory->GetStacks());
+        }
+    }
 }

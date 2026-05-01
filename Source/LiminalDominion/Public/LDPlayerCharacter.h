@@ -62,6 +62,8 @@ public:
     FLDPlayerMessageSignature OnPlayerMessage;
 
 protected:
+    virtual void BeginPlay() override;
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
     TObjectPtr<ULDInventoryComponent> CarriedInventory;
 
@@ -92,4 +94,7 @@ protected:
     void LookUp(float Value);
     void RefreshFocusedInteractable();
     void BroadcastHUDSnapshot();
+    UFUNCTION()
+    void HandleRunEnded(ELDRunResult Result);
+    FName RunResultToName(ELDRunResult Result) const;
 };

@@ -110,6 +110,27 @@ The first editor milestone is not visual polish. It is this loop:
 11. Contribute Movie Tickets and scrap to the Signal Lamp Project.
 12. Trigger death in a test run and confirm carried inventory clears while personal storage remains.
 
+## Local SaveGame Persistence
+
+V0.1 uses `ULDSaveGameSubsystem` as a local-only persistence bridge. This is not the final server persistence model.
+
+The default slot is configured in `Config/DefaultGame.ini`:
+
+```ini
+[/Script/LiminalDominion.LDSaveGameSubsystem]
+SaveSlotName=LiminalDominionV0
+UserIndex=0
+```
+
+Persisted V0.1 state:
+
+- selected faction ID
+- personal storage stacks
+- completed hub upgrade IDs
+- simple run history entries
+
+In the editor, set personal-room storage Blueprints to persist as personal storage, call `LoadFromSave` on BeginPlay, and call `SaveToSaveGame` after manual storage operations that do not go through `DepositFrom`.
+
 ## Windows Build Gate
 
 Before any playtest release:

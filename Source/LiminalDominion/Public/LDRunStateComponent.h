@@ -39,6 +39,9 @@ public:
     UFUNCTION(BlueprintPure, Category="Liminal Dominion|Run")
     ELDRunResult GetRunResult() const;
 
+    UFUNCTION(BlueprintPure, Category="Liminal Dominion|Run")
+    FName GetRunStateId() const;
+
     UPROPERTY(BlueprintAssignable, Category="Liminal Dominion|Run")
     FLDRunEndedSignature OnRunEnded;
 
