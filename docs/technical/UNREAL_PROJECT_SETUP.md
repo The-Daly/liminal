@@ -84,7 +84,14 @@ Import CSV files from:
 generated/unreal_datatables/
 ```
 
-The C++ row structs currently define the first item and extraction row shapes. Additional row structs should be added as each gameplay system moves from Python prototype to Unreal.
+Import `DT_Items.csv` as a DataTable using `FLDItemRow`, then set:
+
+```ini
+[/Script/LiminalDominion.LDGameDataSubsystem]
+ItemDataTablePath=/Game/Data/DT_Items.DT_Items
+```
+
+`ULDGameDataSubsystem` uses that table to resolve stackability and max stack size for starter loadouts, loot pickup, and storage deposits. Additional row structs should be added as each gameplay system moves from Python prototype to Unreal.
 
 ## First Playable Milestone
 

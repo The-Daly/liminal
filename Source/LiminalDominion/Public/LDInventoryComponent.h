@@ -17,6 +17,9 @@ public:
     bool AddItem(FName ItemId, int32 Quantity, bool bStackable, int32 MaxStack);
 
     UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Inventory")
+    bool AddItemFromData(FName ItemId, int32 Quantity);
+
+    UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Inventory")
     bool RemoveItem(FName ItemId, int32 Quantity);
 
     UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Inventory")

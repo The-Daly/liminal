@@ -57,8 +57,7 @@ bool ALDPlayerCharacter::GiveStarterLoadout(const TArray<FName>& ItemIds)
             return false;
         }
 
-        // Prototype loadouts use permissive stack defaults until DataTable item metadata is imported.
-        if (!CarriedInventory->AddItem(ItemId, 1, true, 999))
+        if (!CarriedInventory->AddItemFromData(ItemId, 1))
         {
             return false;
         }

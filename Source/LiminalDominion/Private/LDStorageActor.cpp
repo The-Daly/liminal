@@ -29,8 +29,7 @@ bool ALDStorageActor::DepositFrom(ULDInventoryComponent* SourceInventory, FName 
         return false;
     }
 
-    // Prototype storage does not know item stack metadata yet; Blueprint/DataTable flow should replace these defaults.
-    if (!StorageInventory->AddItem(ItemId, Quantity, true, 999))
+    if (!StorageInventory->AddItemFromData(ItemId, Quantity))
     {
         return false;
     }

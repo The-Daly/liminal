@@ -26,8 +26,7 @@ bool ALDLootContainer::Interact_Implementation(AActor* InteractingActor)
         return false;
     }
 
-    // Prototype containers add one stackable item. DataTable-driven stack metadata comes next.
-    return Player->GetCarriedInventory()->AddItem(LootItemId, 1, true, 999);
+    return Player->GetCarriedInventory()->AddItemFromData(LootItemId, 1);
 }
 
 bool ALDLootContainer::TryTakeFirstLoot(FName& OutItemId)

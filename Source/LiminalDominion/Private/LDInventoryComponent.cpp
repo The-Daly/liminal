@@ -1,4 +1,6 @@
 #include "LDInventoryComponent.h"
+#include "Engine/GameInstance.h"
+#include "LDGameDataSubsystem.h"
 
 ULDInventoryComponent::ULDInventoryComponent()
 {
@@ -57,6 +59,24 @@ bool ULDInventoryComponent::AddItem(FName ItemId, int32 Quantity, bool bStackabl
 
     Stacks = TrialStacks;
     return true;
+}
+
+bool ULDInventoryComponent::AddItemFromData(FName ItemId, int32 Quantity)
+{
+    if (const UGameInstance* GameInstance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr)
+    {
+        if (const ULDGameDataSubsystem* DataSubsystem = GameInstance->GetSubsystem<ULDGameDataSubsystem>())
+        {
+            const FLDItemStackRule Rule = DataSubsystem->GetItemStackRule(ItemId);
+            if (Rule.bFound)
+            {
+                return AddItem(ItemId, Quantity, Rule.bStackable, Rule.MaxStack);
+            }
+        }
+    }
+
+    // Early graybox fallback: allows editor placement before DataTables are imported.
+    return AddItem(ItemId, Quantity, true, 999);
 }
 
 bool ULDInventoryComponent::RemoveItem(FName ItemId, int32 Quantity)

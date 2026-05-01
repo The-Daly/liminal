@@ -16,6 +16,8 @@ REQUIRED_FILES = [
     "Source/LiminalDominion/Private/LiminalDominion.cpp",
     "Source/LiminalDominion/Public/LDDataTypes.h",
     "Source/LiminalDominion/Public/LDHUDTypes.h",
+    "Source/LiminalDominion/Public/LDGameDataSubsystem.h",
+    "Source/LiminalDominion/Private/LDGameDataSubsystem.cpp",
     "Source/LiminalDominion/Public/LDInteractable.h",
     "Source/LiminalDominion/Public/LDPlayerCharacter.h",
     "Source/LiminalDominion/Private/LDPlayerCharacter.cpp",
