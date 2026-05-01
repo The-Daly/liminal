@@ -8,4 +8,7 @@ UCLASS()
 class LIMINALDOMINION_API ALDGameModeBase : public AGameModeBase
 {
     GENERATED_BODY()
+
+public:
+    ALDGameModeBase();
 };

@@ -34,12 +34,19 @@ The current machine does not have Unreal Editor available, so the first editor c
 Create Blueprint children from the C++ skeletons:
 
 - `BP_LDGameModeBase`
+- `BP_LDPlayerCharacter`
 - `BP_LootContainer`
 - `BP_ExtractionTrigger_Stable`
 - `BP_ExtractionTrigger_HiddenTicketBooth`
+- `BP_PersonalStorage`
+- `BP_FactionVaultPlaceholder`
+- `BP_ProjectBoard`
 - `BP_FlickerStalker`
 - `BP_PlayerInventoryComponent`
 - `BP_PlayerSanityComponent`
+- `BP_PlayerRunStateComponent`
+
+The first interaction pass should use `LDInteractable` implementations already present on loot containers, extraction triggers, storage actors, and the project board.
 
 ## Data Import
 
@@ -71,7 +78,9 @@ The first editor milestone is not visual polish. It is this loop:
 7. Trigger a Flicker Stalker chase/attack.
 8. Extract through the stable exit.
 9. Return to personal room.
-10. Trigger death in a test run and confirm carried inventory clears.
+10. Deposit loot into personal storage.
+11. Contribute Movie Tickets and scrap to the Signal Lamp Project.
+12. Trigger death in a test run and confirm carried inventory clears while personal storage remains.
 
 ## Windows Build Gate
 

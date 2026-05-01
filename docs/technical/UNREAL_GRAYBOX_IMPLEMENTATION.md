@@ -21,6 +21,7 @@ This file is the build target for the first Unreal pass. The current package doe
 - Loot container actor bound to `loot_level1_basic`.
 - Extraction trigger actor bound to extraction seed data.
 - Storage actor for personal storage and shared faction vault placeholder.
+- Project board actor bound to the Signal Lamp Project contribution requirements.
 - Flicker Stalker actor with patrol, perception radius, chase, attack, and return-to-patrol.
 - Hub project board actor that accepts contribution items and unlocks one visible placeholder upgrade.
 
@@ -32,6 +33,17 @@ This file is the build target for the first Unreal pass. The current package doe
 - Pickup feedback.
 - Extraction/death result screen.
 - Minimal faction/loadout debug selector until onboarding is built.
+
+## Current Source Skeletons
+
+- `ALDPlayerCharacter`: owns carried inventory, personal storage, sanity, and run state components.
+- `ULDRunStateComponent`: starts runs, handles extraction, and clears carried inventory on death.
+- `ILDInteractable`: common Blueprint-facing interaction contract.
+- `ALDLootContainer`: interactable loot source.
+- `ALDExtractionTrigger`: interactable extraction gate.
+- `ALDStorageActor`: personal/shared storage placeholder.
+- `ALDProjectBoardActor`: contribution/project completion placeholder.
+- `ALDFlickerStalker`: entity state and range helper.
 
 ## Smoke Test
 

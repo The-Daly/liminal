@@ -27,6 +27,7 @@ Created: 2026-05-01
 - `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` — Windows-first, macOS-supported development policy and command equivalents.
 - `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.
 - `docs/technical/UNREAL_PROJECT_SETUP.md` — first Unreal open, map creation, Blueprint pass, and Windows build gate.
+- `Source/` — source-level Unreal Engine module scaffold and first V0.1 gameplay skeletons.
 - `docs/design/V0_1_PLAYER_JOURNEY.md` — first-session journey, starter loadout use, trader, project board, and relic display behavior.
 
 ## Source PDFs Used

@@ -2,17 +2,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "LDInteractable.h"
 #include "LDExtractionTrigger.generated.h"
 
 class ULDInventoryComponent;
 
 UCLASS()
-class LIMINALDOMINION_API ALDExtractionTrigger : public AActor
+class LIMINALDOMINION_API ALDExtractionTrigger : public AActor, public ILDInteractable
 {
     GENERATED_BODY()
 
 public:
     ALDExtractionTrigger();
+
+    virtual FText GetInteractionText_Implementation() const override;
+    virtual bool Interact_Implementation(AActor* InteractingActor) override;
 
     UFUNCTION(BlueprintCallable, Category="Liminal Dominion|Extraction")
     bool CanExtract(const ULDInventoryComponent* Inventory) const;

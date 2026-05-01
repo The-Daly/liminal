@@ -44,6 +44,7 @@
 
 - [x] Add source-level Unreal project scaffold.
 - [x] Add first C++ gameplay skeletons for inventory, sanity, loot, extraction, and Flicker Stalker.
+- [x] Add player, interaction, run-state, storage, and project-board skeletons.
 - [ ] Create hub shell.
 - [ ] Create personal room shell.
 - [ ] Create Level 1 Service Halls shell.
