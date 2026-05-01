@@ -24,6 +24,7 @@ Created: 2026-05-01
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` — full gap roadmap.
 - `docs/technical/UNREAL_GRAYBOX_IMPLEMENTATION.md` — first Unreal graybox implementation target.
 - `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` — Windows-first, macOS-supported development policy and command equivalents.
+- `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.
 - `docs/design/V0_1_PLAYER_JOURNEY.md` — first-session journey, starter loadout use, trader, project board, and relic display behavior.
 
 ## Source PDFs Used

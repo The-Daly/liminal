@@ -48,3 +48,9 @@ python3 scripts/check_dev_environment.py
 ```
 
 See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
+
+## GitHub Sync
+
+This repo is configured for the GitHub remote `https://github.com/The-Daly/liminal.git`.
+
+Use GitHub Desktop for browser/app-based sign-in and pushing without Terminal credential prompts. See `docs/technical/GITHUB_DESKTOP_SETUP.md`.
