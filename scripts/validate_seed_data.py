@@ -1,18 +1,32 @@
 #!/usr/bin/env python3
 import json
 from pathlib import Path
+import shutil
 import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_DIR = ROOT / "data" / "schemas"
+SEED_DIR = ROOT / "data" / "seed"
+
+
+def dependency_install_hint():
+    requirements_path = ROOT / "requirements.txt"
+    if sys.platform.startswith("win") and shutil.which("py"):
+        if requirements_path.exists():
+            return "py -3 -m pip install -r requirements.txt"
+        return "py -3 -m pip install jsonschema"
+    if requirements_path.exists():
+        return f"\"{sys.executable}\" -m pip install -r \"{requirements_path}\""
+    return f"\"{sys.executable}\" -m pip install jsonschema"
+
 
 try:
     from jsonschema import Draft202012Validator
 except ImportError:
     print("Missing dependency: jsonschema")
-    print("Install with: python3 -m pip install jsonschema")
+    print("Install project dependencies with:")
+    print(f"  {dependency_install_hint()}")
     sys.exit(1)
-
-ROOT = Path(__file__).resolve().parents[1]
-SCHEMA_DIR = ROOT / "data" / "schemas"
-SEED_DIR = ROOT / "data" / "seed"
 
 PAIRINGS = {
     "items.seed.json": "item.schema.json",
@@ -40,9 +54,48 @@ PAIRINGS = {
     "social_rules.seed.json": "social_rule.schema.json",
 }
 
+
 def load_json(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def format_json_path(parts):
+    rendered = []
+    for part in parts:
+        if isinstance(part, int):
+            rendered.append(f"[{part}]")
+        else:
+            rendered.append(f".{part}")
+    return "".join(rendered)
+
+
+def format_validation_error(seed_name, record_index, error):
+    location = f"{seed_name}[{record_index}]"
+    record_path = format_json_path(error.path)
+    if record_path:
+        location += record_path
+    return f"{location} ({error.validator}): {error.message}"
+
+
+def error_sort_key(error):
+    return tuple(str(part) for part in error.path)
+
+
+def validate_records(seed_name, schema, data):
+    validator = Draft202012Validator(schema)
+    records = data if isinstance(data, list) else [data]
+    errors = []
+
+    for index, record in enumerate(records):
+        for error in sorted(validator.iter_errors(record), key=error_sort_key):
+            errors.append(format_validation_error(seed_name, index, error))
+
+    if errors:
+        raise ValueError("\n".join(errors))
+
+    return len(records)
+
 
 def validate_file(seed_name, schema_name):
     seed_path = SEED_DIR / seed_name
@@ -55,18 +108,7 @@ def validate_file(seed_name, schema_name):
 
     data = load_json(seed_path)
     schema = load_json(schema_path)
-    validator = Draft202012Validator(schema)
-
-    errors = []
-    records = data if isinstance(data, list) else [data]
-    for i, record in enumerate(records):
-        for error in sorted(validator.iter_errors(record), key=lambda e: e.path):
-            errors.append(f"{seed_name}[{i}]: {error.message}")
-
-    if errors:
-        raise ValueError("\\n".join(errors))
-
-    return len(records)
+    return validate_records(seed_name, schema, data)
 
 def check_duplicate_ids(seed_name, id_field):
     data = load_json(SEED_DIR / seed_name)

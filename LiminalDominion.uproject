@@ -1,12 +1,15 @@
 {
   "FileVersion": 3,
+  "EngineAssociation": "5.7",
   "Category": "Games",
   "Description": "Liminal Dominion V0.1 graybox extraction prototype.",
-  "Modules": [
+  "Plugins": [
     {
-      "Name": "LiminalDominion",
-      "Type": "Runtime",
-      "LoadingPhase": "Default"
+      "Name": "ModelingToolsEditorMode",
+      "Enabled": true,
+      "TargetAllowList": [
+        "Editor"
+      ]
     }
   ]
 }

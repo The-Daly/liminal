@@ -44,12 +44,31 @@ Start with `docs/SYSTEM_INDEX.md` when handing the project to another AI agent o
 
 ## Local Verification
 
+On macOS Terminal:
+
 ```bash
 python3 -m pip install -r requirements.txt
 python3 scripts/validate_seed_data.py
 python3 -m unittest discover -s tests -v
 python3 scripts/check_dev_environment.py
 ```
+
+On Windows PowerShell:
+
+```powershell
+py -3 -m pip install -r requirements.txt
+py -3 scripts/validate_seed_data.py
+py -3 -m unittest discover -s tests -v
+py -3 scripts/check_dev_environment.py
+```
+
+To run the Windows Unreal startup sequence from the repo:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
+```
+
+The current visualization-first startup opens the UE5 Open World template by default. If code modules are re-enabled later, the same script will require Visual Studio 2022 build tools and a Windows 10/11 SDK.
 
 See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
 See `docs/technical/UNREAL_PROJECT_SETUP.md` for the first UE5 editor open, map creation, Blueprint pass, and Windows build gate.

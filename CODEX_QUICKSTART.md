@@ -32,11 +32,11 @@ python3 scripts/check_dev_environment.py
 On Windows PowerShell:
 
 ```powershell
-py -m pip install -r requirements.txt
-py scripts/validate_seed_data.py
-py -m unittest discover -s tests -v
-py scripts/export_unreal_datatables.py
-py scripts/check_dev_environment.py
+py -3 -m pip install -r requirements.txt
+py -3 scripts/validate_seed_data.py
+py -3 -m unittest discover -s tests -v
+py -3 scripts/export_unreal_datatables.py
+py -3 scripts/check_dev_environment.py
 ```
 
 ## 5. Platform Rule

@@ -16,6 +16,17 @@ The current machine does not have Unreal Editor available, so the first editor c
 - Unreal Engine 5.x.
 - Windows 10/11 PC remains the primary playable packaged build target.
 - macOS is supported for development/editor iteration when Unreal supports the local hardware.
+- On Windows, install Visual Studio 2022 with `Desktop development with C++` and a Windows 10/11 SDK before compiling this C++ project.
+
+## Windows Startup Command
+
+From PowerShell in the repo root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
+```
+
+This startup script validates seed data, exports DataTables, creates the initial `Content/Maps`, `Content/Blueprints`, and `Content/Data` folders, and launches Unreal Editor. If code modules are enabled later, it also generates project files and builds the editor target.
 
 ## First Open
 

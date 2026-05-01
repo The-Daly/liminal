@@ -12,6 +12,12 @@ def command_exists(name: str) -> bool:
     return shutil.which(name) is not None
 
 
+def python_command_prefix() -> list[str]:
+    if platform.system() == "Windows" and command_exists("py"):
+        return ["py", "-3"]
+    return [sys.executable]
+
+
 def run_check(label: str, command: list[str]) -> bool:
     try:
         subprocess.run(command, cwd=ROOT, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -27,9 +33,12 @@ def run_check(label: str, command: list[str]) -> bool:
 
 
 def main() -> int:
+    python_command = python_command_prefix()
+
     print(f"Platform: {platform.system()} {platform.release()}")
     print(f"Python: {sys.version.split()[0]}")
     print(f"Project: {ROOT}")
+    print(f"Python command: {' '.join(python_command)}")
 
     checks = []
     checks.append(("Python 3.9+", sys.version_info >= (3, 9)))
@@ -39,10 +48,10 @@ def main() -> int:
         print(f"{'OK' if passed else 'FAIL'}: {label}")
 
     command_checks = [
-        ("Seed data validation", [sys.executable, "scripts/validate_seed_data.py"]),
-        ("Unit tests", [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"]),
-        ("Unreal DataTable export", [sys.executable, "scripts/export_unreal_datatables.py"]),
-        ("Unreal scaffold check", [sys.executable, "scripts/check_unreal_scaffold.py"]),
+        ("Seed data validation", python_command + ["scripts/validate_seed_data.py"]),
+        ("Unit tests", python_command + ["-m", "unittest", "discover", "-s", "tests", "-v"]),
+        ("Unreal DataTable export", python_command + ["scripts/export_unreal_datatables.py"]),
+        ("Unreal scaffold check", python_command + ["scripts/check_unreal_scaffold.py"]),
     ]
 
     command_results = [run_check(label, command) for label, command in command_checks]

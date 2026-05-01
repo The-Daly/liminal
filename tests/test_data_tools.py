@@ -23,6 +23,7 @@ from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
 from social_model import can_form_squad, can_players_damage_each_other, radio_connects_squadmates
 from survival_model import SanityState
 from weapon_model import can_craft, can_fire, can_open_container, consume_round, craft_recipe, roll_noise_response
+from validate_seed_data import validate_records
 
 
 class DataToolTests(unittest.TestCase):
@@ -65,6 +66,41 @@ class DataToolTests(unittest.TestCase):
         }
         errors = list(Draft202012Validator(schema).iter_errors(bad_item))
         self.assertTrue(errors)
+
+    def test_validation_reports_missing_required_field_readably(self):
+        schema = {
+            "type": "object",
+            "required": ["item_id", "display_name"],
+            "properties": {
+                "item_id": {"type": "string"},
+                "display_name": {"type": "string"},
+            },
+        }
+
+        with self.assertRaises(ValueError) as ctx:
+            validate_records("items.seed.json", schema, [{"item_id": "ticket"}])
+
+        message = str(ctx.exception)
+        self.assertIn("items.seed.json[0]", message)
+        self.assertIn("(required)", message)
+        self.assertIn("'display_name' is a required property", message)
+
+    def test_validation_reports_bad_enum_readably(self):
+        schema = {
+            "type": "object",
+            "required": ["rarity"],
+            "properties": {
+                "rarity": {"enum": ["Common", "Uncommon"]},
+            },
+        }
+
+        with self.assertRaises(ValueError) as ctx:
+            validate_records("items.seed.json", schema, [{"rarity": "Legendary"}])
+
+        message = str(ctx.exception)
+        self.assertIn("items.seed.json[0].rarity", message)
+        self.assertIn("(enum)", message)
+        self.assertIn("'Legendary' is not one of ['Common', 'Uncommon']", message)
 
     def test_inventory_stacks_and_removes(self):
         container = InventoryContainer("test", max_slots=2)

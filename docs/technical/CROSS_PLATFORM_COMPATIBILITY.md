@@ -23,11 +23,13 @@ Liminal Dominion should be developed on macOS when convenient, but the primary p
 | Task | macOS Terminal | Windows PowerShell |
 |---|---|---|
 | Change folder | `cd /path/to/project` | `cd C:\path\to\project` |
-| Install Python deps | `python3 -m pip install -r requirements.txt` | `py -m pip install -r requirements.txt` |
-| Validate data | `python3 scripts/validate_seed_data.py` | `py scripts/validate_seed_data.py` |
-| Run tests | `python3 -m unittest discover -s tests -v` | `py -m unittest discover -s tests -v` |
-| Export DataTables | `python3 scripts/export_unreal_datatables.py` | `py scripts/export_unreal_datatables.py` |
-| Full preflight | `python3 scripts/preflight_release.py` | `py scripts/preflight_release.py` |
+| Install Python deps | `python3 -m pip install -r requirements.txt` | `py -3 -m pip install -r requirements.txt` |
+| Validate data | `python3 scripts/validate_seed_data.py` | `py -3 scripts/validate_seed_data.py` |
+| Run tests | `python3 -m unittest discover -s tests -v` | `py -3 -m unittest discover -s tests -v` |
+| Export DataTables | `python3 scripts/export_unreal_datatables.py` | `py -3 scripts/export_unreal_datatables.py` |
+| Full preflight | `python3 scripts/preflight_release.py` | `py -3 scripts/preflight_release.py` |
+
+On Windows, prefer `py -3 ...` over bare `py ...` so the launcher pins the active Python 3 interpreter instead of relying on shebang resolution.
 
 ## macOS Bash Basics
 
