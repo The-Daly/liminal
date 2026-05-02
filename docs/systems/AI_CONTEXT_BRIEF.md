@@ -18,6 +18,8 @@ Hub/personal room -> deploy to Level 1 Service Halls -> loot -> manage sanity ->
 - Death deletes carried inventory.
 - Personal storage is safe and capped.
 - Shared faction storage is larger and raid-risk later.
+- Same-faction players are allies. Friendly fire and team killing are disabled.
+- Squads are same-faction social groups with squad radio connection; they do not override faction team rules.
 - Faction switching means full Realm reset later.
 - NPC recruitment is earned through quests, not purchase.
 - No full multiplayer, raids, procedural generation, or deep NPC systems in V0.1.

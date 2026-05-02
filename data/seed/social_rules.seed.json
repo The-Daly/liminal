@@ -1,0 +1,25 @@
+[
+  {
+    "social_rule_id": "social_faction_safe_squads_v0",
+    "display_name": "Faction-Safe Squads",
+    "friendly_fire": {
+      "same_faction_damage_enabled": false,
+      "same_squad_damage_enabled": false,
+      "team_kill_enabled": false,
+      "description": "Players cannot damage or kill members of their own faction. Squads inherit the same protection."
+    },
+    "squad_rules": {
+      "same_faction_only": true,
+      "max_members": 4,
+      "shared_visibility_channels": ["Radio", "TrailString", "SquadPing", "QuestIntent"],
+      "description": "Squads are smaller opt-in groups inside an existing faction team. They create social closeness without changing the faction alliance."
+    },
+    "radio_rules": {
+      "connects_scope": "SquadOnly",
+      "requires_radio_item": true,
+      "cross_faction_allowed": false,
+      "description": "Radios bind squadmates together for voice/comms-style gameplay. They do not create cross-faction channels."
+    },
+    "description": "V0.1 multiplayer intent: faction members are already allies, players may form same-faction squads, and team killing is disabled."
+  }
+]

@@ -32,6 +32,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Navigation markers: `data/seed/navigation_markers.seed.json`
 - Noise responses: `data/seed/noise_responses.seed.json`
 - Loot density: `data/seed/loot_density.seed.json`
+- Social rules: `data/seed/social_rules.seed.json`
 
 ## System Docs
 
@@ -42,6 +43,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - `docs/systems/PLAYABLE_LOOP_CONTRACT.md`
 - `docs/systems/WEAPONS_AMMO_AND_CONTAINERS.md`
 - `docs/systems/TRADER_STORAGE_UI_CONTRACT.md`
+- `docs/systems/SOCIAL_AND_TEAM_SAFETY.md`
 - `docs/design/CLIPPERS_BASE_STYLE.md`
 - `docs/design/LEVEL1_SCALE_AND_FACTION_LAYOUT.md`
 
@@ -58,6 +60,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Weapons/ammo/crafting/containers: `scripts/weapon_model.py`
 - Level layout: `scripts/level_layout_model.py`
 - Navigation markers: `scripts/navigation_marker_model.py`
+- Social/team safety: `scripts/social_model.py`
 
 ## Verification
 

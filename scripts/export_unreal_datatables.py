@@ -30,6 +30,7 @@ EXPORTS = {
     "navigation_markers.seed.json": "DT_NavigationMarkers.csv",
     "noise_responses.seed.json": "DT_NoiseResponses.csv",
     "loot_density.seed.json": "DT_LootDensity.csv",
+    "social_rules.seed.json": "DT_SocialRules.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -54,6 +55,7 @@ ROW_NAME_FIELDS = [
     "marker_id",
     "noise_response_id",
     "density_profile_id",
+    "social_rule_id",
 ]
 
 

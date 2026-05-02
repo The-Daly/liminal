@@ -19,6 +19,7 @@ from level_layout_model import faction_foothold_zones, shortest_route_seconds
 from loot_model import container_owner, is_level1_weapon_armor_sparse, preview_table, roll_loot
 from navigation_marker_model import is_marker_expired, marker_visibility
 from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
+from social_model import can_form_squad, can_players_damage_each_other, radio_connects_squadmates
 from survival_model import SanityState
 from weapon_model import can_craft, can_fire, can_open_container, consume_round, craft_recipe, roll_noise_response
 
@@ -41,6 +42,7 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("marker_trail_string_v0", self.registry.navigation_markers)
         self.assertIn("noise_level1_gunshot_flicker_v0", self.registry.noise_responses)
         self.assertIn("density_level1_slim_v0", self.registry.loot_density)
+        self.assertIn("social_faction_safe_squads_v0", self.registry.social_rules)
         self.assertIn("level1_service_halls", self.registry.level_layouts)
         self.assertEqual(len(self.registry.factions), 3)
 
@@ -185,6 +187,14 @@ class DataToolTests(unittest.TestCase):
 
     def test_level1_loot_density_keeps_weapons_and_armor_rare(self):
         self.assertTrue(is_level1_weapon_armor_sparse(self.registry))
+
+    def test_faction_safe_squad_rules_disable_team_kill(self):
+        self.assertFalse(can_players_damage_each_other(self.registry, "meg", "meg"))
+        self.assertFalse(can_players_damage_each_other(self.registry, "meg", "meg", same_squad=True))
+        self.assertTrue(can_players_damage_each_other(self.registry, "meg", "bntg"))
+        self.assertTrue(can_form_squad(self.registry, ["clippers", "clippers"]))
+        self.assertFalse(can_form_squad(self.registry, ["meg", "bntg"]))
+        self.assertTrue(radio_connects_squadmates(self.registry))
 
     def test_level_layout_faction_footholds_and_spacing(self):
         level_id = "level1_service_halls"

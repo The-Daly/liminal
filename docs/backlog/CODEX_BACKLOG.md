@@ -30,6 +30,8 @@
 
 - [x] Faction registry.
 - [x] Starting loadout resolver.
+- [x] Same-faction no-team-kill social rule data.
+- [x] Same-faction squad and radio rule prototype.
 - [ ] Full Realm reset stub.
 - [x] Faction hub upgrade project data.
 

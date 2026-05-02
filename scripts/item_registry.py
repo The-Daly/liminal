@@ -55,6 +55,7 @@ class DataRegistry:
     navigation_markers: dict[str, dict[str, Any]]
     noise_responses: dict[str, dict[str, Any]]
     loot_density: dict[str, dict[str, Any]]
+    social_rules: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -92,6 +93,7 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         navigation_markers=index_by(load_json(seed_dir / "navigation_markers.seed.json"), "marker_id", "navigation_markers.seed.json"),
         noise_responses=index_by(load_json(seed_dir / "noise_responses.seed.json"), "noise_response_id", "noise_responses.seed.json"),
         loot_density=index_by(load_json(seed_dir / "loot_density.seed.json"), "density_profile_id", "loot_density.seed.json"),
+        social_rules=index_by(load_json(seed_dir / "social_rules.seed.json"), "social_rule_id", "social_rules.seed.json"),
     )
 
 
@@ -114,6 +116,7 @@ def main() -> None:
     print(f"Loaded {len(registry.navigation_markers)} navigation markers")
     print(f"Loaded {len(registry.noise_responses)} noise response tables")
     print(f"Loaded {len(registry.loot_density)} loot density profiles")
+    print(f"Loaded {len(registry.social_rules)} social rule sets")
 
 
 if __name__ == "__main__":

@@ -36,6 +36,7 @@ PAIRINGS = {
     "navigation_markers.seed.json": "navigation_marker.schema.json",
     "noise_responses.seed.json": "noise_response.schema.json",
     "loot_density.seed.json": "loot_density.schema.json",
+    "social_rules.seed.json": "social_rule.schema.json",
 }
 
 def load_json(path):
@@ -271,6 +272,7 @@ def main():
     check_duplicate_ids("navigation_markers.seed.json", "marker_id")
     check_duplicate_ids("noise_responses.seed.json", "noise_response_id")
     check_duplicate_ids("loot_density.seed.json", "density_profile_id")
+    check_duplicate_ids("social_rules.seed.json", "social_rule_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")

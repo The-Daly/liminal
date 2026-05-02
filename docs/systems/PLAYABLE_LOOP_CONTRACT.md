@@ -8,6 +8,7 @@ This contract describes the first playable state the project is driving toward.
 - Player has selected a faction.
 - Player has a scarce starter loadout: faction identity tool plus flashlight only.
 - Personal storage exists and persists locally.
+- Same-faction players are allies; friendly fire and team killing are disabled.
 
 ## Run Start
 
@@ -24,6 +25,7 @@ This contract describes the first playable state the project is driving toward.
 - Flicker Stalker patrols, detects, chases, and kills at close range.
 - Gunshots may trigger no response, a sound-only response, or a level-specific entity approach.
 - Trail String can mark a self/squad-visible route for one hour.
+- Same-faction squads can share radio connection, Trail String visibility, and squad intent.
 
 ## Extract
 

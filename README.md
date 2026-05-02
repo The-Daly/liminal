@@ -37,7 +37,7 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 - `scripts/validate_seed_data.py` validates schemas, duplicate IDs, and cross-data references.
 - Prototype Python modules model registries, loot rolls, inventory/storage, sanity, and extraction requirements before Unreal integration.
 - A source-level UE5 scaffold now exists in `LiminalDominion.uproject`, `Config/`, `Content/`, and `Source/`.
-- Non-Unreal framework docs and prototypes now cover faction loadouts, trader purchases, NPC/quest contracts, weapons/ammo, Trail String navigation, gun-noise responses, loot density, and the playable loop contract.
+- Non-Unreal framework docs and prototypes now cover faction loadouts, no-team-kill social rules, trader purchases, NPC/quest contracts, weapons/ammo, Trail String navigation, gun-noise responses, loot density, and the playable loop contract.
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
 
 Start with `docs/SYSTEM_INDEX.md` when handing the project to another AI agent or developer.

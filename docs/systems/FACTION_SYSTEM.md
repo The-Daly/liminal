@@ -24,7 +24,11 @@ Factions provide starter identity and loadout flavor. They do not yet implement 
 - V0.1 faction selection grants a loadout only.
 - V0.1 starter loadouts are intentionally minimal: faction identity tool plus flashlight, no weapons, armor, ammo, Almond Water, or Movie Tickets by default.
 - Future faction switching must call a Realm reset flow, not a simple team swap.
+- Same-faction players are allies. They cannot damage or kill one another.
+- Squads are same-faction social groups, not separate combat teams.
+- Radios connect squadmates so small groups feel coordinated inside the larger faction team.
 
 ## Prototype
 
 Use `scripts/faction_model.py` to resolve starting loadouts and validate item references.
+Use `scripts/social_model.py` to enforce no team killing, same-faction squads, and squad radio scope.

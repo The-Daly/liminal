@@ -4,7 +4,7 @@ Codex must read this file before doing any work in this repository.
 
 ## Project
 
-**Liminal Dominion** is a Backrooms-inspired hard-loss extraction survival PvPvE game.
+**Liminal Dominion** is a Backrooms-inspired hard-loss extraction survival PvPvE game. PvP conflict is between opposing factions/rulesets only; same-faction friendly fire and team killing are disabled.
 
 ## Source-of-Truth Rule
 

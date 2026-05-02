@@ -14,6 +14,7 @@ Weapons are rare, noisy, and risky. Players do not start with reliable combat ge
 - which level zones can spawn those containers
 - whether NPCs may carry or reward the item
 - how gunshots can trigger level-specific entity/noise responses
+- that same-faction and same-squad targets cannot be damaged
 
 ## Locked Scope Boundary
 
@@ -22,6 +23,7 @@ V0.1 does not need:
 - weapon attachments
 - ballistics simulation
 - full PvP balance
+- friendly fire or team-kill tuning
 - deep armor penetration
 - complete NPC loot tables
 
