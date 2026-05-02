@@ -18,6 +18,7 @@ from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
 from loot_model import container_owner, is_level1_weapon_armor_sparse, preview_table, roll_loot
 from navigation_marker_model import is_marker_expired, marker_visibility
+from npc_roster_model import faction_roster, hireable_security_npcs, npcs_by_service, security_brokers
 from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
 from social_model import can_form_squad, can_players_damage_each_other, radio_connects_squadmates
 from survival_model import SanityState
@@ -34,6 +35,7 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("run_level1_service_halls_v0", self.registry.run_states)
         self.assertIn("trader_the_turnstile_v0", self.registry.traders)
         self.assertIn("npc_marrow_vell_quartermaster_v0", self.registry.npcs)
+        self.assertIn("npc_roster_marrow_vell", self.registry.npc_roster)
         self.assertIn("quest_still_water", self.registry.quests)
         self.assertIn("weapon_service_pistol_v0", self.registry.weapons)
         self.assertIn("ammo_type_9mm_crude", self.registry.ammo)
@@ -195,6 +197,18 @@ class DataToolTests(unittest.TestCase):
         self.assertTrue(can_form_squad(self.registry, ["clippers", "clippers"]))
         self.assertFalse(can_form_squad(self.registry, ["meg", "bntg"]))
         self.assertTrue(radio_connects_squadmates(self.registry))
+
+    def test_master_npc_roster_has_roles_and_security_options(self):
+        self.assertGreaterEqual(len(self.registry.npc_roster), 21)
+        names = {npc["display_name"] for npc in self.registry.npc_roster.values()}
+        self.assertEqual(len(names), len(self.registry.npc_roster))
+        self.assertIn("Marrow Vell", names)
+        self.assertIn("The Turnstile", names)
+        self.assertGreaterEqual(len(npcs_by_service(self.registry, "Quest")), 6)
+        self.assertGreaterEqual(len(npcs_by_service(self.registry, "Buy")), 6)
+        self.assertGreaterEqual(len(hireable_security_npcs(self.registry)), 4)
+        self.assertGreaterEqual(len(security_brokers(self.registry)), 4)
+        self.assertGreaterEqual(len(faction_roster(self.registry, "meg")), 5)
 
     def test_level_layout_faction_footholds_and_spacing(self):
         level_id = "level1_service_halls"

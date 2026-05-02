@@ -23,6 +23,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Run state: `data/seed/run_state.seed.json`
 - Traders: `data/seed/traders.seed.json`
 - NPCs: `data/seed/npcs.seed.json`
+- Master NPC roster: `data/seed/npc_roster.seed.json`
 - Quests: `data/seed/quests.seed.json`
 - Weapons: `data/seed/weapons.seed.json`
 - Ammo: `data/seed/ammo.seed.json`
@@ -40,6 +41,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - `docs/systems/FACTION_SYSTEM.md`
 - `docs/systems/ECONOMY_AND_TRADER_SYSTEM.md`
 - `docs/systems/NPC_AND_QUEST_SYSTEM.md`
+- `docs/design/MASTER_NPC_ROSTER.md`
 - `docs/systems/PLAYABLE_LOOP_CONTRACT.md`
 - `docs/systems/WEAPONS_AMMO_AND_CONTAINERS.md`
 - `docs/systems/TRADER_STORAGE_UI_CONTRACT.md`
@@ -57,6 +59,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Factions: `scripts/faction_model.py`
 - Economy/trader: `scripts/economy_model.py`
 - Quests: `scripts/quest_model.py`
+- Master NPC roster: `scripts/npc_roster_model.py`
 - Weapons/ammo/crafting/containers: `scripts/weapon_model.py`
 - Level layout: `scripts/level_layout_model.py`
 - Navigation markers: `scripts/navigation_marker_model.py`

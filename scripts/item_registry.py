@@ -46,6 +46,7 @@ class DataRegistry:
     run_states: dict[str, dict[str, Any]]
     traders: dict[str, dict[str, Any]]
     npcs: dict[str, dict[str, Any]]
+    npc_roster: dict[str, dict[str, Any]]
     quests: dict[str, dict[str, Any]]
     weapons: dict[str, dict[str, Any]]
     ammo: dict[str, dict[str, Any]]
@@ -84,6 +85,7 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         run_states=index_by(load_json(seed_dir / "run_state.seed.json"), "run_state_id", "run_state.seed.json"),
         traders=index_by(load_json(seed_dir / "traders.seed.json"), "trader_id", "traders.seed.json"),
         npcs=index_by(load_json(seed_dir / "npcs.seed.json"), "npc_id", "npcs.seed.json"),
+        npc_roster=index_by(load_json(seed_dir / "npc_roster.seed.json"), "npc_roster_id", "npc_roster.seed.json"),
         quests=index_by(load_json(seed_dir / "quests.seed.json"), "quest_id", "quests.seed.json"),
         weapons=index_by(load_json(seed_dir / "weapons.seed.json"), "weapon_id", "weapons.seed.json"),
         ammo=index_by(load_json(seed_dir / "ammo.seed.json"), "ammo_type_id", "ammo.seed.json"),
@@ -107,6 +109,7 @@ def main() -> None:
     print(f"Loaded {len(registry.run_states)} run states")
     print(f"Loaded {len(registry.traders)} traders")
     print(f"Loaded {len(registry.npcs)} NPCs")
+    print(f"Loaded {len(registry.npc_roster)} master NPC roster entries")
     print(f"Loaded {len(registry.quests)} quests")
     print(f"Loaded {len(registry.weapons)} weapons")
     print(f"Loaded {len(registry.ammo)} ammo types")

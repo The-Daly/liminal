@@ -7,7 +7,10 @@ NPC and quest systems are placeholders that give the first player journey struct
 ## Data Source
 
 - `data/seed/npcs.seed.json`
+- `data/seed/npc_roster.seed.json`
 - `data/seed/quests.seed.json`
+
+The master roster lives in `docs/design/MASTER_NPC_ROSTER.md`. The small runtime NPC seed remains V0.1-focused; the roster seed tracks the wider cast that future quest, trader, and security systems can promote into runtime NPCs.
 - `data/seed/items.seed.json`
 
 ## V0.1 NPCs

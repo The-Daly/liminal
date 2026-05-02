@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NPC Roster Entry",
+  "type": "object",
+  "required": [
+    "npc_roster_id",
+    "display_name",
+    "faction_id",
+    "primary_function",
+    "services",
+    "hub_location",
+    "level_focus",
+    "security_profile",
+    "lore_connections",
+    "personality_hook"
+  ],
+  "properties": {
+    "npc_roster_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "faction_id": { "type": ["string", "null"] },
+    "primary_function": {
+      "type": "string",
+      "enum": ["Trader", "QuestGiver", "Security", "SecurityBroker", "Hybrid"]
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Buy",
+          "Sell",
+          "Quest",
+          "SecurityPatrol",
+          "SecurityHire",
+          "Repair",
+          "Crafting",
+          "Medical",
+          "Mapping",
+          "Training",
+          "Storage",
+          "Radio"
+        ]
+      }
+    },
+    "hub_location": { "type": "string" },
+    "level_focus": { "type": "string" },
+    "security_profile": {
+      "type": "object",
+      "required": ["can_fight", "can_be_hired", "can_hire_security"],
+      "properties": {
+        "can_fight": { "type": "boolean" },
+        "can_be_hired": { "type": "boolean" },
+        "can_hire_security": { "type": "boolean" }
+      }
+    },
+    "lore_connections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "M.E.G. archive culture",
+          "B.N.T.G. trade culture",
+          "Clippers route culture",
+          "Level 1 service corridors",
+          "Almond Water survival",
+          "Movie Ticket economy",
+          "No-clip transitions",
+          "Entity documentation",
+          "Supply outposts",
+          "Safe-room settlement life"
+        ]
+      }
+    },
+    "personality_hook": { "type": "string" },
+    "description": { "type": "string" }
+  }
+}

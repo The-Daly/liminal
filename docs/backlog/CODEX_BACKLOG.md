@@ -43,6 +43,7 @@
 - [x] Trader purchase prototype.
 - [x] Quest completion prototype.
 - [x] AI-readable system docs.
+- [x] Master 21-NPC roster for traders, quest givers, security, and security brokers.
 
 ## Phase 4.6 — Weapons / Ammo / Containers Framework
 

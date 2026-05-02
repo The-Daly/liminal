@@ -27,6 +27,7 @@ PAIRINGS = {
     "run_state.seed.json": "run_state.schema.json",
     "traders.seed.json": "trader.schema.json",
     "npcs.seed.json": "npc.schema.json",
+    "npc_roster.seed.json": "npc_roster.schema.json",
     "quests.seed.json": "quest.schema.json",
     "weapons.seed.json": "weapon.schema.json",
     "ammo.seed.json": "ammo.schema.json",
@@ -92,6 +93,7 @@ def check_references():
     run_states = load_json(SEED_DIR / "run_state.seed.json")
     traders = load_json(SEED_DIR / "traders.seed.json")
     npcs = load_json(SEED_DIR / "npcs.seed.json")
+    npc_roster = load_json(SEED_DIR / "npc_roster.seed.json")
     quests = load_json(SEED_DIR / "quests.seed.json")
     weapons = load_json(SEED_DIR / "weapons.seed.json")
     ammo = load_json(SEED_DIR / "ammo.seed.json")
@@ -168,6 +170,11 @@ def check_references():
         for quest_id in npc.get("quest_ids", []):
             if quest_id not in quest_ids:
                 missing.append(f"NPC {npc['npc_id']} references missing quest {quest_id}")
+
+    for npc in npc_roster:
+        faction_id = npc.get("faction_id")
+        if faction_id is not None and faction_id not in faction_ids:
+            missing.append(f"NPC roster {npc['npc_roster_id']} references missing faction {faction_id}")
 
     for quest in quests:
         if quest["giver_npc_id"] not in npc_ids:
@@ -263,6 +270,7 @@ def main():
     check_duplicate_ids("run_state.seed.json", "run_state_id")
     check_duplicate_ids("traders.seed.json", "trader_id")
     check_duplicate_ids("npcs.seed.json", "npc_id")
+    check_duplicate_ids("npc_roster.seed.json", "npc_roster_id")
     check_duplicate_ids("quests.seed.json", "quest_id")
     check_duplicate_ids("weapons.seed.json", "weapon_id")
     check_duplicate_ids("ammo.seed.json", "ammo_type_id")

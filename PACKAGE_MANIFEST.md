@@ -17,6 +17,7 @@ Created: 2026-05-01
 - `scripts/faction_model.py` — faction starter loadout resolver.
 - `scripts/economy_model.py` — V0.1 trader purchase prototype.
 - `scripts/quest_model.py` — V0.1 quest objective/reward prototype.
+- `scripts/npc_roster_model.py` — master NPC roster role, service, and security helper.
 - `scripts/weapon_model.py` — weapon ammo consumption, ammo crafting, and gated container prototype.
 - `scripts/navigation_marker_model.py` — Trail String visibility and one-hour expiry prototype.
 - `scripts/social_model.py` — same-faction squad, radio, and no-team-kill rules prototype.
@@ -36,6 +37,7 @@ Created: 2026-05-01
 - `docs/systems/` — AI-readable system contracts for faction, economy/trader, NPC/quest, and playable loop behavior.
 - `docs/systems/TRADER_STORAGE_UI_CONTRACT.md` — extraction-style trader/storage UI contract.
 - `docs/systems/SOCIAL_AND_TEAM_SAFETY.md` — faction alliance, squad, radio, and no-team-kill contract.
+- `docs/design/MASTER_NPC_ROSTER.md` — 21-NPC trader, quest giver, security, and security broker roster.
 - `docs/design/CLIPPERS_BASE_STYLE.md` — original retro-scrap Clippers base style guide.
 - `docs/design/LEVEL1_SCALE_AND_FACTION_LAYOUT.md` — Level 1 footprint, travel time, faction foothold spacing, and route topology.
 - `docs/technical/UNREAL_GRAYBOX_IMPLEMENTATION.md` — first Unreal graybox implementation target.
