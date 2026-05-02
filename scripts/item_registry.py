@@ -44,6 +44,9 @@ class DataRegistry:
     hub_upgrades: dict[str, dict[str, Any]]
     player_states: dict[str, dict[str, Any]]
     run_states: dict[str, dict[str, Any]]
+    traders: dict[str, dict[str, Any]]
+    npcs: dict[str, dict[str, Any]]
+    quests: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -70,6 +73,9 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         hub_upgrades=index_by(load_json(seed_dir / "hub_upgrades.seed.json"), "hub_upgrade_id", "hub_upgrades.seed.json"),
         player_states=index_by(load_json(seed_dir / "player_state.seed.json"), "player_state_id", "player_state.seed.json"),
         run_states=index_by(load_json(seed_dir / "run_state.seed.json"), "run_state_id", "run_state.seed.json"),
+        traders=index_by(load_json(seed_dir / "traders.seed.json"), "trader_id", "traders.seed.json"),
+        npcs=index_by(load_json(seed_dir / "npcs.seed.json"), "npc_id", "npcs.seed.json"),
+        quests=index_by(load_json(seed_dir / "quests.seed.json"), "quest_id", "quests.seed.json"),
     )
 
 
@@ -81,6 +87,9 @@ def main() -> None:
     print(f"Loaded {len(registry.entities)} entities")
     print(f"Loaded {len(registry.extractions)} extractions")
     print(f"Loaded {len(registry.run_states)} run states")
+    print(f"Loaded {len(registry.traders)} traders")
+    print(f"Loaded {len(registry.npcs)} NPCs")
+    print(f"Loaded {len(registry.quests)} quests")
 
 
 if __name__ == "__main__":

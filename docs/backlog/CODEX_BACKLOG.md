@@ -28,10 +28,19 @@
 
 ## Phase 4 — Faction Prototype
 
-- [ ] Faction registry.
-- [ ] Starting loadout resolver.
+- [x] Faction registry.
+- [x] Starting loadout resolver.
 - [ ] Full Realm reset stub.
-- [ ] Faction hub upgrade project data.
+- [x] Faction hub upgrade project data.
+
+## Phase 4.5 — Quest / Trader / NPC Framework
+
+- [x] Trader schema and seed data.
+- [x] NPC schema and seed data.
+- [x] Quest schema and seed data.
+- [x] Trader purchase prototype.
+- [x] Quest completion prototype.
+- [x] AI-readable system docs.
 
 ## Phase 5 — Storage Prototype
 

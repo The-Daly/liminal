@@ -25,6 +25,9 @@ PAIRINGS = {
     "hub_upgrades.seed.json": "hub_upgrade.schema.json",
     "player_state.seed.json": "player_state.schema.json",
     "run_state.seed.json": "run_state.schema.json",
+    "traders.seed.json": "trader.schema.json",
+    "npcs.seed.json": "npc.schema.json",
+    "quests.seed.json": "quest.schema.json",
 }
 
 def load_json(path):
@@ -78,6 +81,9 @@ def check_references():
     hub_upgrades = load_json(SEED_DIR / "hub_upgrades.seed.json")
     player_states = load_json(SEED_DIR / "player_state.seed.json")
     run_states = load_json(SEED_DIR / "run_state.seed.json")
+    traders = load_json(SEED_DIR / "traders.seed.json")
+    npcs = load_json(SEED_DIR / "npcs.seed.json")
+    quests = load_json(SEED_DIR / "quests.seed.json")
 
     item_ids = {item["item_id"] for item in items}
     faction_ids = {faction["faction_id"] for faction in factions}
@@ -86,6 +92,8 @@ def check_references():
     sanity_rule_ids = {entry["sanity_rule_id"] for entry in sanity}
     extraction_ids = {entry["extraction_id"] for entry in extractions}
     loot_table_ids = {entry["loot_table_id"] for entry in loot_tables}
+    npc_ids = {entry["npc_id"] for entry in npcs}
+    quest_ids = {entry["quest_id"] for entry in quests}
 
     missing = []
 
@@ -131,6 +139,26 @@ def check_references():
             if extraction_id not in extraction_ids:
                 missing.append(f"Run state {run_state['run_state_id']} references missing extraction {extraction_id}")
 
+    for trader in traders:
+        for stock in trader.get("stock", []):
+            if stock["item_id"] not in item_ids:
+                missing.append(f"Trader {trader['trader_id']} references missing stock item {stock['item_id']}")
+
+    for npc in npcs:
+        for quest_id in npc.get("quest_ids", []):
+            if quest_id not in quest_ids:
+                missing.append(f"NPC {npc['npc_id']} references missing quest {quest_id}")
+
+    for quest in quests:
+        if quest["giver_npc_id"] not in npc_ids:
+            missing.append(f"Quest {quest['quest_id']} references missing giver NPC {quest['giver_npc_id']}")
+        for objective in quest.get("objectives", []):
+            if objective["item_id"] not in item_ids:
+                missing.append(f"Quest {quest['quest_id']} objective references missing item {objective['item_id']}")
+        for reward in quest.get("rewards", []):
+            if reward["item_id"] not in item_ids:
+                missing.append(f"Quest {quest['quest_id']} reward references missing item {reward['item_id']}")
+
     if missing:
         raise ValueError("\\n".join(missing))
 
@@ -151,6 +179,9 @@ def main():
     check_duplicate_ids("hub_upgrades.seed.json", "hub_upgrade_id")
     check_duplicate_ids("player_state.seed.json", "player_state_id")
     check_duplicate_ids("run_state.seed.json", "run_state_id")
+    check_duplicate_ids("traders.seed.json", "trader_id")
+    check_duplicate_ids("npcs.seed.json", "npc_id")
+    check_duplicate_ids("quests.seed.json", "quest_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")

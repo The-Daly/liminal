@@ -1,0 +1,2 @@
+Name,quest_id,display_name,giver_npc_id,objectives,rewards,description
+quest_first_service_halls_recovery,quest_first_service_halls_recovery,First Service Halls Recovery,npc_tom_quartermaster_v0,"[{""objective_type"":""ExtractWithItem"",""item_id"":""consumable_almond_water"",""quantity"":1},{""objective_type"":""ExtractWithItem"",""item_id"":""item_scrap_metal"",""quantity"":3}]","[{""item_id"":""currency_old_movie_ticket"",""quantity"":20}]",Recover enough supplies from Level 1 to prove the first extraction loop.

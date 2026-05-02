@@ -1,0 +1,10 @@
+[
+  {
+    "npc_id": "npc_tom_quartermaster_v0",
+    "display_name": "Tom",
+    "role": "Quartermaster",
+    "location_id": "hub_quartermaster_corner",
+    "quest_ids": ["quest_first_service_halls_recovery"],
+    "description": "V0.1 quartermaster placeholder who frames the first recovery run."
+  }
+]

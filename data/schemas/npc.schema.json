@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NPC",
+  "type": "object",
+  "required": ["npc_id", "display_name", "role", "location_id"],
+  "additionalProperties": false,
+  "properties": {
+    "npc_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "role": {
+      "type": "string",
+      "enum": ["Quartermaster", "Trader", "QuestGiver", "Recruitable", "Trainer"]
+    },
+    "location_id": { "type": "string" },
+    "quest_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "description": { "type": "string" }
+  }
+}

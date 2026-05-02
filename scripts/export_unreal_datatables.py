@@ -19,6 +19,9 @@ EXPORTS = {
     "hub_upgrades.seed.json": "DT_HubUpgrades.csv",
     "player_state.seed.json": "DT_PlayerState.csv",
     "run_state.seed.json": "DT_RunState.csv",
+    "traders.seed.json": "DT_Traders.csv",
+    "npcs.seed.json": "DT_NPCs.csv",
+    "quests.seed.json": "DT_Quests.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -32,6 +35,9 @@ ROW_NAME_FIELDS = [
     "hub_upgrade_id",
     "player_state_id",
     "run_state_id",
+    "trader_id",
+    "npc_id",
+    "quest_id",
 ]
 
 

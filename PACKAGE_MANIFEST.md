@@ -14,6 +14,9 @@ Created: 2026-05-01
 - `scripts/inventory_model.py` — standalone inventory/storage prototype.
 - `scripts/survival_model.py` — standalone sanity prototype.
 - `scripts/extraction_model.py` — extraction requirement helper.
+- `scripts/faction_model.py` — faction starter loadout resolver.
+- `scripts/economy_model.py` — V0.1 trader purchase prototype.
+- `scripts/quest_model.py` — V0.1 quest objective/reward prototype.
 - `scripts/loot_model.py` — loot table preview and roll helper.
 - `scripts/export_unreal_datatables.py` — CSV export bridge for Unreal DataTables.
 - `scripts/check_dev_environment.py` — macOS/Windows development environment smoke check.
@@ -25,6 +28,8 @@ Created: 2026-05-01
 - `data/schemas/` — starter schemas.
 - `data/seed/` — starter data.
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` — full gap roadmap.
+- `docs/SYSTEM_INDEX.md` — AI/developer navigation index for systems, data, prototypes, and verification.
+- `docs/systems/` — AI-readable system contracts for faction, economy/trader, NPC/quest, and playable loop behavior.
 - `docs/technical/UNREAL_GRAYBOX_IMPLEMENTATION.md` — first Unreal graybox implementation target.
 - `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` — Windows-first, macOS-supported development policy and command equivalents.
 - `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.

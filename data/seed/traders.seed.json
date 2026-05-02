@@ -1,0 +1,25 @@
+[
+  {
+    "trader_id": "trader_broken_kiosk_v0",
+    "display_name": "Broken Trader Kiosk",
+    "location_id": "level1_broken_trader_kiosk",
+    "stock": [
+      {
+        "item_id": "consumable_almond_water",
+        "price_tickets": 25,
+        "max_quantity": 5
+      },
+      {
+        "item_id": "item_battery_pack",
+        "price_tickets": 8,
+        "max_quantity": 10
+      },
+      {
+        "item_id": "item_chalk_bundle",
+        "price_tickets": 5,
+        "max_quantity": 4
+      }
+    ],
+    "description": "V0.1 placeholder trader inventory for survival basics."
+  }
+]
