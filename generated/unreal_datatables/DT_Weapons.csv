@@ -1,0 +1,4 @@
+Name,weapon_id,item_id,weapon_type,ammo_type_id,magazine_size,noise_level,durability,acquisition_routes,description
+weapon_service_pistol,weapon_service_pistol_v0,weapon_service_pistol,Pistol,ammo_type_9mm_crude,8,Loud,100,"[""WorldContainer"",""NPCDrop"",""TraderStock""]",First firearm placeholder for rare locker/NPC/trader acquisition.
+weapon_pipe_shotgun,weapon_pipe_shotgun_v0,weapon_pipe_shotgun,Shotgun,ammo_type_shell_crude,1,VeryLoud,60,"[""BreakOpenContainer"",""Crafting""]",Rare emergency weapon associated with crowbar-opened supply crates.
+tool_bntg_crowbar,tool_bntg_crowbar_weapon_v0,tool_bntg_crowbar,ToolWeapon,,0,Quiet,250,"[""QuestReward""]",B.N.T.G. starter tool that also gates break-open containers.

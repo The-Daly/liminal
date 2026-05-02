@@ -8,4 +8,10 @@ tool_clippers_camcorder,tool_clippers_camcorder,Clippers Camcorder,FactionTool,Q
 item_chalk_bundle,item_chalk_bundle,Chalk Bundle,Tool,Common,True,10,0.05,5,True,False,,,Used by Clippers to mark routes.
 item_battery_pack,item_battery_pack,Battery Pack,Resource,Common,True,20,0.1,8,True,False,,,Basic power source for prototype tools and lights.
 item_scrap_metal,item_scrap_metal,Scrap Metal,Resource,Common,True,50,0.2,3,True,False,,,Bulk salvage used for hub projects and trade.
+item_gunpowder_pouch,item_gunpowder_pouch,Gunpowder Pouch,Resource,Uncommon,True,20,0.1,12,True,False,,,Unstable powder used for crude ammunition crafting.
+item_spent_casings,item_spent_casings,Spent Casings,Resource,Common,True,50,0.02,1,True,False,,,Recovered casings for improvised ammunition.
+ammo_9mm_crude,ammo_9mm_crude,Crude 9mm Rounds,Ammo,Uncommon,True,60,0.01,2,True,False,,,Unreliable handmade 9mm ammunition.
+ammo_shell_crude,ammo_shell_crude,Crude Shells,Ammo,Rare,True,24,0.04,5,True,False,,,Improvised shells for rare shotgun-class weapons.
+weapon_service_pistol,weapon_service_pistol,Service Pistol,Weapon,Rare,False,1,1.2,180,True,True,WallRack,,A battered pistol recovered from a maintenance locker.
+weapon_pipe_shotgun,weapon_pipe_shotgun,Pipe Shotgun,Weapon,VeryRare,False,1,2.8,350,True,True,WallRack,,"A crude, loud emergency weapon best treated as a last resort."
 relic_golden_admit_one_ticket,relic_golden_admit_one_ticket,Golden Admit-One Ticket,Relic,RelicClass,False,1,0.01,10000,True,True,GlassCase,,A pristine gold ticket stamped with an unreadable theater name.

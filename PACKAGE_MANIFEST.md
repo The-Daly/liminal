@@ -17,6 +17,7 @@ Created: 2026-05-01
 - `scripts/faction_model.py` — faction starter loadout resolver.
 - `scripts/economy_model.py` — V0.1 trader purchase prototype.
 - `scripts/quest_model.py` — V0.1 quest objective/reward prototype.
+- `scripts/weapon_model.py` — weapon ammo consumption, ammo crafting, and gated container prototype.
 - `scripts/loot_model.py` — loot table preview and roll helper.
 - `scripts/export_unreal_datatables.py` — CSV export bridge for Unreal DataTables.
 - `scripts/check_dev_environment.py` — macOS/Windows development environment smoke check.

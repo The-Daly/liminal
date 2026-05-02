@@ -1,0 +1,35 @@
+[
+  {
+    "container_id": "container_level1_storage_cabinet_v0",
+    "display_name": "Storage Cabinet",
+    "container_type": "Cabinet",
+    "level_id": "level1_service_halls",
+    "zone_id": "fogged_storage_bay",
+    "loot_table_id": "loot_level1_cabinet_survival",
+    "required_tool_item_id": null,
+    "breakable": false,
+    "description": "Common cabinet for survival supplies and occasional crude ammo."
+  },
+  {
+    "container_id": "container_level1_security_locker_v0",
+    "display_name": "Security Locker",
+    "container_type": "Locker",
+    "level_id": "level1_service_halls",
+    "zone_id": "utility_room_cluster",
+    "loot_table_id": "loot_level1_locker_security",
+    "required_tool_item_id": null,
+    "breakable": false,
+    "description": "Rare locker that may contain ammo or a damaged service pistol."
+  },
+  {
+    "container_id": "container_level1_bntg_supply_crate_v0",
+    "display_name": "B.N.T.G. Supply Crate",
+    "container_type": "SupplyCrate",
+    "level_id": "level1_service_halls",
+    "zone_id": "broken_trader_kiosk",
+    "loot_table_id": "loot_level1_crowbar_supply_crate",
+    "required_tool_item_id": "tool_bntg_crowbar",
+    "breakable": true,
+    "description": "Break-open supply crate requiring the crowbar."
+  }
+]

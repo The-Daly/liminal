@@ -1,0 +1,16 @@
+[
+  {
+    "ammo_type_id": "ammo_type_9mm_crude",
+    "item_id": "ammo_9mm_crude",
+    "rounds_per_item": 1,
+    "compatible_weapon_ids": ["weapon_service_pistol_v0"],
+    "description": "Crude pistol ammunition."
+  },
+  {
+    "ammo_type_id": "ammo_type_shell_crude",
+    "item_id": "ammo_shell_crude",
+    "rounds_per_item": 1,
+    "compatible_weapon_ids": ["weapon_pipe_shotgun_v0"],
+    "description": "Crude shell ammunition."
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CraftingRecipe",
+  "type": "object",
+  "required": ["recipe_id", "display_name", "recipe_type", "ingredients", "outputs"],
+  "additionalProperties": false,
+  "properties": {
+    "recipe_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "recipe_type": {
+      "type": "string",
+      "enum": ["Ammo", "Tool", "Consumable", "Upgrade"]
+    },
+    "required_station": {
+      "type": ["string", "null"]
+    },
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "quantity"],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "quantity"],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "description": { "type": "string" }
+  }
+}

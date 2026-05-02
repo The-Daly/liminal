@@ -18,6 +18,7 @@ from item_registry import index_by, load_registry
 from loot_model import preview_table, roll_loot
 from quest_model import is_quest_complete, reward_preview
 from survival_model import SanityState
+from weapon_model import can_craft, can_fire, can_open_container, consume_round, craft_recipe
 
 
 class DataToolTests(unittest.TestCase):
@@ -31,6 +32,10 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("trader_broken_kiosk_v0", self.registry.traders)
         self.assertIn("npc_tom_quartermaster_v0", self.registry.npcs)
         self.assertIn("quest_first_service_halls_recovery", self.registry.quests)
+        self.assertIn("weapon_service_pistol_v0", self.registry.weapons)
+        self.assertIn("ammo_type_9mm_crude", self.registry.ammo)
+        self.assertIn("recipe_crude_9mm_rounds_v0", self.registry.crafting_recipes)
+        self.assertIn("container_level1_bntg_supply_crate_v0", self.registry.containers)
         self.assertEqual(len(self.registry.factions), 3)
 
     def test_duplicate_ids_fail(self):
@@ -118,6 +123,32 @@ class DataToolTests(unittest.TestCase):
         inventory.add_item(self.registry, "item_scrap_metal", 3)
         self.assertTrue(is_quest_complete(self.registry, quest_id, inventory))
         self.assertEqual(reward_preview(self.registry, quest_id), [("currency_old_movie_ticket", 20)])
+
+    def test_weapon_ammo_consumption(self):
+        inventory = InventoryContainer("weapon", max_slots=4)
+        weapon_id = "weapon_service_pistol_v0"
+        self.assertFalse(can_fire(self.registry, weapon_id, inventory))
+        inventory.add_item(self.registry, "ammo_9mm_crude", 2)
+        self.assertTrue(can_fire(self.registry, weapon_id, inventory))
+        consume_round(self.registry, weapon_id, inventory)
+        self.assertEqual(inventory.quantity("ammo_9mm_crude"), 1)
+
+    def test_ammo_crafting_recipe(self):
+        inventory = InventoryContainer("craft", max_slots=6)
+        recipe_id = "recipe_crude_9mm_rounds_v0"
+        inventory.add_item(self.registry, "item_spent_casings", 6)
+        inventory.add_item(self.registry, "item_gunpowder_pouch", 1)
+        inventory.add_item(self.registry, "item_scrap_metal", 2)
+        self.assertTrue(can_craft(self.registry, recipe_id, inventory))
+        craft_recipe(self.registry, recipe_id, inventory)
+        self.assertEqual(inventory.quantity("ammo_9mm_crude"), 6)
+
+    def test_crowbar_gated_container(self):
+        inventory = InventoryContainer("crate", max_slots=4)
+        container_id = "container_level1_bntg_supply_crate_v0"
+        self.assertFalse(can_open_container(self.registry, container_id, inventory))
+        inventory.add_item(self.registry, "tool_bntg_crowbar")
+        self.assertTrue(can_open_container(self.registry, container_id, inventory))
 
 
 if __name__ == "__main__":

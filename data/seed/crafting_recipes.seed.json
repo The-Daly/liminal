@@ -1,0 +1,56 @@
+[
+  {
+    "recipe_id": "recipe_crude_9mm_rounds_v0",
+    "display_name": "Craft Crude 9mm Rounds",
+    "recipe_type": "Ammo",
+    "required_station": null,
+    "ingredients": [
+      {
+        "item_id": "item_spent_casings",
+        "quantity": 6
+      },
+      {
+        "item_id": "item_gunpowder_pouch",
+        "quantity": 1
+      },
+      {
+        "item_id": "item_scrap_metal",
+        "quantity": 2
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "ammo_9mm_crude",
+        "quantity": 6
+      }
+    ],
+    "description": "Basic ammo crafting recipe for the V0.1 economy framework."
+  },
+  {
+    "recipe_id": "recipe_crude_shells_v0",
+    "display_name": "Craft Crude Shells",
+    "recipe_type": "Ammo",
+    "required_station": "Workshop",
+    "ingredients": [
+      {
+        "item_id": "item_spent_casings",
+        "quantity": 4
+      },
+      {
+        "item_id": "item_gunpowder_pouch",
+        "quantity": 2
+      },
+      {
+        "item_id": "item_scrap_metal",
+        "quantity": 4
+      }
+    ],
+    "outputs": [
+      {
+        "item_id": "ammo_shell_crude",
+        "quantity": 2
+      }
+    ],
+    "description": "Workshop-gated shell recipe for later hub progression."
+  }
+]

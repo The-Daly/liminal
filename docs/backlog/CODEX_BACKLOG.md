@@ -42,6 +42,17 @@
 - [x] Quest completion prototype.
 - [x] AI-readable system docs.
 
+## Phase 4.6 — Weapons / Ammo / Containers Framework
+
+- [x] Weapon schema and seed data.
+- [x] Ammo schema and seed data.
+- [x] Ammo crafting recipe schema and seed data.
+- [x] Container schema and seed data.
+- [x] Crowbar-gated supply crate data.
+- [x] Weapon ammo consumption prototype.
+- [x] Ammo crafting prototype.
+- [x] Gated container prototype.
+
 ## Phase 5 — Storage Prototype
 
 - [x] Personal storage container model.

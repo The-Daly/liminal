@@ -47,6 +47,10 @@ class DataRegistry:
     traders: dict[str, dict[str, Any]]
     npcs: dict[str, dict[str, Any]]
     quests: dict[str, dict[str, Any]]
+    weapons: dict[str, dict[str, Any]]
+    ammo: dict[str, dict[str, Any]]
+    crafting_recipes: dict[str, dict[str, Any]]
+    containers: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -76,6 +80,10 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         traders=index_by(load_json(seed_dir / "traders.seed.json"), "trader_id", "traders.seed.json"),
         npcs=index_by(load_json(seed_dir / "npcs.seed.json"), "npc_id", "npcs.seed.json"),
         quests=index_by(load_json(seed_dir / "quests.seed.json"), "quest_id", "quests.seed.json"),
+        weapons=index_by(load_json(seed_dir / "weapons.seed.json"), "weapon_id", "weapons.seed.json"),
+        ammo=index_by(load_json(seed_dir / "ammo.seed.json"), "ammo_type_id", "ammo.seed.json"),
+        crafting_recipes=index_by(load_json(seed_dir / "crafting_recipes.seed.json"), "recipe_id", "crafting_recipes.seed.json"),
+        containers=index_by(load_json(seed_dir / "containers.seed.json"), "container_id", "containers.seed.json"),
     )
 
 
@@ -90,6 +98,10 @@ def main() -> None:
     print(f"Loaded {len(registry.traders)} traders")
     print(f"Loaded {len(registry.npcs)} NPCs")
     print(f"Loaded {len(registry.quests)} quests")
+    print(f"Loaded {len(registry.weapons)} weapons")
+    print(f"Loaded {len(registry.ammo)} ammo types")
+    print(f"Loaded {len(registry.crafting_recipes)} crafting recipes")
+    print(f"Loaded {len(registry.containers)} containers")
 
 
 if __name__ == "__main__":

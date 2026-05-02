@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Weapon",
+  "type": "object",
+  "required": ["weapon_id", "item_id", "weapon_type", "ammo_type_id", "acquisition_routes"],
+  "additionalProperties": false,
+  "properties": {
+    "weapon_id": { "type": "string" },
+    "item_id": { "type": "string" },
+    "weapon_type": {
+      "type": "string",
+      "enum": ["Melee", "Pistol", "Shotgun", "Rifle", "ToolWeapon"]
+    },
+    "ammo_type_id": {
+      "type": ["string", "null"]
+    },
+    "magazine_size": { "type": "integer", "minimum": 0 },
+    "noise_level": {
+      "type": "string",
+      "enum": ["Silent", "Quiet", "Loud", "VeryLoud"]
+    },
+    "durability": { "type": "integer", "minimum": 0 },
+    "acquisition_routes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["WorldContainer", "BreakOpenContainer", "NPCDrop", "TraderStock", "Crafting", "QuestReward"]
+      }
+    },
+    "description": { "type": "string" }
+  }
+}

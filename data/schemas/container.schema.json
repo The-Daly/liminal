@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Container",
+  "type": "object",
+  "required": ["container_id", "display_name", "container_type", "level_id", "loot_table_id"],
+  "additionalProperties": false,
+  "properties": {
+    "container_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "container_type": {
+      "type": "string",
+      "enum": ["Cabinet", "Locker", "SupplyCrate", "TheaterCache", "Toolbox"]
+    },
+    "level_id": { "type": "string" },
+    "zone_id": { "type": "string" },
+    "loot_table_id": { "type": "string" },
+    "required_tool_item_id": {
+      "type": ["string", "null"]
+    },
+    "breakable": { "type": "boolean" },
+    "description": { "type": "string" }
+  }
+}

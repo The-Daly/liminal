@@ -1,0 +1,3 @@
+Name,ammo_type_id,item_id,rounds_per_item,compatible_weapon_ids,description
+ammo_9mm_crude,ammo_type_9mm_crude,ammo_9mm_crude,1,"[""weapon_service_pistol_v0""]",Crude pistol ammunition.
+ammo_shell_crude,ammo_type_shell_crude,ammo_shell_crude,1,"[""weapon_pipe_shotgun_v0""]",Crude shell ammunition.

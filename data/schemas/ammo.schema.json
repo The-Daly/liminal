@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ammo",
+  "type": "object",
+  "required": ["ammo_type_id", "item_id", "rounds_per_item", "compatible_weapon_ids"],
+  "additionalProperties": false,
+  "properties": {
+    "ammo_type_id": { "type": "string" },
+    "item_id": { "type": "string" },
+    "rounds_per_item": { "type": "integer", "minimum": 1 },
+    "compatible_weapon_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "description": { "type": "string" }
+  }
+}

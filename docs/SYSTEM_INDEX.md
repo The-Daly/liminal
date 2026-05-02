@@ -24,6 +24,10 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Traders: `data/seed/traders.seed.json`
 - NPCs: `data/seed/npcs.seed.json`
 - Quests: `data/seed/quests.seed.json`
+- Weapons: `data/seed/weapons.seed.json`
+- Ammo: `data/seed/ammo.seed.json`
+- Crafting: `data/seed/crafting_recipes.seed.json`
+- Containers: `data/seed/containers.seed.json`
 
 ## System Docs
 
@@ -32,6 +36,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - `docs/systems/ECONOMY_AND_TRADER_SYSTEM.md`
 - `docs/systems/NPC_AND_QUEST_SYSTEM.md`
 - `docs/systems/PLAYABLE_LOOP_CONTRACT.md`
+- `docs/systems/WEAPONS_AMMO_AND_CONTAINERS.md`
 
 ## Python Prototypes
 
@@ -43,6 +48,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Factions: `scripts/faction_model.py`
 - Economy/trader: `scripts/economy_model.py`
 - Quests: `scripts/quest_model.py`
+- Weapons/ammo/crafting/containers: `scripts/weapon_model.py`
 
 ## Verification
 

@@ -22,6 +22,10 @@ EXPORTS = {
     "traders.seed.json": "DT_Traders.csv",
     "npcs.seed.json": "DT_NPCs.csv",
     "quests.seed.json": "DT_Quests.csv",
+    "weapons.seed.json": "DT_Weapons.csv",
+    "ammo.seed.json": "DT_Ammo.csv",
+    "crafting_recipes.seed.json": "DT_CraftingRecipes.csv",
+    "containers.seed.json": "DT_Containers.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -38,6 +42,10 @@ ROW_NAME_FIELDS = [
     "trader_id",
     "npc_id",
     "quest_id",
+    "weapon_id",
+    "ammo_type_id",
+    "recipe_id",
+    "container_id",
 ]
 
 

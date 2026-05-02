@@ -27,5 +27,68 @@
         "weight": 0.1
       }
     ]
+  },
+  {
+    "loot_table_id": "loot_level1_cabinet_survival",
+    "entries": [
+      {
+        "item_id": "consumable_almond_water",
+        "weight": 20
+      },
+      {
+        "item_id": "item_battery_pack",
+        "weight": 30
+      },
+      {
+        "item_id": "ammo_9mm_crude",
+        "weight": 5
+      },
+      {
+        "item_id": "item_spent_casings",
+        "weight": 10
+      }
+    ]
+  },
+  {
+    "loot_table_id": "loot_level1_locker_security",
+    "entries": [
+      {
+        "item_id": "ammo_9mm_crude",
+        "weight": 15
+      },
+      {
+        "item_id": "weapon_service_pistol",
+        "weight": 1
+      },
+      {
+        "item_id": "item_battery_pack",
+        "weight": 12
+      },
+      {
+        "item_id": "item_scrap_metal",
+        "weight": 20
+      }
+    ]
+  },
+  {
+    "loot_table_id": "loot_level1_crowbar_supply_crate",
+    "entries": [
+      {
+        "item_id": "item_scrap_metal",
+        "weight": 35
+      },
+      {
+        "item_id": "item_gunpowder_pouch",
+        "weight": 10
+      },
+      {
+        "item_id": "ammo_shell_crude",
+        "weight": 4
+      },
+      {
+        "item_id": "weapon_pipe_shotgun",
+        "weight": 0.5
+      }
+    ]
   }
 ]

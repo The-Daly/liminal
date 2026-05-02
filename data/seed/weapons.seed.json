@@ -1,0 +1,35 @@
+[
+  {
+    "weapon_id": "weapon_service_pistol_v0",
+    "item_id": "weapon_service_pistol",
+    "weapon_type": "Pistol",
+    "ammo_type_id": "ammo_type_9mm_crude",
+    "magazine_size": 8,
+    "noise_level": "Loud",
+    "durability": 100,
+    "acquisition_routes": ["WorldContainer", "NPCDrop", "TraderStock"],
+    "description": "First firearm placeholder for rare locker/NPC/trader acquisition."
+  },
+  {
+    "weapon_id": "weapon_pipe_shotgun_v0",
+    "item_id": "weapon_pipe_shotgun",
+    "weapon_type": "Shotgun",
+    "ammo_type_id": "ammo_type_shell_crude",
+    "magazine_size": 1,
+    "noise_level": "VeryLoud",
+    "durability": 60,
+    "acquisition_routes": ["BreakOpenContainer", "Crafting"],
+    "description": "Rare emergency weapon associated with crowbar-opened supply crates."
+  },
+  {
+    "weapon_id": "tool_bntg_crowbar_weapon_v0",
+    "item_id": "tool_bntg_crowbar",
+    "weapon_type": "ToolWeapon",
+    "ammo_type_id": null,
+    "magazine_size": 0,
+    "noise_level": "Quiet",
+    "durability": 250,
+    "acquisition_routes": ["QuestReward"],
+    "description": "B.N.T.G. starter tool that also gates break-open containers."
+  }
+]

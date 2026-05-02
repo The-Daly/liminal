@@ -28,6 +28,10 @@ PAIRINGS = {
     "traders.seed.json": "trader.schema.json",
     "npcs.seed.json": "npc.schema.json",
     "quests.seed.json": "quest.schema.json",
+    "weapons.seed.json": "weapon.schema.json",
+    "ammo.seed.json": "ammo.schema.json",
+    "crafting_recipes.seed.json": "crafting_recipe.schema.json",
+    "containers.seed.json": "container.schema.json",
 }
 
 def load_json(path):
@@ -84,6 +88,10 @@ def check_references():
     traders = load_json(SEED_DIR / "traders.seed.json")
     npcs = load_json(SEED_DIR / "npcs.seed.json")
     quests = load_json(SEED_DIR / "quests.seed.json")
+    weapons = load_json(SEED_DIR / "weapons.seed.json")
+    ammo = load_json(SEED_DIR / "ammo.seed.json")
+    recipes = load_json(SEED_DIR / "crafting_recipes.seed.json")
+    containers = load_json(SEED_DIR / "containers.seed.json")
 
     item_ids = {item["item_id"] for item in items}
     faction_ids = {faction["faction_id"] for faction in factions}
@@ -94,6 +102,8 @@ def check_references():
     loot_table_ids = {entry["loot_table_id"] for entry in loot_tables}
     npc_ids = {entry["npc_id"] for entry in npcs}
     quest_ids = {entry["quest_id"] for entry in quests}
+    weapon_ids = {entry["weapon_id"] for entry in weapons}
+    ammo_type_ids = {entry["ammo_type_id"] for entry in ammo}
 
     missing = []
 
@@ -159,6 +169,35 @@ def check_references():
             if reward["item_id"] not in item_ids:
                 missing.append(f"Quest {quest['quest_id']} reward references missing item {reward['item_id']}")
 
+    for weapon in weapons:
+        if weapon["item_id"] not in item_ids:
+            missing.append(f"Weapon {weapon['weapon_id']} references missing item {weapon['item_id']}")
+        ammo_type_id = weapon.get("ammo_type_id")
+        if ammo_type_id is not None and ammo_type_id not in ammo_type_ids:
+            missing.append(f"Weapon {weapon['weapon_id']} references missing ammo type {ammo_type_id}")
+
+    for ammo_entry in ammo:
+        if ammo_entry["item_id"] not in item_ids:
+            missing.append(f"Ammo {ammo_entry['ammo_type_id']} references missing item {ammo_entry['item_id']}")
+        for weapon_id in ammo_entry.get("compatible_weapon_ids", []):
+            if weapon_id not in weapon_ids:
+                missing.append(f"Ammo {ammo_entry['ammo_type_id']} references missing weapon {weapon_id}")
+
+    for recipe in recipes:
+        for ingredient in recipe.get("ingredients", []):
+            if ingredient["item_id"] not in item_ids:
+                missing.append(f"Recipe {recipe['recipe_id']} ingredient references missing item {ingredient['item_id']}")
+        for output in recipe.get("outputs", []):
+            if output["item_id"] not in item_ids:
+                missing.append(f"Recipe {recipe['recipe_id']} output references missing item {output['item_id']}")
+
+    for container in containers:
+        if container["loot_table_id"] not in loot_table_ids:
+            missing.append(f"Container {container['container_id']} references missing loot table {container['loot_table_id']}")
+        required_tool = container.get("required_tool_item_id")
+        if required_tool is not None and required_tool not in item_ids:
+            missing.append(f"Container {container['container_id']} references missing required tool {required_tool}")
+
     if missing:
         raise ValueError("\\n".join(missing))
 
@@ -182,6 +221,10 @@ def main():
     check_duplicate_ids("traders.seed.json", "trader_id")
     check_duplicate_ids("npcs.seed.json", "npc_id")
     check_duplicate_ids("quests.seed.json", "quest_id")
+    check_duplicate_ids("weapons.seed.json", "weapon_id")
+    check_duplicate_ids("ammo.seed.json", "ammo_type_id")
+    check_duplicate_ids("crafting_recipes.seed.json", "recipe_id")
+    check_duplicate_ids("containers.seed.json", "container_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")
