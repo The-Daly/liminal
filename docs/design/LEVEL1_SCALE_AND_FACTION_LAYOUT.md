@@ -8,16 +8,16 @@ Before this file, the repo only had a required-zone list. It did not yet define 
 
 ## Scale Target
 
-V0.1 should feel larger than a simple hallway but smaller than a full extraction map.
+V0.1 should feel like a large first extraction zone: big enough for players to lose orientation, but still scoped tightly enough to graybox and test before full faction-base gameplay.
 
 | Metric | Target |
 |---|---:|
-| Playable footprint | about 420m x 320m |
-| Critical-path hub gate to stable extraction | 4-6 minutes cautious solo movement |
-| Cross-map faction foothold to foothold | 5-8 minutes without shortcuts |
-| Fast hidden-route traversal | 2-4 minutes, high disorientation risk |
-| Normal run length | 10-18 minutes |
-| Lost-player recovery time | 2-5 minutes after finding a landmark |
+| Playable footprint | about 850m x 650m |
+| Critical-path hub gate to stable extraction | 7-10 minutes cautious solo movement |
+| Cross-map faction foothold to foothold | 9-14 minutes without shortcuts |
+| Fast hidden-route traversal | 4-7 minutes, high disorientation risk |
+| Normal run length | 18-32 minutes |
+| Lost-player recovery time | 4-8 minutes after finding a landmark |
 
 Use Unreal scale convention: `1 uu = 1 cm`, so `100 uu = 1 m`.
 
@@ -39,7 +39,7 @@ V0.1 does not include full faction bases or raids. It should include small facti
 | B.N.T.G. | Broken Trader Kiosk | east/central-east | salvage, trader, crowbar crate |
 | Clippers | Crawlspace Route | south/southeast | hidden routes, chalk marks, hidden extraction clue |
 
-Spacing rule: no faction foothold should be reachable from another in under 2 minutes by the main corridor route during first-time navigation. With hidden routes, Clippers can reduce travel time, but only after discovering route language.
+Spacing rule: no faction foothold should be reachable from another in under 9 minutes by the main corridor route during first-time navigation. With hidden routes, Clippers can reduce travel time, but only after discovering route language.
 
 ## First Layout Topology
 
@@ -66,18 +66,18 @@ Use these as first graybox anchors, not final art positions.
 | Zone | Approx Center | Radius / Size Intent |
 |---|---:|---|
 | Hub Arrival Gate | `(0, 0)` | small sealed-room buffer |
-| Main Service Spine | `(120m, 40m)` | long readable artery |
-| Service Hall North | `(130m, 150m)` | branching route |
-| Fogged Storage Bay | `(-40m, 130m)` | wide loot/tension room |
-| M.E.G. Archive Office | `(40m, 240m)` | compact office cluster |
-| Flicker Corridor | `(250m, 170m)` | long entity patrol lane |
-| Utility Room Cluster | `(300m, 40m)` | dense mechanical rooms |
-| B.N.T.G. Kiosk | `(250m, -70m)` | trader/salvage pocket |
-| Abandoned Theater Corner | `(80m, -90m)` | ticket/relic flavor pocket |
-| Crawlspace Route | `(120m, -190m)` | low/hidden alternate route |
-| Clippers Route Wall | `(220m, -230m)` | route landmark |
-| Stable Extraction | `(-110m, 40m)` | reliable return path |
-| Hidden Ticket Booth Exit | `(40m, -240m)` | conditional hidden exit |
+| Main Service Spine | `(220m, 70m)` | long readable artery |
+| Service Hall North | `(240m, 270m)` | branching route |
+| Fogged Storage Bay | `(-90m, 250m)` | wide loot/tension room |
+| M.E.G. Archive Office | `(70m, 470m)` | compact office cluster |
+| Flicker Corridor | `(500m, 340m)` | long entity patrol lane |
+| Utility Room Cluster | `(620m, 70m)` | dense mechanical rooms |
+| B.N.T.G. Kiosk | `(540m, -190m)` | trader/salvage pocket |
+| Abandoned Theater Corner | `(140m, -210m)` | ticket/relic flavor pocket |
+| Crawlspace Route | `(220m, -420m)` | low/hidden alternate route |
+| Clippers Route Wall | `(470m, -520m)` | route landmark |
+| Stable Extraction | `(-240m, 90m)` | reliable return path |
+| Hidden Ticket Booth Exit | `(40m, -560m)` | conditional hidden exit |
 
 ## Route Rules
 
@@ -97,7 +97,7 @@ Use these tools:
 - flickering lights that change route confidence
 - low ceilings/crawlspaces that restrict sightlines
 - one-way drops or vents only for shortcuts
-- landmarks every 60-90 seconds of walking
+- landmarks every 90-150 seconds of walking
 
 Avoid these in V0.1:
 
@@ -130,4 +130,4 @@ Future faction bases can grow outward from the V0.1 footholds:
 - B.N.T.G. expands east into trader vault/salvage market.
 - Clippers expand south into route dens and shortcut networks.
 
-The first full faction-base spacing pass should preserve at least 5 minutes of cautious travel between major base entrances by standard routes.
+The first full faction-base spacing pass should preserve at least 9 minutes of cautious travel between major base entrances by standard routes.

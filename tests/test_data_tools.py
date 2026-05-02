@@ -154,6 +154,10 @@ class DataToolTests(unittest.TestCase):
 
     def test_level_layout_faction_footholds_and_spacing(self):
         level_id = "level1_service_halls"
+        layout = self.registry.level_layouts[level_id]
+        self.assertGreaterEqual(layout["footprint_meters"]["width"], 800)
+        self.assertGreaterEqual(layout["footprint_meters"]["height"], 600)
+        self.assertGreaterEqual(layout["target_run_minutes"]["min"], 18)
         footholds = faction_foothold_zones(self.registry, level_id)
         self.assertEqual(footholds["meg"], "meg_archive_office")
         self.assertEqual(footholds["bntg"], "bntg_broken_trader_kiosk")
@@ -162,8 +166,8 @@ class DataToolTests(unittest.TestCase):
         bntg_to_clippers = shortest_route_seconds(self.registry, level_id, footholds["bntg"], footholds["clippers"])
         self.assertIsNotNone(meg_to_bntg)
         self.assertIsNotNone(bntg_to_clippers)
-        self.assertGreaterEqual(meg_to_bntg, 120)
-        self.assertGreaterEqual(bntg_to_clippers, 120)
+        self.assertGreaterEqual(meg_to_bntg, 540)
+        self.assertGreaterEqual(bntg_to_clippers, 540)
 
 
 if __name__ == "__main__":
