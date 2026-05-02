@@ -60,6 +60,7 @@
 - [x] Trail String marker data and prototype.
 - [x] Extraction-style trader/storage UI contract.
 - [x] Clippers retro-scrap base style guide.
+- [x] Faction base visual identity guide.
 
 ## Phase 5 — Storage Prototype
 

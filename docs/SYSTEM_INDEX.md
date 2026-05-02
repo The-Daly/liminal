@@ -46,6 +46,7 @@ This is the navigation page for AI agents and developers working without Unreal 
 - `docs/systems/WEAPONS_AMMO_AND_CONTAINERS.md`
 - `docs/systems/TRADER_STORAGE_UI_CONTRACT.md`
 - `docs/systems/SOCIAL_AND_TEAM_SAFETY.md`
+- `docs/design/FACTION_BASE_STYLE_GUIDE.md`
 - `docs/design/CLIPPERS_BASE_STYLE.md`
 - `docs/design/LEVEL1_SCALE_AND_FACTION_LAYOUT.md`
 

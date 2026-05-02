@@ -35,9 +35,9 @@ V0.1 does not include full faction bases or raids. It should include small facti
 
 | Faction | Foothold | Placement | Function |
 |---|---|---|---|
-| M.E.G. | Archive Office | west/northwest | scanner clue, map board, safer landmark |
-| B.N.T.G. | Broken Trader Kiosk | east/central-east | salvage, trader, crowbar crate |
-| Clippers | Crawlspace Route | south/southeast | hidden routes, chalk marks, hidden extraction clue |
+| M.E.G. | Archive Office | west/northwest | scanner clue, map board, safer official landmark |
+| B.N.T.G. | Broken Trader Kiosk | east/central-east | official-commercial salvage, trader, crowbar crate |
+| Clippers | Crawlspace Route / Route Wall | south/southeast | hidden routes, chalk marks, scrap-settlement preview, hidden extraction clue |
 
 Spacing rule: no faction foothold should be reachable from another in under 9 minutes by the main corridor route during first-time navigation. With hidden routes, Clippers can reduce travel time, but only after discovering route language.
 
@@ -126,8 +126,8 @@ It should not camp the Hub Arrival Gate or Stable Extraction in V0.1.
 
 Future faction bases can grow outward from the V0.1 footholds:
 
-- M.E.G. expands northwest into archive/survey rooms.
-- B.N.T.G. expands east into trader vault/salvage market.
-- Clippers expand south into route dens and shortcut networks.
+- M.E.G. expands northwest into moderately official archive/survey rooms.
+- B.N.T.G. expands east into a moderately official trader vault/salvage market.
+- Clippers expand south into an indoor vertical scrap settlement, with route dens and shortcut networks built into a large service atrium.
 
 The first full faction-base spacing pass should preserve at least 9 minutes of cautious travel between major base entrances by standard routes.

@@ -38,6 +38,7 @@ Created: 2026-05-01
 - `docs/systems/TRADER_STORAGE_UI_CONTRACT.md` — extraction-style trader/storage UI contract.
 - `docs/systems/SOCIAL_AND_TEAM_SAFETY.md` — faction alliance, squad, radio, and no-team-kill contract.
 - `docs/design/MASTER_NPC_ROSTER.md` — 21-NPC trader, quest giver, security, and security broker roster.
+- `docs/design/FACTION_BASE_STYLE_GUIDE.md` — visual identity split for M.E.G., B.N.T.G., and Clippers bases.
 - `docs/design/CLIPPERS_BASE_STYLE.md` — original retro-scrap Clippers base style guide.
 - `docs/design/LEVEL1_SCALE_AND_FACTION_LAYOUT.md` — Level 1 footprint, travel time, faction foothold spacing, and route topology.
 - `docs/technical/UNREAL_GRAYBOX_IMPLEMENTATION.md` — first Unreal graybox implementation target.
