@@ -63,6 +63,7 @@
 ## Phase 6 — Unreal Graybox
 
 - [x] Add source-level Unreal project scaffold.
+- [x] Add Level 1 scale, route, and faction foothold layout data.
 - [x] Add first C++ gameplay skeletons for inventory, sanity, loot, extraction, and Flicker Stalker.
 - [x] Add player, interaction, run-state, storage, and project-board skeletons.
 - [x] Add input mappings and HUD-facing player delegates.

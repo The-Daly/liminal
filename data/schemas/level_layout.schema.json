@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LevelLayout",
+  "type": "object",
+  "required": ["level_id", "display_name", "footprint_meters", "zones", "routes", "faction_footholds"],
+  "additionalProperties": false,
+  "properties": {
+    "level_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "footprint_meters": {
+      "type": "object",
+      "required": ["width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "number", "minimum": 1 },
+        "height": { "type": "number", "minimum": 1 }
+      }
+    },
+    "target_run_minutes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": { "type": "number", "minimum": 0 },
+        "max": { "type": "number", "minimum": 0 }
+      }
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["zone_id", "display_name", "center_meters", "zone_role"],
+        "additionalProperties": false,
+        "properties": {
+          "zone_id": { "type": "string" },
+          "display_name": { "type": "string" },
+          "center_meters": {
+            "type": "object",
+            "required": ["x", "y"],
+            "additionalProperties": false,
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" }
+            }
+          },
+          "zone_role": { "type": "string" },
+          "landmark_strength": {
+            "type": "string",
+            "enum": ["Low", "Medium", "High"]
+          }
+        }
+      }
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["route_id", "from_zone_id", "to_zone_id", "route_type", "estimated_seconds"],
+        "additionalProperties": false,
+        "properties": {
+          "route_id": { "type": "string" },
+          "from_zone_id": { "type": "string" },
+          "to_zone_id": { "type": "string" },
+          "route_type": {
+            "type": "string",
+            "enum": ["Main", "Side", "Hidden", "Danger", "Extraction"]
+          },
+          "estimated_seconds": { "type": "integer", "minimum": 1 },
+          "requires_item_id": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "faction_footholds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["faction_id", "zone_id", "future_expansion_direction"],
+        "additionalProperties": false,
+        "properties": {
+          "faction_id": { "type": "string" },
+          "zone_id": { "type": "string" },
+          "future_expansion_direction": { "type": "string" }
+        }
+      }
+    }
+  }
+}

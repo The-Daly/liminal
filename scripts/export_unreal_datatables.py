@@ -26,6 +26,7 @@ EXPORTS = {
     "ammo.seed.json": "DT_Ammo.csv",
     "crafting_recipes.seed.json": "DT_CraftingRecipes.csv",
     "containers.seed.json": "DT_Containers.csv",
+    "level_layouts.seed.json": "DT_LevelLayouts.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -46,6 +47,7 @@ ROW_NAME_FIELDS = [
     "ammo_type_id",
     "recipe_id",
     "container_id",
+    "level_id",
 ]
 
 

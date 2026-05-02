@@ -32,6 +32,7 @@ PAIRINGS = {
     "ammo.seed.json": "ammo.schema.json",
     "crafting_recipes.seed.json": "crafting_recipe.schema.json",
     "containers.seed.json": "container.schema.json",
+    "level_layouts.seed.json": "level_layout.schema.json",
 }
 
 def load_json(path):
@@ -92,6 +93,7 @@ def check_references():
     ammo = load_json(SEED_DIR / "ammo.seed.json")
     recipes = load_json(SEED_DIR / "crafting_recipes.seed.json")
     containers = load_json(SEED_DIR / "containers.seed.json")
+    level_layouts = load_json(SEED_DIR / "level_layouts.seed.json")
 
     item_ids = {item["item_id"] for item in items}
     faction_ids = {faction["faction_id"] for faction in factions}
@@ -198,6 +200,22 @@ def check_references():
         if required_tool is not None and required_tool not in item_ids:
             missing.append(f"Container {container['container_id']} references missing required tool {required_tool}")
 
+    for layout in level_layouts:
+        zone_ids = {zone["zone_id"] for zone in layout.get("zones", [])}
+        for route in layout.get("routes", []):
+            if route["from_zone_id"] not in zone_ids:
+                missing.append(f"Level layout {layout['level_id']} route {route['route_id']} references missing from-zone {route['from_zone_id']}")
+            if route["to_zone_id"] not in zone_ids:
+                missing.append(f"Level layout {layout['level_id']} route {route['route_id']} references missing to-zone {route['to_zone_id']}")
+            required_item = route.get("requires_item_id")
+            if required_item is not None and required_item not in item_ids:
+                missing.append(f"Level layout {layout['level_id']} route {route['route_id']} references missing required item {required_item}")
+        for foothold in layout.get("faction_footholds", []):
+            if foothold["faction_id"] not in faction_ids:
+                missing.append(f"Level layout {layout['level_id']} references missing faction {foothold['faction_id']}")
+            if foothold["zone_id"] not in zone_ids:
+                missing.append(f"Level layout {layout['level_id']} foothold references missing zone {foothold['zone_id']}")
+
     if missing:
         raise ValueError("\\n".join(missing))
 
@@ -225,6 +243,7 @@ def main():
     check_duplicate_ids("ammo.seed.json", "ammo_type_id")
     check_duplicate_ids("crafting_recipes.seed.json", "recipe_id")
     check_duplicate_ids("containers.seed.json", "container_id")
+    check_duplicate_ids("level_layouts.seed.json", "level_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")

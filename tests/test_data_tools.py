@@ -15,6 +15,7 @@ from economy_model import buy_item, can_buy
 from faction_model import hub_upgrade_focus, resolve_starting_loadout
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
+from level_layout_model import faction_foothold_zones, shortest_route_seconds
 from loot_model import preview_table, roll_loot
 from quest_model import is_quest_complete, reward_preview
 from survival_model import SanityState
@@ -36,6 +37,7 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("ammo_type_9mm_crude", self.registry.ammo)
         self.assertIn("recipe_crude_9mm_rounds_v0", self.registry.crafting_recipes)
         self.assertIn("container_level1_bntg_supply_crate_v0", self.registry.containers)
+        self.assertIn("level1_service_halls", self.registry.level_layouts)
         self.assertEqual(len(self.registry.factions), 3)
 
     def test_duplicate_ids_fail(self):
@@ -149,6 +151,19 @@ class DataToolTests(unittest.TestCase):
         self.assertFalse(can_open_container(self.registry, container_id, inventory))
         inventory.add_item(self.registry, "tool_bntg_crowbar")
         self.assertTrue(can_open_container(self.registry, container_id, inventory))
+
+    def test_level_layout_faction_footholds_and_spacing(self):
+        level_id = "level1_service_halls"
+        footholds = faction_foothold_zones(self.registry, level_id)
+        self.assertEqual(footholds["meg"], "meg_archive_office")
+        self.assertEqual(footholds["bntg"], "bntg_broken_trader_kiosk")
+        self.assertEqual(footholds["clippers"], "clippers_route_wall")
+        meg_to_bntg = shortest_route_seconds(self.registry, level_id, footholds["meg"], footholds["bntg"])
+        bntg_to_clippers = shortest_route_seconds(self.registry, level_id, footholds["bntg"], footholds["clippers"])
+        self.assertIsNotNone(meg_to_bntg)
+        self.assertIsNotNone(bntg_to_clippers)
+        self.assertGreaterEqual(meg_to_bntg, 120)
+        self.assertGreaterEqual(bntg_to_clippers, 120)
 
 
 if __name__ == "__main__":

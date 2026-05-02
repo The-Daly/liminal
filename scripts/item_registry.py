@@ -51,6 +51,7 @@ class DataRegistry:
     ammo: dict[str, dict[str, Any]]
     crafting_recipes: dict[str, dict[str, Any]]
     containers: dict[str, dict[str, Any]]
+    level_layouts: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -84,6 +85,7 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         ammo=index_by(load_json(seed_dir / "ammo.seed.json"), "ammo_type_id", "ammo.seed.json"),
         crafting_recipes=index_by(load_json(seed_dir / "crafting_recipes.seed.json"), "recipe_id", "crafting_recipes.seed.json"),
         containers=index_by(load_json(seed_dir / "containers.seed.json"), "container_id", "containers.seed.json"),
+        level_layouts=index_by(load_json(seed_dir / "level_layouts.seed.json"), "level_id", "level_layouts.seed.json"),
     )
 
 
@@ -102,6 +104,7 @@ def main() -> None:
     print(f"Loaded {len(registry.ammo)} ammo types")
     print(f"Loaded {len(registry.crafting_recipes)} crafting recipes")
     print(f"Loaded {len(registry.containers)} containers")
+    print(f"Loaded {len(registry.level_layouts)} level layouts")
 
 
 if __name__ == "__main__":

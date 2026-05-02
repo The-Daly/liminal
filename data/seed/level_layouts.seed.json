@@ -1,0 +1,230 @@
+[
+  {
+    "level_id": "level1_service_halls",
+    "display_name": "Level 1 Service Halls",
+    "footprint_meters": {
+      "width": 420,
+      "height": 320
+    },
+    "target_run_minutes": {
+      "min": 10,
+      "max": 18
+    },
+    "zones": [
+      {
+        "zone_id": "hub_arrival_gate",
+        "display_name": "Hub Arrival Gate",
+        "center_meters": { "x": 0, "y": 0 },
+        "zone_role": "Run start sealed-room buffer",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "main_service_spine",
+        "display_name": "Main Service Spine",
+        "center_meters": { "x": 120, "y": 40 },
+        "zone_role": "Main navigation artery",
+        "landmark_strength": "Medium"
+      },
+      {
+        "zone_id": "service_hall_north",
+        "display_name": "Service Hall North",
+        "center_meters": { "x": 130, "y": 150 },
+        "zone_role": "North branch and route split",
+        "landmark_strength": "Medium"
+      },
+      {
+        "zone_id": "fogged_storage_bay",
+        "display_name": "Fogged Storage Bay",
+        "center_meters": { "x": -40, "y": 130 },
+        "zone_role": "Loot and sightline tension",
+        "landmark_strength": "Medium"
+      },
+      {
+        "zone_id": "meg_archive_office",
+        "display_name": "M.E.G. Archive Office",
+        "center_meters": { "x": 40, "y": 240 },
+        "zone_role": "M.E.G. foothold and scanner/archive objective",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "flicker_corridor",
+        "display_name": "Flicker Corridor",
+        "center_meters": { "x": 250, "y": 170 },
+        "zone_role": "Flicker Stalker patrol lane",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "utility_room_cluster",
+        "display_name": "Utility Room Cluster",
+        "center_meters": { "x": 300, "y": 40 },
+        "zone_role": "Mechanical loot rooms and lockers",
+        "landmark_strength": "Low"
+      },
+      {
+        "zone_id": "bntg_broken_trader_kiosk",
+        "display_name": "B.N.T.G. Broken Trader Kiosk",
+        "center_meters": { "x": 250, "y": -70 },
+        "zone_role": "B.N.T.G. foothold and salvage/trader objective",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "abandoned_theater_corner",
+        "display_name": "Abandoned Theater Corner",
+        "center_meters": { "x": 80, "y": -90 },
+        "zone_role": "Movie Ticket and relic flavor pocket",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "crawlspace_route",
+        "display_name": "Crawlspace Route",
+        "center_meters": { "x": 120, "y": -190 },
+        "zone_role": "Hidden route and disorientation pocket",
+        "landmark_strength": "Low"
+      },
+      {
+        "zone_id": "clippers_route_wall",
+        "display_name": "Clippers Route Wall",
+        "center_meters": { "x": 220, "y": -230 },
+        "zone_role": "Clippers foothold and chalk/camcorder route language",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "stable_extraction",
+        "display_name": "Stable Extraction",
+        "center_meters": { "x": -110, "y": 40 },
+        "zone_role": "Reliable return extraction",
+        "landmark_strength": "High"
+      },
+      {
+        "zone_id": "hidden_ticket_booth_exit",
+        "display_name": "Hidden Ticket Booth Exit",
+        "center_meters": { "x": 40, "y": -240 },
+        "zone_role": "Conditional hidden extraction",
+        "landmark_strength": "Medium"
+      }
+    ],
+    "routes": [
+      {
+        "route_id": "route_gate_to_spine",
+        "from_zone_id": "hub_arrival_gate",
+        "to_zone_id": "main_service_spine",
+        "route_type": "Main",
+        "estimated_seconds": 75,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_spine_to_north",
+        "from_zone_id": "main_service_spine",
+        "to_zone_id": "service_hall_north",
+        "route_type": "Main",
+        "estimated_seconds": 90,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_north_to_archive",
+        "from_zone_id": "service_hall_north",
+        "to_zone_id": "meg_archive_office",
+        "route_type": "Side",
+        "estimated_seconds": 70,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_north_to_flicker",
+        "from_zone_id": "service_hall_north",
+        "to_zone_id": "flicker_corridor",
+        "route_type": "Danger",
+        "estimated_seconds": 85,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_flicker_to_utility",
+        "from_zone_id": "flicker_corridor",
+        "to_zone_id": "utility_room_cluster",
+        "route_type": "Danger",
+        "estimated_seconds": 70,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_utility_to_bntg",
+        "from_zone_id": "utility_room_cluster",
+        "to_zone_id": "bntg_broken_trader_kiosk",
+        "route_type": "Side",
+        "estimated_seconds": 75,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_spine_to_theater",
+        "from_zone_id": "main_service_spine",
+        "to_zone_id": "abandoned_theater_corner",
+        "route_type": "Main",
+        "estimated_seconds": 80,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_theater_to_crawlspace",
+        "from_zone_id": "abandoned_theater_corner",
+        "to_zone_id": "crawlspace_route",
+        "route_type": "Hidden",
+        "estimated_seconds": 65,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_crawlspace_to_clippers",
+        "from_zone_id": "crawlspace_route",
+        "to_zone_id": "clippers_route_wall",
+        "route_type": "Hidden",
+        "estimated_seconds": 60,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_crawlspace_to_hidden_exit",
+        "from_zone_id": "crawlspace_route",
+        "to_zone_id": "hidden_ticket_booth_exit",
+        "route_type": "Extraction",
+        "estimated_seconds": 55,
+        "requires_item_id": "currency_old_movie_ticket"
+      },
+      {
+        "route_id": "route_gate_to_stable_extract",
+        "from_zone_id": "hub_arrival_gate",
+        "to_zone_id": "stable_extraction",
+        "route_type": "Extraction",
+        "estimated_seconds": 120,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_storage_to_stable_extract",
+        "from_zone_id": "fogged_storage_bay",
+        "to_zone_id": "stable_extraction",
+        "route_type": "Extraction",
+        "estimated_seconds": 95,
+        "requires_item_id": null
+      },
+      {
+        "route_id": "route_storage_to_north",
+        "from_zone_id": "fogged_storage_bay",
+        "to_zone_id": "service_hall_north",
+        "route_type": "Side",
+        "estimated_seconds": 80,
+        "requires_item_id": null
+      }
+    ],
+    "faction_footholds": [
+      {
+        "faction_id": "meg",
+        "zone_id": "meg_archive_office",
+        "future_expansion_direction": "northwest archive and survey rooms"
+      },
+      {
+        "faction_id": "bntg",
+        "zone_id": "bntg_broken_trader_kiosk",
+        "future_expansion_direction": "east trader vault and salvage market"
+      },
+      {
+        "faction_id": "clippers",
+        "zone_id": "clippers_route_wall",
+        "future_expansion_direction": "south route dens and shortcut network"
+      }
+    ]
+  }
+]

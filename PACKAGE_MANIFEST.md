@@ -18,6 +18,7 @@ Created: 2026-05-01
 - `scripts/economy_model.py` — V0.1 trader purchase prototype.
 - `scripts/quest_model.py` — V0.1 quest objective/reward prototype.
 - `scripts/weapon_model.py` — weapon ammo consumption, ammo crafting, and gated container prototype.
+- `scripts/level_layout_model.py` — route/foothold helpers for Level 1 spatial layout data.
 - `scripts/loot_model.py` — loot table preview and roll helper.
 - `scripts/export_unreal_datatables.py` — CSV export bridge for Unreal DataTables.
 - `scripts/check_dev_environment.py` — macOS/Windows development environment smoke check.
@@ -31,6 +32,7 @@ Created: 2026-05-01
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` — full gap roadmap.
 - `docs/SYSTEM_INDEX.md` — AI/developer navigation index for systems, data, prototypes, and verification.
 - `docs/systems/` — AI-readable system contracts for faction, economy/trader, NPC/quest, and playable loop behavior.
+- `docs/design/LEVEL1_SCALE_AND_FACTION_LAYOUT.md` — Level 1 footprint, travel time, faction foothold spacing, and route topology.
 - `docs/technical/UNREAL_GRAYBOX_IMPLEMENTATION.md` — first Unreal graybox implementation target.
 - `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` — Windows-first, macOS-supported development policy and command equivalents.
 - `docs/technical/GITHUB_DESKTOP_SETUP.md` — internet/GUI-based GitHub push workflow.
