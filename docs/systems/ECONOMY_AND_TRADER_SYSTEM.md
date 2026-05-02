@@ -11,11 +11,15 @@ Movie Tickets are the prototype currency. The first trader proves buy/sell inter
 
 ## V0.1 Trader
 
-The Broken Trader Kiosk sells survival basics:
+The Turnstile sells survival basics and expensive early combat gear:
 
 - Almond Water
 - Battery Pack
 - Chalk Bundle
+- Trail String Spool
+- Scrap-Padded Vest
+- Service Pistol
+- Crude 9mm Rounds
 
 The trader can buy simple loot/resources:
 
@@ -30,6 +34,7 @@ The trader can buy simple loot/resources:
 - Purchase removes tickets and adds the purchased item.
 - Sell flow may use item `value_tickets`.
 - No dynamic market/inflation in V0.1.
+- Players do not start with enough to rely on the shop; finding Movie Tickets matters.
 
 ## Prototype
 

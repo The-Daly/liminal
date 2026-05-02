@@ -12,15 +12,19 @@ NPC and quest systems are placeholders that give the first player journey struct
 
 ## V0.1 NPCs
 
-- Tom / Quartermaster: static hub NPC.
+- Marrow Vell / Quartermaster: static hub NPC.
 - Gives or frames the first recovery objective.
 - Points the player toward deployment and storage.
 
-## V0.1 Quest
+## V0.1 Quests
 
-First quest: recover basic supplies from Level 1 and return.
+First five quests:
 
-Completion should be possible when the player has the required items after extraction.
+- Still Water: extract with Almond Water.
+- The Floor Gives Way: fall through a weak floor hole to a deeper pocket.
+- Back to One: return from another level/pocket back to Level 1.
+- Pry Rights: find a crowbar and open a supply crate.
+- Ticket Hunger: find Movie Tickets to buy survival gear from The Turnstile.
 
 ## Runtime Contract
 

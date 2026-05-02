@@ -32,9 +32,18 @@ def buy_item(registry: DataRegistry, trader_id: str, item_id: str, quantity: int
     inventory.add_item(registry, item_id, quantity)
 
 
+def sell_preview(registry: DataRegistry, item_id: str, quantity: int) -> int:
+    if quantity <= 0:
+        return 0
+    item = registry.item(item_id)
+    if item_id == CURRENCY_ITEM_ID:
+        return 0
+    return int(item.get("value_tickets", 0)) * quantity
+
+
 def main() -> None:
     registry = load_registry()
-    trader_id = "trader_broken_kiosk_v0"
+    trader_id = "trader_the_turnstile_v0"
     print(f"{trader_id}: {len(registry.traders[trader_id]['stock'])} stock entries")
 
 

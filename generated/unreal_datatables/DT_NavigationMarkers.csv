@@ -1,0 +1,2 @@
+Name,marker_id,display_name,item_id,visibility,duration_seconds,max_segments,description
+item_trail_string_spool,marker_trail_string_v0,Trail String,item_trail_string_spool,SelfAndSquad,3600,40,Temporary path marker for route recovery. Self/squad only to avoid clutter and enemy route reveal.

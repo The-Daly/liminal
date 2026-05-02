@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LootDensity",
+  "type": "object",
+  "required": ["density_profile_id", "level_id", "display_name", "container_spawn_chance", "weapon_weight_cap", "armor_weight_cap"],
+  "additionalProperties": false,
+  "properties": {
+    "density_profile_id": { "type": "string" },
+    "level_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "container_spawn_chance": { "type": "number", "minimum": 0, "maximum": 1 },
+    "weapon_weight_cap": { "type": "number", "minimum": 0 },
+    "armor_weight_cap": { "type": "number", "minimum": 0 },
+    "notes": { "type": "string" }
+  }
+}

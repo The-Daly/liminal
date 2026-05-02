@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NoiseResponse",
+  "type": "object",
+  "required": ["noise_response_id", "level_id", "source_type", "responses"],
+  "additionalProperties": false,
+  "properties": {
+    "noise_response_id": { "type": "string" },
+    "level_id": { "type": "string" },
+    "source_type": {
+      "type": "string",
+      "enum": ["Gunshot", "Explosion", "ToolBreak", "EntityLure"]
+    },
+    "responses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["response_type", "weight"],
+        "additionalProperties": false,
+        "properties": {
+          "response_type": {
+            "type": "string",
+            "enum": ["None", "DistantCreature", "Scream", "Banging", "EntityApproach"]
+          },
+          "weight": { "type": "number", "minimum": 0 },
+          "entity_id": { "type": ["string", "null"] },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "description": { "type": "string" }
+  }
+}

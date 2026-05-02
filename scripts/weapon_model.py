@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from typing import Optional
+import random
 
 from inventory_model import InventoryContainer, InventoryError
 from item_registry import DataRegistry, RegistryError, load_registry
@@ -56,12 +57,31 @@ def can_open_container(registry: DataRegistry, container_id: str, inventory: Inv
     return required_tool is None or inventory.quantity(required_tool) > 0
 
 
+def roll_noise_response(registry: DataRegistry, noise_response_id: str, rng: Optional[random.Random] = None) -> dict:
+    table = registry.noise_responses.get(noise_response_id)
+    if table is None:
+        raise RegistryError(f"Unknown noise_response_id: {noise_response_id}")
+    responses = table.get("responses", [])
+    total_weight = sum(response["weight"] for response in responses)
+    if total_weight <= 0:
+        raise RegistryError(f"Noise response table has no positive weights: {noise_response_id}")
+    rng = rng or random.Random()
+    pick = rng.uniform(0, total_weight)
+    running = 0.0
+    for response in responses:
+        running += response["weight"]
+        if pick <= running:
+            return response
+    return responses[-1]
+
+
 def main() -> None:
     registry = load_registry()
     print(f"Weapons: {len(registry.weapons)}")
     print(f"Ammo types: {len(registry.ammo)}")
     print(f"Recipes: {len(registry.crafting_recipes)}")
     print(f"Containers: {len(registry.containers)}")
+    print(f"Noise responses: {len(registry.noise_responses)}")
 
 
 if __name__ == "__main__":

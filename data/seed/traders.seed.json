@@ -1,7 +1,7 @@
 [
   {
-    "trader_id": "trader_broken_kiosk_v0",
-    "display_name": "Broken Trader Kiosk",
+    "trader_id": "trader_the_turnstile_v0",
+    "display_name": "The Turnstile",
     "location_id": "level1_broken_trader_kiosk",
     "stock": [
       {
@@ -18,8 +18,28 @@
         "item_id": "item_chalk_bundle",
         "price_tickets": 5,
         "max_quantity": 4
+      },
+      {
+        "item_id": "item_trail_string_spool",
+        "price_tickets": 18,
+        "max_quantity": 3
+      },
+      {
+        "item_id": "armor_scrap_padded_vest",
+        "price_tickets": 140,
+        "max_quantity": 1
+      },
+      {
+        "item_id": "weapon_service_pistol",
+        "price_tickets": 260,
+        "max_quantity": 1
+      },
+      {
+        "item_id": "ammo_9mm_crude",
+        "price_tickets": 3,
+        "max_quantity": 24
       }
     ],
-    "description": "V0.1 placeholder trader inventory for survival basics."
+    "description": "Ticket-operated survival trader that sells basics and rare early combat gear at painful prices."
   }
 ]

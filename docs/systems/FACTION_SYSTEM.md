@@ -22,6 +22,7 @@ Factions provide starter identity and loadout flavor. They do not yet implement 
 - A faction has `starting_items`.
 - Every starting item must exist in the item registry.
 - V0.1 faction selection grants a loadout only.
+- V0.1 starter loadouts are intentionally minimal: faction identity tool plus flashlight, no weapons, armor, ammo, Almond Water, or Movie Tickets by default.
 - Future faction switching must call a Realm reset flow, not a simple team swap.
 
 ## Prototype

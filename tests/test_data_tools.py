@@ -11,15 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from extraction_model import can_extract
-from economy_model import buy_item, can_buy
+from economy_model import buy_item, can_buy, sell_preview
 from faction_model import hub_upgrade_focus, resolve_starting_loadout
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
-from loot_model import preview_table, roll_loot
-from quest_model import is_quest_complete, reward_preview
+from loot_model import container_owner, is_level1_weapon_armor_sparse, preview_table, roll_loot
+from navigation_marker_model import is_marker_expired, marker_visibility
+from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
 from survival_model import SanityState
-from weapon_model import can_craft, can_fire, can_open_container, consume_round, craft_recipe
+from weapon_model import can_craft, can_fire, can_open_container, consume_round, craft_recipe, roll_noise_response
 
 
 class DataToolTests(unittest.TestCase):
@@ -30,13 +31,16 @@ class DataToolTests(unittest.TestCase):
     def test_registry_loads_runtime_data(self):
         self.assertIn("currency_old_movie_ticket", self.registry.items)
         self.assertIn("run_level1_service_halls_v0", self.registry.run_states)
-        self.assertIn("trader_broken_kiosk_v0", self.registry.traders)
-        self.assertIn("npc_tom_quartermaster_v0", self.registry.npcs)
-        self.assertIn("quest_first_service_halls_recovery", self.registry.quests)
+        self.assertIn("trader_the_turnstile_v0", self.registry.traders)
+        self.assertIn("npc_marrow_vell_quartermaster_v0", self.registry.npcs)
+        self.assertIn("quest_still_water", self.registry.quests)
         self.assertIn("weapon_service_pistol_v0", self.registry.weapons)
         self.assertIn("ammo_type_9mm_crude", self.registry.ammo)
         self.assertIn("recipe_crude_9mm_rounds_v0", self.registry.crafting_recipes)
         self.assertIn("container_level1_bntg_supply_crate_v0", self.registry.containers)
+        self.assertIn("marker_trail_string_v0", self.registry.navigation_markers)
+        self.assertIn("noise_level1_gunshot_flicker_v0", self.registry.noise_responses)
+        self.assertIn("density_level1_slim_v0", self.registry.loot_density)
         self.assertIn("level1_service_halls", self.registry.level_layouts)
         self.assertEqual(len(self.registry.factions), 3)
 
@@ -107,24 +111,34 @@ class DataToolTests(unittest.TestCase):
     def test_faction_loadout_resolves_items(self):
         loadout = resolve_starting_loadout(self.registry, "clippers")
         self.assertTrue(any(item["item_id"] == "tool_clippers_camcorder" for item in loadout))
+        self.assertFalse(any(item["category"] in ("Weapon", "Armor", "Ammo") for item in loadout))
         self.assertIn("RouteWall", hub_upgrade_focus(self.registry, "clippers"))
 
     def test_trader_purchase_uses_movie_tickets(self):
         inventory = InventoryContainer("buyer", max_slots=4)
         inventory.add_item(self.registry, "currency_old_movie_ticket", 25)
-        self.assertTrue(can_buy(self.registry, "trader_broken_kiosk_v0", "consumable_almond_water", 1, inventory))
-        buy_item(self.registry, "trader_broken_kiosk_v0", "consumable_almond_water", 1, inventory)
+        self.assertTrue(can_buy(self.registry, "trader_the_turnstile_v0", "consumable_almond_water", 1, inventory))
+        buy_item(self.registry, "trader_the_turnstile_v0", "consumable_almond_water", 1, inventory)
         self.assertEqual(inventory.quantity("currency_old_movie_ticket"), 0)
         self.assertEqual(inventory.quantity("consumable_almond_water"), 1)
+        self.assertEqual(sell_preview(self.registry, "item_scrap_metal", 3), 9)
 
     def test_quest_completion_and_rewards(self):
         inventory = InventoryContainer("quest", max_slots=4)
-        quest_id = "quest_first_service_halls_recovery"
+        quest_id = "quest_still_water"
         self.assertFalse(is_quest_complete(self.registry, quest_id, inventory))
         inventory.add_item(self.registry, "consumable_almond_water", 1)
-        inventory.add_item(self.registry, "item_scrap_metal", 3)
         self.assertTrue(is_quest_complete(self.registry, quest_id, inventory))
-        self.assertEqual(reward_preview(self.registry, quest_id), [("currency_old_movie_ticket", 20)])
+        self.assertEqual(reward_preview(self.registry, quest_id), [("currency_old_movie_ticket", 15)])
+        expected_quests = {
+            "quest_still_water",
+            "quest_floor_gives_way",
+            "quest_back_to_one",
+            "quest_pry_rights",
+            "quest_ticket_hunger",
+        }
+        self.assertTrue(expected_quests.issubset(set(self.registry.quests)))
+        self.assertEqual(set(quest_ids_for_npc(self.registry, "npc_marrow_vell_quartermaster_v0")), expected_quests)
 
     def test_weapon_ammo_consumption(self):
         inventory = InventoryContainer("weapon", max_slots=4)
@@ -151,6 +165,26 @@ class DataToolTests(unittest.TestCase):
         self.assertFalse(can_open_container(self.registry, container_id, inventory))
         inventory.add_item(self.registry, "tool_bntg_crowbar")
         self.assertTrue(can_open_container(self.registry, container_id, inventory))
+        self.assertEqual(container_owner(self.registry, container_id), "bntg")
+
+    def test_trail_string_marker_rules(self):
+        marker_id = "marker_trail_string_v0"
+        marker = self.registry.navigation_markers[marker_id]
+        self.assertEqual(marker_visibility(self.registry, marker_id), "SelfAndSquad")
+        self.assertEqual(marker["duration_seconds"], 3600)
+        self.assertFalse(is_marker_expired(100, 3699, marker["duration_seconds"]))
+        self.assertTrue(is_marker_expired(100, 3700, marker["duration_seconds"]))
+
+    def test_gun_noise_response_has_varied_level_specific_outcomes(self):
+        table_id = "noise_level1_gunshot_flicker_v0"
+        response_types = {response["response_type"] for response in self.registry.noise_responses[table_id]["responses"]}
+        self.assertIn("None", response_types)
+        self.assertIn("EntityApproach", response_types)
+        outcomes = {roll_noise_response(self.registry, table_id, random.Random(seed))["response_type"] for seed in range(30)}
+        self.assertGreaterEqual(len(outcomes), 2)
+
+    def test_level1_loot_density_keeps_weapons_and_armor_rare(self):
+        self.assertTrue(is_level1_weapon_armor_sparse(self.registry))
 
     def test_level_layout_faction_footholds_and_spacing(self):
         level_id = "level1_service_halls"

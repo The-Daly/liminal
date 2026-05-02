@@ -8,9 +8,19 @@ def is_quest_complete(registry: DataRegistry, quest_id: str, inventory: Inventor
     if quest is None:
         raise RegistryError(f"Unknown quest_id: {quest_id}")
     for objective in quest.get("objectives", []):
-        if inventory.quantity(objective["item_id"]) < objective["quantity"]:
+        item_id = objective.get("item_id")
+        if item_id is None:
+            return False
+        if inventory.quantity(item_id) < objective["quantity"]:
             return False
     return True
+
+
+def quest_ids_for_npc(registry: DataRegistry, npc_id: str) -> list[str]:
+    npc = registry.npcs.get(npc_id)
+    if npc is None:
+        raise RegistryError(f"Unknown npc_id: {npc_id}")
+    return list(npc.get("quest_ids", []))
 
 
 def reward_preview(registry: DataRegistry, quest_id: str) -> list[tuple[str, int]]:

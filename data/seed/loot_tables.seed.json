@@ -4,11 +4,11 @@
     "entries": [
       {
         "item_id": "currency_old_movie_ticket",
-        "weight": 50
+        "weight": 30
       },
       {
         "item_id": "consumable_almond_water",
-        "weight": 15
+        "weight": 8
       },
       {
         "item_id": "item_chalk_bundle",
@@ -16,11 +16,11 @@
       },
       {
         "item_id": "item_battery_pack",
-        "weight": 20
+        "weight": 12
       },
       {
         "item_id": "item_scrap_metal",
-        "weight": 35
+        "weight": 22
       },
       {
         "item_id": "relic_golden_admit_one_ticket",
@@ -33,11 +33,11 @@
     "entries": [
       {
         "item_id": "consumable_almond_water",
-        "weight": 20
+        "weight": 10
       },
       {
         "item_id": "item_battery_pack",
-        "weight": 30
+        "weight": 18
       },
       {
         "item_id": "ammo_9mm_crude",
@@ -54,11 +54,15 @@
     "entries": [
       {
         "item_id": "ammo_9mm_crude",
-        "weight": 15
+        "weight": 8
       },
       {
         "item_id": "weapon_service_pistol",
-        "weight": 1
+        "weight": 0.35
+      },
+      {
+        "item_id": "armor_scrap_padded_vest",
+        "weight": 0.4
       },
       {
         "item_id": "item_battery_pack",
@@ -78,6 +82,10 @@
         "weight": 35
       },
       {
+        "item_id": "tool_bntg_crowbar",
+        "weight": 3
+      },
+      {
         "item_id": "item_gunpowder_pouch",
         "weight": 10
       },
@@ -87,7 +95,7 @@
       },
       {
         "item_id": "weapon_pipe_shotgun",
-        "weight": 0.5
+        "weight": 0.15
       }
     ]
   }

@@ -12,14 +12,15 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["objective_type", "item_id", "quantity"],
+        "required": ["objective_type", "quantity"],
         "additionalProperties": false,
         "properties": {
           "objective_type": {
             "type": "string",
-            "enum": ["ExtractWithItem", "ContributeItem", "VisitLocation"]
+            "enum": ["ExtractWithItem", "ContributeItem", "VisitLocation", "UseTransition", "ReturnToLevel", "OpenContainer"]
           },
-          "item_id": { "type": "string" },
+          "item_id": { "type": ["string", "null"] },
+          "target_id": { "type": ["string", "null"] },
           "quantity": { "type": "integer", "minimum": 1 }
         }
       }

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NavigationMarker",
+  "type": "object",
+  "required": ["marker_id", "display_name", "item_id", "visibility", "duration_seconds", "max_segments"],
+  "additionalProperties": false,
+  "properties": {
+    "marker_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "item_id": { "type": "string" },
+    "visibility": {
+      "type": "string",
+      "enum": ["SelfOnly", "SelfAndSquad", "Faction", "Everyone"]
+    },
+    "duration_seconds": { "type": "integer", "minimum": 1 },
+    "max_segments": { "type": "integer", "minimum": 1 },
+    "description": { "type": "string" }
+  }
+}

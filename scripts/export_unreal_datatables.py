@@ -27,6 +27,9 @@ EXPORTS = {
     "crafting_recipes.seed.json": "DT_CraftingRecipes.csv",
     "containers.seed.json": "DT_Containers.csv",
     "level_layouts.seed.json": "DT_LevelLayouts.csv",
+    "navigation_markers.seed.json": "DT_NavigationMarkers.csv",
+    "noise_responses.seed.json": "DT_NoiseResponses.csv",
+    "loot_density.seed.json": "DT_LootDensity.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -48,6 +51,9 @@ ROW_NAME_FIELDS = [
     "recipe_id",
     "container_id",
     "level_id",
+    "marker_id",
+    "noise_response_id",
+    "density_profile_id",
 ]
 
 

@@ -4,7 +4,7 @@ This framework defines combat items and acquisition routes without implementing 
 
 ## V0.1 Intent
 
-Weapons are rare, noisy, and risky. The first playable build may use placeholders, but the data should already know:
+Weapons are rare, noisy, and risky. Players do not start with reliable combat gear. The first playable build may use placeholders, but the data should already know:
 
 - which item is a weapon
 - what ammo it consumes
@@ -13,6 +13,7 @@ Weapons are rare, noisy, and risky. The first playable build may use placeholder
 - which containers require tools such as a crowbar
 - which level zones can spawn those containers
 - whether NPCs may carry or reward the item
+- how gunshots can trigger level-specific entity/noise responses
 
 ## Locked Scope Boundary
 

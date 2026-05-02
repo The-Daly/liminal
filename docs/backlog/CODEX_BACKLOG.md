@@ -52,6 +52,11 @@
 - [x] Weapon ammo consumption prototype.
 - [x] Ammo crafting prototype.
 - [x] Gated container prototype.
+- [x] Gun-noise entity response table.
+- [x] Level 1 slim loot density profile.
+- [x] Trail String marker data and prototype.
+- [x] Extraction-style trader/storage UI contract.
+- [x] Clippers retro-scrap base style guide.
 
 ## Phase 5 — Storage Prototype
 

@@ -6,7 +6,7 @@ This contract describes the first playable state the project is driving toward.
 
 - Player starts in hub or personal room.
 - Player has selected a faction.
-- Player has a starter loadout.
+- Player has a scarce starter loadout: faction identity tool plus flashlight only.
 - Personal storage exists and persists locally.
 
 ## Run Start
@@ -18,9 +18,12 @@ This contract describes the first playable state the project is driving toward.
 ## During Run
 
 - Loot containers provide items from `loot_level1_basic`.
+- Level 1 loot is slim; weapons and armor are rare.
 - Sanity drains over time.
 - Almond Water restores sanity.
 - Flicker Stalker patrols, detects, chases, and kills at close range.
+- Gunshots may trigger no response, a sound-only response, or a level-specific entity approach.
+- Trail String can mark a self/squad-visible route for one hour.
 
 ## Extract
 

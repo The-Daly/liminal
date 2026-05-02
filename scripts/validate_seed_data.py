@@ -33,6 +33,9 @@ PAIRINGS = {
     "crafting_recipes.seed.json": "crafting_recipe.schema.json",
     "containers.seed.json": "container.schema.json",
     "level_layouts.seed.json": "level_layout.schema.json",
+    "navigation_markers.seed.json": "navigation_marker.schema.json",
+    "noise_responses.seed.json": "noise_response.schema.json",
+    "loot_density.seed.json": "loot_density.schema.json",
 }
 
 def load_json(path):
@@ -94,6 +97,9 @@ def check_references():
     recipes = load_json(SEED_DIR / "crafting_recipes.seed.json")
     containers = load_json(SEED_DIR / "containers.seed.json")
     level_layouts = load_json(SEED_DIR / "level_layouts.seed.json")
+    navigation_markers = load_json(SEED_DIR / "navigation_markers.seed.json")
+    noise_responses = load_json(SEED_DIR / "noise_responses.seed.json")
+    loot_density = load_json(SEED_DIR / "loot_density.seed.json")
 
     item_ids = {item["item_id"] for item in items}
     faction_ids = {faction["faction_id"] for faction in factions}
@@ -106,6 +112,7 @@ def check_references():
     quest_ids = {entry["quest_id"] for entry in quests}
     weapon_ids = {entry["weapon_id"] for entry in weapons}
     ammo_type_ids = {entry["ammo_type_id"] for entry in ammo}
+    density_profile_ids = {entry["density_profile_id"] for entry in loot_density}
 
     missing = []
 
@@ -165,8 +172,9 @@ def check_references():
         if quest["giver_npc_id"] not in npc_ids:
             missing.append(f"Quest {quest['quest_id']} references missing giver NPC {quest['giver_npc_id']}")
         for objective in quest.get("objectives", []):
-            if objective["item_id"] not in item_ids:
-                missing.append(f"Quest {quest['quest_id']} objective references missing item {objective['item_id']}")
+            objective_item_id = objective.get("item_id")
+            if objective_item_id is not None and objective_item_id not in item_ids:
+                missing.append(f"Quest {quest['quest_id']} objective references missing item {objective_item_id}")
         for reward in quest.get("rewards", []):
             if reward["item_id"] not in item_ids:
                 missing.append(f"Quest {quest['quest_id']} reward references missing item {reward['item_id']}")
@@ -199,6 +207,12 @@ def check_references():
         required_tool = container.get("required_tool_item_id")
         if required_tool is not None and required_tool not in item_ids:
             missing.append(f"Container {container['container_id']} references missing required tool {required_tool}")
+        owner_faction_id = container.get("owner_faction_id")
+        if owner_faction_id is not None and owner_faction_id not in faction_ids:
+            missing.append(f"Container {container['container_id']} references missing owner faction {owner_faction_id}")
+        density_profile_id = container.get("density_profile_id")
+        if density_profile_id is not None and density_profile_id not in density_profile_ids:
+            missing.append(f"Container {container['container_id']} references missing density profile {density_profile_id}")
 
     for layout in level_layouts:
         zone_ids = {zone["zone_id"] for zone in layout.get("zones", [])}
@@ -215,6 +229,16 @@ def check_references():
                 missing.append(f"Level layout {layout['level_id']} references missing faction {foothold['faction_id']}")
             if foothold["zone_id"] not in zone_ids:
                 missing.append(f"Level layout {layout['level_id']} foothold references missing zone {foothold['zone_id']}")
+
+    for marker in navigation_markers:
+        if marker["item_id"] not in item_ids:
+            missing.append(f"Navigation marker {marker['marker_id']} references missing item {marker['item_id']}")
+
+    for response_table in noise_responses:
+        for response in response_table.get("responses", []):
+            entity_id = response.get("entity_id")
+            if entity_id is not None and entity_id not in entity_ids:
+                missing.append(f"Noise response {response_table['noise_response_id']} references missing entity {entity_id}")
 
     if missing:
         raise ValueError("\\n".join(missing))
@@ -244,6 +268,9 @@ def main():
     check_duplicate_ids("crafting_recipes.seed.json", "recipe_id")
     check_duplicate_ids("containers.seed.json", "container_id")
     check_duplicate_ids("level_layouts.seed.json", "level_id")
+    check_duplicate_ids("navigation_markers.seed.json", "marker_id")
+    check_duplicate_ids("noise_responses.seed.json", "noise_response_id")
+    check_duplicate_ids("loot_density.seed.json", "density_profile_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")

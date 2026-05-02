@@ -1,0 +1,11 @@
+[
+  {
+    "marker_id": "marker_trail_string_v0",
+    "display_name": "Trail String",
+    "item_id": "item_trail_string_spool",
+    "visibility": "SelfAndSquad",
+    "duration_seconds": 3600,
+    "max_segments": 40,
+    "description": "Temporary path marker for route recovery. Self/squad only to avoid clutter and enemy route reveal."
+  }
+]

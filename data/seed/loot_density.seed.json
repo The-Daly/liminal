@@ -1,0 +1,11 @@
+[
+  {
+    "density_profile_id": "density_level1_slim_v0",
+    "level_id": "level1_service_halls",
+    "display_name": "Level 1 Slim Scarcity",
+    "container_spawn_chance": 0.38,
+    "weapon_weight_cap": 0.5,
+    "armor_weight_cap": 0.5,
+    "notes": "Level 1 should support stealth, navigation, and scavenging. Weapons and armor are rare."
+  }
+]

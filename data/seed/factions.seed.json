@@ -5,10 +5,7 @@
     "role": "Research, safety, archive, scanner play",
     "starting_items": [
       "tool_meg_entity_scanner",
-      "item_flashlight",
-      "consumable_almond_water",
-      "consumable_almond_water",
-      "currency_old_movie_ticket"
+      "item_flashlight"
     ],
     "hub_upgrade_focus": [
       "ArchiveTerminal",
@@ -23,10 +20,8 @@
     "display_name": "B.N.T.G.",
     "role": "Trade, salvage, economy, armor/resources",
     "starting_items": [
-      "tool_bntg_crowbar",
-      "item_flashlight",
-      "consumable_almond_water",
-      "currency_old_movie_ticket"
+      "tool_bntg_salvage_kit",
+      "item_flashlight"
     ],
     "hub_upgrade_focus": [
       "TraderMarket",
@@ -42,10 +37,7 @@
     "role": "Runner/scout/no-clip route faction",
     "starting_items": [
       "tool_clippers_camcorder",
-      "item_flashlight",
-      "consumable_almond_water",
-      "item_chalk_bundle",
-      "currency_old_movie_ticket"
+      "item_flashlight"
     ],
     "hub_upgrade_focus": [
       "RouteWall",

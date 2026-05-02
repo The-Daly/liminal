@@ -75,6 +75,21 @@
     "description": "Starter salvage tool for crates, doors, and scrap."
   },
   {
+    "item_id": "tool_bntg_salvage_kit",
+    "display_name": "B.N.T.G. Salvage Kit",
+    "category": "FactionTool",
+    "rarity": "Quest",
+    "stackable": false,
+    "max_stack": 1,
+    "weight": 1.0,
+    "value_tickets": 0,
+    "can_be_lost_on_death": false,
+    "can_display_in_room": true,
+    "display_location": "Desk",
+    "faction_restriction": "bntg",
+    "description": "Starter salvage identity kit. It does not pry open reinforced supply crates."
+  },
+  {
     "item_id": "tool_clippers_camcorder",
     "display_name": "Clippers Camcorder",
     "category": "FactionTool",
@@ -103,6 +118,21 @@
     "display_location": null,
     "faction_restriction": null,
     "description": "Used by Clippers to mark routes."
+  },
+  {
+    "item_id": "item_trail_string_spool",
+    "display_name": "Trail String Spool",
+    "category": "Navigation",
+    "rarity": "Uncommon",
+    "stackable": true,
+    "max_stack": 3,
+    "weight": 0.2,
+    "value_tickets": 18,
+    "can_be_lost_on_death": true,
+    "can_display_in_room": false,
+    "display_location": null,
+    "faction_restriction": null,
+    "description": "Temporary self/squad-visible route string that expires after one hour."
   },
   {
     "item_id": "item_battery_pack",
@@ -223,6 +253,21 @@
     "display_location": "WallRack",
     "faction_restriction": null,
     "description": "A crude, loud emergency weapon best treated as a last resort."
+  },
+  {
+    "item_id": "armor_scrap_padded_vest",
+    "display_name": "Scrap-Padded Vest",
+    "category": "Armor",
+    "rarity": "Rare",
+    "stackable": false,
+    "max_stack": 1,
+    "weight": 3.5,
+    "value_tickets": 140,
+    "can_be_lost_on_death": true,
+    "can_display_in_room": true,
+    "display_location": "ArmorHook",
+    "faction_restriction": null,
+    "description": "Improvised early armor with poor comfort and modest protection."
   },
   {
     "item_id": "relic_golden_admit_one_ticket",

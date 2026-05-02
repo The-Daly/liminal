@@ -6,6 +6,8 @@
     "level_id": "level1_service_halls",
     "zone_id": "fogged_storage_bay",
     "loot_table_id": "loot_level1_cabinet_survival",
+    "owner_faction_id": null,
+    "density_profile_id": "density_level1_slim_v0",
     "required_tool_item_id": null,
     "breakable": false,
     "description": "Common cabinet for survival supplies and occasional crude ammo."
@@ -17,6 +19,8 @@
     "level_id": "level1_service_halls",
     "zone_id": "utility_room_cluster",
     "loot_table_id": "loot_level1_locker_security",
+    "owner_faction_id": "meg",
+    "density_profile_id": "density_level1_slim_v0",
     "required_tool_item_id": null,
     "breakable": false,
     "description": "Rare locker that may contain ammo or a damaged service pistol."
@@ -28,6 +32,8 @@
     "level_id": "level1_service_halls",
     "zone_id": "broken_trader_kiosk",
     "loot_table_id": "loot_level1_crowbar_supply_crate",
+    "owner_faction_id": "bntg",
+    "density_profile_id": "density_level1_slim_v0",
     "required_tool_item_id": "tool_bntg_crowbar",
     "breakable": true,
     "description": "Break-open supply crate requiring the crowbar."

@@ -41,3 +41,26 @@ def preview_table(registry: DataRegistry, loot_table_id: str) -> list[dict[str, 
         }
         for entry in table["entries"]
     ]
+
+
+def container_owner(registry: DataRegistry, container_id: str) -> Optional[str]:
+    container = registry.containers.get(container_id)
+    if container is None:
+        raise RegistryError(f"Unknown container_id: {container_id}")
+    return container.get("owner_faction_id")
+
+
+def is_level1_weapon_armor_sparse(registry: DataRegistry, density_profile_id: str = "density_level1_slim_v0") -> bool:
+    density = registry.loot_density.get(density_profile_id)
+    if density is None:
+        raise RegistryError(f"Unknown density_profile_id: {density_profile_id}")
+    for table in registry.loot_tables.values():
+        if not table["loot_table_id"].startswith("loot_level1_"):
+            continue
+        for entry in table.get("entries", []):
+            item = registry.item(entry["item_id"])
+            if item.get("category") == "Weapon" and entry["weight"] > density["weapon_weight_cap"]:
+                return False
+            if item.get("category") == "Armor" and entry["weight"] > density["armor_weight_cap"]:
+                return False
+    return True

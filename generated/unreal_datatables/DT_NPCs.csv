@@ -1,2 +1,2 @@
 Name,npc_id,display_name,role,location_id,quest_ids,description
-npc_tom_quartermaster_v0,npc_tom_quartermaster_v0,Tom,Quartermaster,hub_quartermaster_corner,"[""quest_first_service_halls_recovery""]",V0.1 quartermaster placeholder who frames the first recovery run.
+npc_marrow_vell_quartermaster_v0,npc_marrow_vell_quartermaster_v0,Marrow Vell,Quartermaster,hub_quartermaster_corner,"[""quest_still_water"",""quest_floor_gives_way"",""quest_back_to_one"",""quest_pry_rights"",""quest_ticket_hunger""]","V0.1 quartermaster with a dry, practical tone who frames the first survival objectives."

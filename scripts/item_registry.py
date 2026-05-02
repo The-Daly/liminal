@@ -52,6 +52,9 @@ class DataRegistry:
     crafting_recipes: dict[str, dict[str, Any]]
     containers: dict[str, dict[str, Any]]
     level_layouts: dict[str, dict[str, Any]]
+    navigation_markers: dict[str, dict[str, Any]]
+    noise_responses: dict[str, dict[str, Any]]
+    loot_density: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -86,6 +89,9 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         crafting_recipes=index_by(load_json(seed_dir / "crafting_recipes.seed.json"), "recipe_id", "crafting_recipes.seed.json"),
         containers=index_by(load_json(seed_dir / "containers.seed.json"), "container_id", "containers.seed.json"),
         level_layouts=index_by(load_json(seed_dir / "level_layouts.seed.json"), "level_id", "level_layouts.seed.json"),
+        navigation_markers=index_by(load_json(seed_dir / "navigation_markers.seed.json"), "marker_id", "navigation_markers.seed.json"),
+        noise_responses=index_by(load_json(seed_dir / "noise_responses.seed.json"), "noise_response_id", "noise_responses.seed.json"),
+        loot_density=index_by(load_json(seed_dir / "loot_density.seed.json"), "density_profile_id", "loot_density.seed.json"),
     )
 
 
@@ -105,6 +111,9 @@ def main() -> None:
     print(f"Loaded {len(registry.crafting_recipes)} crafting recipes")
     print(f"Loaded {len(registry.containers)} containers")
     print(f"Loaded {len(registry.level_layouts)} level layouts")
+    print(f"Loaded {len(registry.navigation_markers)} navigation markers")
+    print(f"Loaded {len(registry.noise_responses)} noise response tables")
+    print(f"Loaded {len(registry.loot_density)} loot density profiles")
 
 
 if __name__ == "__main__":

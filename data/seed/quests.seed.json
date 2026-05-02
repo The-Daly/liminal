@@ -1,18 +1,33 @@
 [
   {
-    "quest_id": "quest_first_service_halls_recovery",
-    "display_name": "First Service Halls Recovery",
-    "giver_npc_id": "npc_tom_quartermaster_v0",
+    "quest_id": "quest_still_water",
+    "display_name": "Still Water",
+    "giver_npc_id": "npc_marrow_vell_quartermaster_v0",
     "objectives": [
       {
         "objective_type": "ExtractWithItem",
         "item_id": "consumable_almond_water",
         "quantity": 1
-      },
+      }
+    ],
+    "rewards": [
       {
-        "objective_type": "ExtractWithItem",
-        "item_id": "item_scrap_metal",
-        "quantity": 3
+        "item_id": "currency_old_movie_ticket",
+        "quantity": 15
+      }
+    ],
+    "description": "Extract from Level 1 with Almond Water to prove the player can find water and return alive."
+  },
+  {
+    "quest_id": "quest_floor_gives_way",
+    "display_name": "The Floor Gives Way",
+    "giver_npc_id": "npc_marrow_vell_quartermaster_v0",
+    "objectives": [
+      {
+        "objective_type": "UseTransition",
+        "target_id": "transition_level1_floor_hole_deeper_pocket",
+        "item_id": null,
+        "quantity": 1
       }
     ],
     "rewards": [
@@ -21,6 +36,70 @@
         "quantity": 20
       }
     ],
-    "description": "Recover enough supplies from Level 1 to prove the first extraction loop."
+    "description": "Find a weak floor hole and fall into a deeper pocket, introducing vertical danger."
+  },
+  {
+    "quest_id": "quest_back_to_one",
+    "display_name": "Back to One",
+    "giver_npc_id": "npc_marrow_vell_quartermaster_v0",
+    "objectives": [
+      {
+        "objective_type": "ReturnToLevel",
+        "target_id": "level1_service_halls",
+        "item_id": null,
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "item_id": "item_trail_string_spool",
+        "quantity": 1
+      }
+    ],
+    "description": "Return from a deeper pocket or adjacent level route back to Level 1."
+  },
+  {
+    "quest_id": "quest_pry_rights",
+    "display_name": "Pry Rights",
+    "giver_npc_id": "npc_marrow_vell_quartermaster_v0",
+    "objectives": [
+      {
+        "objective_type": "ExtractWithItem",
+        "item_id": "tool_bntg_crowbar",
+        "quantity": 1
+      },
+      {
+        "objective_type": "OpenContainer",
+        "target_id": "container_level1_bntg_supply_crate_v0",
+        "item_id": "tool_bntg_crowbar",
+        "quantity": 1
+      }
+    ],
+    "rewards": [
+      {
+        "item_id": "ammo_9mm_crude",
+        "quantity": 8
+      }
+    ],
+    "description": "Locate a crowbar and use it to open a supply crate."
+  },
+  {
+    "quest_id": "quest_ticket_hunger",
+    "display_name": "Ticket Hunger",
+    "giver_npc_id": "npc_marrow_vell_quartermaster_v0",
+    "objectives": [
+      {
+        "objective_type": "ExtractWithItem",
+        "item_id": "currency_old_movie_ticket",
+        "quantity": 25
+      }
+    ],
+    "rewards": [
+      {
+        "item_id": "consumable_almond_water",
+        "quantity": 1
+      }
+    ],
+    "description": "Find enough Movie Tickets to buy survival gear from The Turnstile."
   }
 ]
