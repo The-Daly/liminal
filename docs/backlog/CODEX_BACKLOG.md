@@ -15,7 +15,7 @@
 - [x] Item registry loader.
 - [x] Inventory slot model.
 - [x] Stackable item support.
-- [ ] Weight placeholder.
+- [x] Weight placeholder.
 - [x] Add/remove item operations.
 - [x] Death inventory wipe operation.
 
@@ -32,7 +32,7 @@
 - [x] Starting loadout resolver.
 - [x] Same-faction no-team-kill social rule data.
 - [x] Same-faction squad and radio rule prototype.
-- [ ] Full Realm reset stub.
+- [x] Full Realm reset stub.
 - [x] Faction hub upgrade project data.
 
 ## Phase 4.5 — Quest / Trader / NPC Framework

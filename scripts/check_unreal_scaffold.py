@@ -9,6 +9,9 @@ REQUIRED_FILES = [
     "Config/DefaultEngine.ini",
     "Config/DefaultGame.ini",
     "Config/DefaultInput.ini",
+]
+
+REQUIRED_SOURCE_FILES = [
     "Source/LiminalDominion.Target.cs",
     "Source/LiminalDominionEditor.Target.cs",
     "Source/LiminalDominion/LiminalDominion.Build.cs",
@@ -45,6 +48,37 @@ REQUIRED_FILES = [
     "Source/LiminalDominion/Private/LDFlickerStalker.cpp",
 ]
 
+LEGACY_SOURCE_FILES = [
+    "Source_Legacy/LiminalDominion.Target.cs.disabled",
+    "Source_Legacy/LiminalDominionEditor.Target.cs.disabled",
+    "Source_Legacy/LiminalDominion/LiminalDominion.Build.cs.disabled",
+    "Source_Legacy/LiminalDominion/Public/LiminalDominion.h",
+    "Source_Legacy/LiminalDominion/Private/LiminalDominion.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDDataTypes.h",
+    "Source_Legacy/LiminalDominion/Public/LDHUDTypes.h",
+    "Source_Legacy/LiminalDominion/Public/LDGameDataSubsystem.h",
+    "Source_Legacy/LiminalDominion/Private/LDGameDataSubsystem.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDInteractable.h",
+    "Source_Legacy/LiminalDominion/Public/LDPlayerCharacter.h",
+    "Source_Legacy/LiminalDominion/Private/LDPlayerCharacter.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDRunStateComponent.h",
+    "Source_Legacy/LiminalDominion/Private/LDRunStateComponent.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDInventoryComponent.h",
+    "Source_Legacy/LiminalDominion/Private/LDInventoryComponent.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDSanityComponent.h",
+    "Source_Legacy/LiminalDominion/Private/LDSanityComponent.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDExtractionTrigger.h",
+    "Source_Legacy/LiminalDominion/Private/LDExtractionTrigger.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDLootContainer.h",
+    "Source_Legacy/LiminalDominion/Private/LDLootContainer.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDStorageActor.h",
+    "Source_Legacy/LiminalDominion/Private/LDStorageActor.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDProjectBoardActor.h",
+    "Source_Legacy/LiminalDominion/Private/LDProjectBoardActor.cpp",
+    "Source_Legacy/LiminalDominion/Public/LDFlickerStalker.h",
+    "Source_Legacy/LiminalDominion/Private/LDFlickerStalker.cpp",
+]
+
 
 def main() -> int:
     missing = [path for path in REQUIRED_FILES if not (ROOT / path).exists()]
@@ -58,12 +92,28 @@ def main() -> int:
         project = json.load(f)
 
     modules = project.get("Modules", [])
-    if not any(module.get("Name") == "LiminalDominion" for module in modules):
-        print("FAIL: LiminalDominion module is not declared in LiminalDominion.uproject")
+    has_runtime_module = any(module.get("Name") == "LiminalDominion" for module in modules)
+    source_missing = [path for path in REQUIRED_SOURCE_FILES if not (ROOT / path).exists()]
+
+    if has_runtime_module:
+        if source_missing:
+            print("FAIL: LiminalDominion module is declared, but source files are missing:")
+            for path in source_missing:
+                print(f"- {path}")
+            return 1
+        print(f"OK: Unreal scaffold contains {len(REQUIRED_FILES) + len(REQUIRED_SOURCE_FILES)} required files")
+        print("OK: LiminalDominion runtime module is declared")
+        return 0
+
+    legacy_missing = [path for path in LEGACY_SOURCE_FILES if not (ROOT / path).exists()]
+    if legacy_missing:
+        print("FAIL: project has no active code module and disabled source scaffold is incomplete:")
+        for path in legacy_missing:
+            print(f"- {path}")
         return 1
 
-    print(f"OK: Unreal scaffold contains {len(REQUIRED_FILES)} required files")
-    print("OK: LiminalDominion runtime module is declared")
+    print(f"OK: module-free Unreal visualization scaffold contains {len(REQUIRED_FILES)} required files")
+    print("OK: disabled C++ scaffold is preserved under Source_Legacy")
     return 0
 
 

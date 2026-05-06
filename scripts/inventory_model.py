@@ -18,10 +18,14 @@ class InventoryStack:
 class InventoryContainer:
     container_id: str
     max_slots: int
+    max_weight: float | None = None
     stacks: list[InventoryStack] = field(default_factory=list)
 
     def quantity(self, item_id: str) -> int:
         return sum(stack.quantity for stack in self.stacks if stack.item_id == item_id)
+
+    def total_weight(self, registry: DataRegistry) -> float:
+        return sum(float(registry.item(stack.item_id).get("weight", 0)) * stack.quantity for stack in self.stacks)
 
     def add_item(self, registry: DataRegistry, item_id: str, quantity: int = 1) -> None:
         if quantity <= 0:
@@ -52,6 +56,13 @@ class InventoryContainer:
             moved = min(max_stack, remaining) if stackable else 1
             trial_stacks.append(InventoryStack(item_id=item_id, quantity=moved))
             remaining -= moved
+
+        if self.max_weight is not None:
+            trial_weight = sum(float(registry.item(stack.item_id).get("weight", 0)) * stack.quantity for stack in trial_stacks)
+            if trial_weight > self.max_weight:
+                raise InventoryError(
+                    f"Container {self.container_id} exceeds weight cap: {trial_weight:.2f}/{self.max_weight:.2f}"
+                )
 
         self.stacks = trial_stacks
 
@@ -94,10 +105,12 @@ def build_player_inventory(registry: DataRegistry, player_state_id: str = "playe
         carried=InventoryContainer(
             container_id=carried_def["storage_id"],
             max_slots=int(carried_def["caps"].get("slots", 12)),
+            max_weight=float(carried_def["caps"]["weight"]) if "weight" in carried_def["caps"] else None,
         ),
         personal=InventoryContainer(
             container_id=personal_def["storage_id"],
             max_slots=int(personal_def["caps"].get("slots", 80)),
+            max_weight=float(personal_def["caps"]["weight"]) if "weight" in personal_def["caps"] else None,
         ),
     )
 

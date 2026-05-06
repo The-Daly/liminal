@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from extraction_model import can_extract
 from economy_model import buy_item, can_buy, sell_preview
-from faction_model import hub_upgrade_focus, resolve_starting_loadout
+from faction_model import build_new_realm_inventory, hub_upgrade_focus, reset_realm_for_faction, resolve_starting_loadout
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
@@ -110,6 +110,15 @@ class DataToolTests(unittest.TestCase):
         container.remove_item("consumable_almond_water", 6)
         self.assertEqual(container.quantity("consumable_almond_water"), 5)
 
+    def test_inventory_tracks_weight_cap(self):
+        container = InventoryContainer("weighted", max_slots=10, max_weight=2.0)
+        container.add_item(self.registry, "item_flashlight")
+        container.add_item(self.registry, "consumable_almond_water", 6)
+        self.assertAlmostEqual(container.total_weight(self.registry), 2.0)
+        with self.assertRaises(InventoryError):
+            container.add_item(self.registry, "currency_old_movie_ticket")
+        self.assertEqual(container.quantity("currency_old_movie_ticket"), 0)
+
     def test_storage_cap_rejects_without_partial_add(self):
         container = InventoryContainer("tiny", max_slots=1)
         with self.assertRaises(InventoryError):
@@ -140,6 +149,18 @@ class DataToolTests(unittest.TestCase):
         self.assertFalse(can_extract(self.registry, extraction_id, inventory.carried))
         inventory.carried.add_item(self.registry, "currency_old_movie_ticket")
         self.assertTrue(can_extract(self.registry, extraction_id, inventory.carried))
+
+    def test_faction_loadout_and_realm_reset(self):
+        loadout = resolve_starting_loadout(self.registry, "meg")
+        self.assertIn("tool_meg_entity_scanner", loadout.item_ids)
+
+        inventory = build_new_realm_inventory(self.registry)
+        self.assertEqual(inventory.carried.quantity("tool_meg_entity_scanner"), 1)
+        inventory.personal.add_item(self.registry, "relic_golden_admit_one_ticket")
+
+        reset_inventory = reset_realm_for_faction(self.registry, "clippers")
+        self.assertEqual(reset_inventory.carried.quantity("tool_clippers_camcorder"), 1)
+        self.assertEqual(reset_inventory.personal.quantity("relic_golden_admit_one_ticket"), 0)
 
     def test_loot_roll_and_preview(self):
         rng = random.Random(1)
