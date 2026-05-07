@@ -10,7 +10,7 @@ A repo scaffold for starting development of Liminal Dominion Version 0.1.
 
 ## What This Is Not
 
-This is not the full game. This is not a final Unreal project. This is the planning/data/tooling skeleton Codex should use before building gameplay systems.
+This is not the full game. This is not a finished Unreal build. This repo is the planning, data, prototype, and content scaffold the team is using to build Version 0.1.
 
 ## Recommended First Codex Prompt
 
@@ -35,8 +35,9 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 
 - Expanded JSON schemas and seed data cover V0.1 items, factions, loot, entities, storage, sanity, extractions, hub upgrades, player state, and run state.
 - `scripts/validate_seed_data.py` validates schemas, duplicate IDs, and cross-data references.
-- Prototype Python modules model registries, loot rolls, inventory/storage, sanity, and extraction requirements before Unreal integration.
-- A source-level UE5 scaffold now exists in `LiminalDominion.uproject`, `Config/`, `Content/`, and `Source/`.
+- Prototype Python modules model registries, loot rolls, inventory/storage, capped personal-storage overflow, sanity, and extraction requirements before Unreal integration.
+- A content-first UE5 project now exists in `LiminalDominion.uproject`, `Config/`, and `Content/`.
+- The earlier C++ gameplay scaffold is preserved in `Source_Legacy/` and can be re-enabled later when the Windows toolchain is ready.
 - Non-Unreal framework docs and prototypes now cover faction loadouts, no-team-kill social rules, trader purchases, the 21-NPC master roster, NPC/quest contracts, weapons/ammo, Trail String navigation, gun-noise responses, loot density, and the playable loop contract.
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
 

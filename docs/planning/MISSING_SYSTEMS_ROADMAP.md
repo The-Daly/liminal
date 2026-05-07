@@ -4,8 +4,11 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 
 ## Current Package State
 
-- The repo is a Codex-oriented data, planning, and tooling scaffold.
-- No Unreal Engine project files, maps, Blueprints, C++ modules, or packaged build pipeline exist yet.
+- The repo is a Codex-oriented data, planning, tooling, and visualization scaffold.
+- `LiminalDominion.uproject` now exists and launches as a content-first Unreal Engine 5 project.
+- `Config/`, `Content/`, generated DataTable CSV exports, and Windows startup tooling are now in the repo.
+- The previous C++ gameplay scaffold is preserved in `Source_Legacy/` but is not active in the current visualization-first project path.
+- Saved repo-owned maps, Blueprint assets, and a packaged playable build still do not exist yet.
 - Python validation exists and requires `jsonschema` from `requirements.txt`.
 - Version 0.1 remains a graybox, single-player/local prototype target.
 
@@ -22,7 +25,7 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - Graybox hub shell, personal room, faction vault placeholder, deployment corridor, and Level 1 Service Halls.
 - Stable extraction and one hidden/conditional extraction.
 - Loot containers using the validated loot table.
-- Carried inventory, personal storage, shared vault placeholder, death wipe, and extraction result handling.
+- Carried inventory, personal storage, shared vault placeholder, death wipe, capped personal-storage overflow handling, and extraction result handling.
 - Sanity meter, sanity drain, Almond Water effect, and low-sanity event hook.
 - Flicker Stalker prototype with patrol, perception, chase, attack, and return-to-patrol.
 - Minimal HUD for sanity, inventory, prompts, pickup feedback, extraction, and death.
@@ -43,7 +46,7 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 ## Build Order
 
 1. Finish data validation and Python prototypes.
-2. Create the UE5 project and data import path.
+2. Save repo-owned maps and first Blueprint/UI assets into the existing UE5 project.
 3. Build the complete graybox extraction loop.
 4. Playtest V0.1 until the 10-minute loop is readable.
 5. Add persistence/session architecture only after the loop works.

@@ -22,4 +22,11 @@
 
 ## Version 0.1 Implementation
 
-Implement caps as data. Overflow routing can be stubbed.
+Caps are implemented as data in `data/seed/storage.seed.json` and enforced by the Python prototype layer in `scripts/inventory_model.py`.
+
+Current overflow stub behavior:
+
+- Personal storage accepts items until the relevant class cap is reached.
+- Any excess is returned as an overflow result instead of being silently discarded.
+- When transferring from carried inventory to personal storage, only the stored quantity is removed from carried inventory.
+- Overflow remains in the source container for manual player handling until the final Unreal UI/flow exists.

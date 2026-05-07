@@ -133,6 +133,35 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(inventory.carried.quantity("currency_old_movie_ticket"), 0)
         self.assertEqual(inventory.personal.quantity("relic_golden_admit_one_ticket"), 1)
 
+    def test_personal_storage_caps_movie_tickets_with_overflow_stub(self):
+        inventory = build_player_inventory(self.registry)
+        result = inventory.personal.store_with_overflow(self.registry, "currency_old_movie_ticket", 5100)
+        self.assertEqual(result.moved_quantity, 5000)
+        self.assertIsNotNone(result.overflow)
+        self.assertEqual(result.overflow.quantity, 100)
+        self.assertEqual(result.overflow.cap_key, "MovieTickets")
+        self.assertEqual(inventory.personal.quantity("currency_old_movie_ticket"), 5000)
+
+    def test_transfer_to_personal_preserves_overflow_in_carried(self):
+        inventory = build_player_inventory(self.registry)
+        inventory.carried.add_item(self.registry, "consumable_almond_water", 55)
+        result = inventory.move_carried_to_personal(self.registry, "consumable_almond_water", 55)
+        self.assertEqual(result.moved_quantity, 50)
+        self.assertIsNotNone(result.overflow)
+        self.assertEqual(result.overflow.quantity, 5)
+        self.assertEqual(result.overflow.cap_key, "AlmondWater")
+        self.assertEqual(inventory.personal.quantity("consumable_almond_water"), 50)
+        self.assertEqual(inventory.carried.quantity("consumable_almond_water"), 5)
+
+    def test_personal_storage_caps_weapons_by_total_count(self):
+        inventory = build_player_inventory(self.registry)
+        result = inventory.personal.store_with_overflow(self.registry, "weapon_service_pistol", 19)
+        self.assertEqual(result.moved_quantity, 18)
+        self.assertIsNotNone(result.overflow)
+        self.assertEqual(result.overflow.quantity, 1)
+        self.assertEqual(result.overflow.cap_key, "Weapons")
+        self.assertEqual(inventory.personal.quantity("weapon_service_pistol"), 18)
+
     def test_sanity_drain_and_almond_water(self):
         rule = self.registry.sanity_rules["sanity_level1_service_halls_v0"]
         sanity = SanityState.from_rule(rule)

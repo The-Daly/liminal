@@ -67,11 +67,12 @@
 - [x] Personal storage container model.
 - [x] Shared faction vault data placeholder.
 - [x] Storage caps.
-- [ ] Overflow stub.
+- [x] Overflow stub.
 
 ## Phase 6 — Unreal Graybox
 
 - [x] Add source-level Unreal project scaffold.
+- [x] Preserve the legacy C++ gameplay scaffold in `Source_Legacy` while the active project stays content-first for visualization.
 - [x] Add Level 1 scale, route, and faction foothold layout data.
 - [x] Add first C++ gameplay skeletons for inventory, sanity, loot, extraction, and Flicker Stalker.
 - [x] Add player, interaction, run-state, storage, and project-board skeletons.

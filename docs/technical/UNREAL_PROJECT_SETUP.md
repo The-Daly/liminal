@@ -1,22 +1,22 @@
 # Unreal Project Setup
 
-This repo now contains a source-level Unreal Engine 5 scaffold:
+This repo now contains a content-first Unreal Engine 5 scaffold:
 
 ```text
 LiminalDominion.uproject
 Config/
 Content/
-Source/
+Source_Legacy/
 ```
 
-The current machine does not have Unreal Editor available, so the first editor compile still needs to happen on a Mac or Windows machine with UE5 installed.
+The active project path is visualization-first. The archived C++ gameplay scaffold lives in `Source_Legacy/` and should stay there until the Windows MSVC toolchain is fully ready.
 
 ## Recommended Engine
 
-- Unreal Engine 5.x.
+- Unreal Engine 5.7 on Windows.
 - Windows 10/11 PC remains the primary playable packaged build target.
-- macOS is supported for development/editor iteration when Unreal supports the local hardware.
-- On Windows, install Visual Studio 2022 with `Desktop development with C++` and a Windows 10/11 SDK before compiling this C++ project.
+- macOS is still acceptable for docs, planning, and data work.
+- If legacy C++ modules are re-enabled later, install Visual Studio 2022 Build Tools with the MSVC v143 x64/x86 toolchain and a Windows 10/11 SDK first.
 
 ## Windows Startup Command
 
@@ -26,28 +26,25 @@ From PowerShell in the repo root:
 powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
 ```
 
-This startup script validates seed data, exports DataTables, creates the initial `Content/Maps`, `Content/Blueprints`, and `Content/Data` folders, and launches Unreal Editor. If code modules are enabled later, it also generates project files and builds the editor target.
+This startup script validates seed data, exports DataTables, ensures `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` exist, and launches Unreal Editor. If code modules are re-enabled later, it can also generate project files and build the editor target.
 
 ## First Open
 
 1. Install Unreal Engine 5 through Epic Games Launcher.
-2. Open `LiminalDominion.uproject`.
-3. If Unreal asks to rebuild modules, choose `Yes`.
-4. If Unreal asks to generate project files, allow it.
-5. Create these maps in `Content/Maps/`:
-   - `LD_Hub_Greybox`
-   - `LD_PersonalRoom_Greybox`
-   - `LD_Level1_ServiceHalls_Greybox`
-6. Set `LD_Hub_Greybox` as the startup map if the editor does not auto-resolve it.
+2. Run the startup script above or open `LiminalDominion.uproject` directly.
+3. Let the project open into the UE5 Open World template.
+4. Immediately save the current level into `Content/Maps/LD_Hub_Greybox`.
+5. Create or duplicate and save:
+   - `Content/Maps/LD_PersonalRoom_Greybox`
+   - `Content/Maps/LD_Level1_ServiceHalls_Greybox`
+6. Set `LD_Hub_Greybox` as the startup map after the first save so the repo opens into a repo-owned world instead of the engine template.
 
 ## First Blueprint Pass
 
-Create Blueprint children from the C++ skeletons:
+For the current content-first pass, create Blueprint-only placeholder assets under `Content/Blueprints`:
 
-- `BP_LDGameModeBase`
-- `BP_LDPlayerCharacter`
-- `WBP_PlayerHUD`
-- `WBP_RunResult`
+- `BP_LDPlayer`
+- `BP_LDGameMode`
 - `BP_DeploymentGate`
 - `BP_LootContainer`
 - `BP_ExtractionTrigger_Stable`
@@ -56,15 +53,17 @@ Create Blueprint children from the C++ skeletons:
 - `BP_FactionVaultPlaceholder`
 - `BP_ProjectBoard`
 - `BP_FlickerStalker`
-- `BP_PlayerInventoryComponent`
-- `BP_PlayerSanityComponent`
-- `BP_PlayerRunStateComponent`
 
-The first interaction pass should use `LDInteractable` implementations already present on loot containers, extraction triggers, storage actors, and the project board.
+Create UI assets under `Content/UI`:
+
+- `WBP_PlayerHUD`
+- `WBP_RunResult`
+
+If the legacy C++ module path is re-enabled later, these Blueprint assets can be reparented to the archived gameplay classes instead of being recreated.
 
 ## Input And HUD Contract
 
-The source scaffold includes classic UE input mappings in `Config/DefaultInput.ini`:
+`Config/DefaultInput.ini` already reserves the first-pass controls:
 
 - `WASD`: move
 - mouse: look
@@ -73,21 +72,21 @@ The source scaffold includes classic UE input mappings in `Config/DefaultInput.i
 - `Q`: consume Almond Water
 - `K`: debug death
 
-`ALDPlayerCharacter` exposes Blueprint delegates for:
+The first HUD pass should display:
 
-- interaction prompt changes
-- HUD snapshot changes
-- player messages
-
-The first HUD widget should bind to the player character and display sanity, carried inventory stacks, interaction prompt text, player messages, and run result state.
+- sanity
+- carried inventory stacks
+- interaction prompt text
+- player feedback messages
+- extraction/death result state
 
 ## Data Import
 
-Before importing data:
+Before importing data on Windows:
 
-```bash
-python3 scripts/validate_seed_data.py
-python3 scripts/export_unreal_datatables.py
+```powershell
+py -3 scripts/validate_seed_data.py
+py -3 scripts/export_unreal_datatables.py
 ```
 
 Import CSV files from:
@@ -96,37 +95,40 @@ Import CSV files from:
 generated/unreal_datatables/
 ```
 
-Import `DT_Items.csv` as a DataTable using `FLDItemRow`, then set:
+Import at least:
 
-```ini
-[/Script/LiminalDominion.LDGameDataSubsystem]
-ItemDataTablePath=/Game/Data/DT_Items.DT_Items
-```
+- `DT_Items.csv`
+- `DT_LootTables.csv`
+- `DT_Extractions.csv`
+- `DT_Storage.csv`
+- `DT_Sanity.csv`
 
-`ULDGameDataSubsystem` uses that table to resolve stackability and max stack size for starter loadouts, loot pickup, and storage deposits. Additional row structs should be added as each gameplay system moves from Python prototype to Unreal.
+Place the imported assets under `Content/Data`. The first required dependency is `DT_Items`, because that drives stackability, max-stack limits, storage UI readouts, and loot pickup behavior.
+
+`Config/DefaultGame.ini` still reserves `ItemDataTablePath` and local save-slot settings for the later legacy-C++ reactivation path.
 
 ## First Playable Milestone
 
-The first editor milestone is not visual polish. It is this loop:
+The first editor milestone is not polish. It is this readable loop:
 
 1. Start in `LD_Hub_Greybox`.
-2. Enter personal room.
-3. Interact with `BP_DeploymentGate` to start `run_level1_service_halls_v0` and open `LD_Level1_ServiceHalls_Greybox`.
-4. Pick up loot from a container.
+2. Enter or transition to `LD_PersonalRoom_Greybox`.
+3. Deploy into `LD_Level1_ServiceHalls_Greybox`.
+4. Pick up loot from at least one container.
 5. Watch sanity drain.
 6. Consume Almond Water.
-7. Trigger a Flicker Stalker patrol/chase/attack.
-8. Extract through the stable exit and return to `LD_PersonalRoom_Greybox`.
-9. Return to personal room.
+7. Encounter a Flicker Stalker placeholder.
+8. Extract through the stable exit.
+9. Return to the personal room.
 10. Deposit loot into personal storage.
 11. Contribute Movie Tickets and scrap to the Signal Lamp Project.
-12. Trigger death in a test run and confirm carried inventory clears while personal storage remains.
+12. Trigger death in a second run and confirm carried inventory clears while personal storage remains.
 
 ## Local SaveGame Persistence
 
-V0.1 uses `ULDSaveGameSubsystem` as a local-only persistence bridge. This is not the final server persistence model.
+V0.1 save behavior should remain local-only.
 
-The default slot is configured in `Config/DefaultGame.ini`:
+The reserved slot config in `Config/DefaultGame.ini` is:
 
 ```ini
 [/Script/LiminalDominion.LDSaveGameSubsystem]
@@ -134,28 +136,28 @@ SaveSlotName=LiminalDominionV0
 UserIndex=0
 ```
 
-Persisted V0.1 state:
+If the current content-only pass needs persistence before the legacy C++ bridge returns, use Blueprint/local SaveGame placeholders that preserve:
 
 - selected faction ID
 - personal storage stacks
 - completed hub upgrade IDs
 - simple run history entries
 
-In the editor, set personal-room storage Blueprints to persist as personal storage, call `LoadFromSave` on BeginPlay, and call `SaveToSaveGame` after manual storage operations that do not go through `DepositFrom`.
+## Legacy C++ Reactivation
 
-## Entity Setup
+Only do this after the Windows toolchain is fixed:
 
-For `BP_FlickerStalker`:
-
-- Assign one or more patrol point actors in the Flicker Corridor.
-- Tune `DetectionRadius`, `AttackRange`, `PatrolSpeed`, and `ChaseSpeed`.
-- Confirm attack calls the player death path and clears carried inventory during an active run.
+1. Restore `Source_Legacy/` back to `Source/`.
+2. Re-enable module entries in `LiminalDominion.uproject`.
+3. Generate project files.
+4. Rebuild the editor target.
+5. Reparent Blueprint placeholders to the gameplay classes as needed.
 
 ## Windows Build Gate
 
 Before any playtest release:
 
-- Package for Windows.
-- Run the full smoke test on Windows.
-- Confirm input, UI scaling, save paths, data import, extraction, death wipe, and sanity behavior.
-- Commit any project-setting changes after verifying they do not break macOS development.
+- package for Windows
+- run the full smoke test on Windows
+- confirm input, UI scaling, save paths, data import, extraction, death wipe, and sanity behavior
+- commit only source/config/content assets that belong in git

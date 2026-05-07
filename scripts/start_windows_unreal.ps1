@@ -17,7 +17,8 @@ $SolutionPath = Join-Path $RepoRoot "$ProjectName.sln"
 $ContentFolders = @(
     (Join-Path $RepoRoot "Content\Maps"),
     (Join-Path $RepoRoot "Content\Blueprints"),
-    (Join-Path $RepoRoot "Content\Data")
+    (Join-Path $RepoRoot "Content\Data"),
+    (Join-Path $RepoRoot "Content\UI")
 )
 
 function Write-Step {

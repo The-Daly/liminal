@@ -1,6 +1,6 @@
 # Unreal Graybox Implementation Spec
 
-This file is the build target for the first Unreal pass. The current package does not include `.uproject` files yet.
+This file is the build target for the first Unreal pass. The repo now includes `LiminalDominion.uproject`, but the active path is content-first visualization rather than a compiled C++ gameplay module.
 
 ## Project Target
 
@@ -34,31 +34,27 @@ This file is the build target for the first Unreal pass. The current package doe
 - Pickup feedback.
 - Extraction/death result screen.
 - Minimal faction/loadout debug selector until onboarding is built.
-- Player HUD widget bound to `ALDPlayerCharacter` HUD snapshots.
+- Player HUD widget for sanity, prompts, carried stacks, messages, and run state.
 - Run result widget for extraction/death.
 
-## Current Source Skeletons
+## Current Project State
 
-- `ALDPlayerCharacter`: owns carried inventory, personal storage, sanity, and run state components.
-- `FLDHUDSnapshot`: Blueprint-facing UI state for sanity, carried stacks, prompts, and run status.
-- `ULDGameDataSubsystem`: runtime lookup for imported DataTables, starting with item stack metadata.
-- `ULDSaveGameSubsystem`: local V0.1 persistence for faction, personal storage, hub upgrades, and run history.
-- `ULDRunStateComponent`: starts runs, handles extraction, and clears carried inventory on death.
-- `ILDInteractable`: common Blueprint-facing interaction contract.
-- `ALDDeploymentGate`: interactable run start and map transition gate.
-- `ALDLootContainer`: interactable loot source.
-- `ALDExtractionTrigger`: interactable extraction gate.
-- `ALDStorageActor`: personal/shared storage placeholder.
-- `ALDProjectBoardActor`: contribution/project completion placeholder.
-- `ALDFlickerStalker`: simple patrol, chase, attack, and return-to-patrol runtime behavior.
+- `LiminalDominion.uproject` opens as a content-first Unreal project and currently starts from the UE5 Open World template.
+- `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` are the repo-owned target folders for the first Unreal pass.
+- The first saved `.umap` assets and Blueprint assets are still missing and must be created inside the editor.
+- The previous gameplay C++ skeletons are preserved in `Source_Legacy/` for later reactivation once the Windows Visual Studio toolchain is fully ready.
 
 ## Data Dependency
 
-Item add paths should prefer `ULDInventoryComponent::AddItemFromData`, which asks `ULDGameDataSubsystem` for stackability and max stack size from `DT_Items`. The permissive fallback is only for early graybox use before DataTables are imported.
+The current content-first path should import CSV files from `generated/unreal_datatables/` into Unreal DataTables under `Content/Data`.
+
+The first required import is `DT_Items.csv`. That asset becomes the source for stackability, max-stack limits, trader item metadata, and storage UI display.
 
 ## Save Dependency
 
-The V0.1 save layer is intentionally local. It proves personal storage persistence and hub project completion without committing to the later server-authoritative Realm model.
+V0.1 save behavior remains intentionally local. The immediate graybox goal is to prove personal storage persistence and hub project completion without committing to the later server-authoritative Realm model.
+
+If the archived C++ save bridge is re-enabled later, it should remain a local-only proof layer until the core loop is playable.
 
 ## Default Input
 
