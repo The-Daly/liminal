@@ -28,6 +28,14 @@ powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
 
 This startup script validates seed data, exports DataTables, ensures `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` exist, and launches Unreal Editor. If code modules are re-enabled later, it can also generate project files and build the editor target.
 
+For the first automated placeholder pass after the maps exist, close the editor and run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_unreal_first_pass.ps1
+```
+
+That pass safely creates the first Blueprint and widget placeholders and places them into the repo-owned maps.
+
 ## First Open
 
 1. Install Unreal Engine 5 through Epic Games Launcher.
@@ -60,6 +68,8 @@ Create UI assets under `Content/UI`:
 - `WBP_RunResult`
 
 If the legacy C++ module path is re-enabled later, these Blueprint assets can be reparented to the archived gameplay classes instead of being recreated.
+
+The current `run_unreal_first_pass.ps1` script creates these placeholder assets automatically if they are missing, then places them into the current graybox maps.
 
 ## Input And HUD Contract
 
@@ -104,6 +114,12 @@ Import at least:
 - `DT_Sanity.csv`
 
 Place the imported assets under `Content/Data`. The first required dependency is `DT_Items`, because that drives stackability, max-stack limits, storage UI readouts, and loot pickup behavior.
+
+Current limitation on Windows with UE 5.7:
+
+- automated CSV-to-DataTable import through Python currently crashes when the row struct is Python-generated
+- placeholder assets and map placement can be automated safely
+- DataTable import should still be completed manually in the editor until the project has native or editor-authored row structs
 
 `Config/DefaultGame.ini` still reserves `ItemDataTablePath` and local save-slot settings for the later legacy-C++ reactivation path.
 

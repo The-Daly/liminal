@@ -9,6 +9,7 @@ This is the first task list for the Windows machine with Unreal Engine installed
 - Run `powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1`.
 - Open `LiminalDominion.uproject`.
 - Confirm the project reaches the editor and opens the UE5 Open World template.
+- After the three repo-owned maps exist, close the editor and run `powershell -ExecutionPolicy Bypass -File scripts/run_unreal_first_pass.ps1` to create and place the first placeholder Blueprint/UI assets.
 - If Unreal asks to build missing modules, cancel unless you are intentionally re-enabling the legacy C++ path.
 - Commit only source/config/content changes, not generated Unreal folders.
 
@@ -29,10 +30,12 @@ This is the first task list for the Windows machine with Unreal Engine installed
 - Import `DT_Storage.csv`.
 - Import `DT_Sanity.csv`.
 - Save the imported assets under `Content/Data`.
+- Current limitation: the automated Python import path crashes in UE 5.7 when using Python-generated row structs, so this CSV import step remains manual for now.
 
 ## Task 4: Blueprint Loop
 
 - Create Blueprint-only placeholders for deployment gate, loot containers, extraction triggers, storage, project board, player, and Flicker Stalker.
+- The repo automation script already creates the first pass of these placeholders if they are missing.
 - Place the deployment gate in the hub.
 - Place loot containers and a Flicker Stalker placeholder in Service Halls.
 - Place extraction triggers in Service Halls.
