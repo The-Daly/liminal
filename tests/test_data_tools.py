@@ -19,6 +19,9 @@ from level_layout_model import faction_foothold_zones, shortest_route_seconds
 from loot_model import container_owner, is_level1_weapon_armor_sparse, preview_table, roll_loot
 from navigation_marker_model import is_marker_expired, marker_visibility
 from npc_roster_model import faction_roster, hireable_security_npcs, npcs_by_service, security_brokers
+from persistence_model import load_profile, new_local_profile, save_profile
+from playable_loop_model import LoopOutcome, simulate_death_run, simulate_successful_run
+from project_board_model import HubProgressState, contribute_all_possible, contribute_item, is_upgrade_complete
 from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
 from social_model import can_form_squad, can_players_damage_each_other, radio_connects_squadmates
 from survival_model import SanityState
@@ -179,6 +182,68 @@ class DataToolTests(unittest.TestCase):
         inventory.carried.add_item(self.registry, "currency_old_movie_ticket")
         self.assertTrue(can_extract(self.registry, extraction_id, inventory.carried))
 
+    def test_playable_loop_successfully_extracts_to_personal_room(self):
+        outcome = simulate_successful_run(self.registry, rng=random.Random(7))
+        self.assertTrue(outcome.extracted)
+        self.assertFalse(outcome.died)
+        self.assertEqual(outcome.destination_map, "LD_PersonalRoom_Greybox")
+        self.assertGreaterEqual(len(outcome.looted_item_ids), 1)
+        self.assertGreaterEqual(len(outcome.deposited_item_ids), 1)
+
+    def test_playable_loop_death_run_wipes_carried_progress(self):
+        outcome = simulate_death_run(self.registry, rng=random.Random(7))
+        self.assertFalse(outcome.extracted)
+        self.assertTrue(outcome.died)
+        self.assertIsNone(outcome.extraction_id)
+        self.assertEqual(outcome.deposited_item_ids, ())
+
+    def test_local_profile_round_trips_storage_progress_and_history(self):
+        profile = new_local_profile(self.registry)
+        profile.personal.add_item(self.registry, "currency_old_movie_ticket", 25)
+        profile.personal.add_item(self.registry, "item_scrap_metal", 5)
+        profile.hub_progress.contributions["hub_project_board_signal_lamp_v0"] = {
+            "currency_old_movie_ticket": 10
+        }
+        profile.append_run(simulate_successful_run(self.registry, rng=random.Random(7)))
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            profile_path = Path(temp_dir) / "local_profile.json"
+            save_profile(profile_path, profile)
+            restored = load_profile(self.registry, profile_path)
+
+        self.assertEqual(restored.faction_id, "meg")
+        self.assertEqual(restored.personal.quantity("currency_old_movie_ticket"), 25)
+        self.assertEqual(restored.personal.quantity("item_scrap_metal"), 5)
+        self.assertEqual(
+            restored.hub_progress.contributions["hub_project_board_signal_lamp_v0"]["currency_old_movie_ticket"],
+            10,
+        )
+        self.assertEqual(len(restored.run_history), 1)
+        self.assertTrue(restored.run_history[0].extracted)
+
+    def test_local_profile_trims_run_history_to_latest_entries(self):
+        profile = new_local_profile(self.registry)
+        for index in range(25):
+            profile.append_run(
+                LoopOutcome(
+                    faction_id="meg",
+                    run_state_id=f"run_{index}",
+                    extracted=False,
+                    died=True,
+                    extraction_id=None,
+                    destination_map=None,
+                    looted_item_ids=(),
+                    deposited_item_ids=(),
+                    completed_upgrades=(),
+                    remaining_sanity=float(100 - index),
+                ),
+                max_entries=20,
+            )
+
+        self.assertEqual(len(profile.run_history), 20)
+        self.assertEqual(profile.run_history[0].run_state_id, "run_5")
+        self.assertEqual(profile.run_history[-1].run_state_id, "run_24")
+
     def test_faction_loadout_and_realm_reset(self):
         loadout = resolve_starting_loadout(self.registry, "meg")
         self.assertIn("tool_meg_entity_scanner", loadout.item_ids)
@@ -190,6 +255,36 @@ class DataToolTests(unittest.TestCase):
         reset_inventory = reset_realm_for_faction(self.registry, "clippers")
         self.assertEqual(reset_inventory.carried.quantity("tool_clippers_camcorder"), 1)
         self.assertEqual(reset_inventory.personal.quantity("relic_golden_admit_one_ticket"), 0)
+
+    def test_project_board_accepts_partial_contribution_without_over_removing(self):
+        state = HubProgressState(faction_id="meg")
+        storage = InventoryContainer("personal", max_slots=20)
+        storage.add_item(self.registry, "currency_old_movie_ticket", 10)
+        result = contribute_item(
+            self.registry,
+            state,
+            "hub_project_board_signal_lamp_v0",
+            storage,
+            "currency_old_movie_ticket",
+            25,
+        )
+        self.assertEqual(result.moved_quantity, 10)
+        self.assertEqual(result.remaining_quantity, 15)
+        self.assertFalse(result.completed_upgrade)
+        self.assertEqual(storage.quantity("currency_old_movie_ticket"), 0)
+        self.assertFalse(is_upgrade_complete(self.registry, state, "hub_project_board_signal_lamp_v0"))
+
+    def test_project_board_completes_signal_lamp_upgrade(self):
+        state = HubProgressState(faction_id="meg")
+        storage = InventoryContainer("personal", max_slots=20)
+        storage.add_item(self.registry, "currency_old_movie_ticket", 25)
+        storage.add_item(self.registry, "item_scrap_metal", 5)
+        results = contribute_all_possible(self.registry, state, "hub_project_board_signal_lamp_v0", storage)
+        self.assertTrue(is_upgrade_complete(self.registry, state, "hub_project_board_signal_lamp_v0"))
+        self.assertIn("hub_project_board_signal_lamp_v0", state.completed_upgrades)
+        self.assertTrue(any(result.completed_upgrade for result in results))
+        self.assertEqual(storage.quantity("currency_old_movie_ticket"), 0)
+        self.assertEqual(storage.quantity("item_scrap_metal"), 0)
 
     def test_loot_roll_and_preview(self):
         rng = random.Random(1)

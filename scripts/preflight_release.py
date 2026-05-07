@@ -10,6 +10,9 @@ CHECKS = [
     ("Unit tests", [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"]),
     ("Unreal DataTable export", [sys.executable, "scripts/export_unreal_datatables.py"]),
     ("Unreal scaffold check", [sys.executable, "scripts/check_unreal_scaffold.py"]),
+    ("Project board prototype", [sys.executable, "scripts/project_board_model.py"]),
+    ("Playable loop prototype", [sys.executable, "scripts/playable_loop_model.py"]),
+    ("Persistence prototype", [sys.executable, "scripts/persistence_model.py"]),
     ("Python compile", [sys.executable, "-m", "compileall", "scripts", "tests"]),
 ]
 

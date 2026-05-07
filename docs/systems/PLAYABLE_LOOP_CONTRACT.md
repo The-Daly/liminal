@@ -43,4 +43,5 @@ This contract describes the first playable state the project is driving toward.
 
 - Player can deposit loot into personal storage.
 - Player can contribute resources to Signal Lamp Project.
-- SaveGame stores personal storage, completed hub upgrades, faction ID, and run history.
+- SaveGame stores personal storage, partial and completed hub upgrade progress, faction ID, and run history.
+- The current repo-side prototype for that payload lives in `scripts/persistence_model.py`.

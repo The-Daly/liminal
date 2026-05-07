@@ -30,3 +30,14 @@ Current overflow stub behavior:
 - Any excess is returned as an overflow result instead of being silently discarded.
 - When transferring from carried inventory to personal storage, only the stored quantity is removed from carried inventory.
 - Overflow remains in the source container for manual player handling until the final Unreal UI/flow exists.
+
+## Local Persistence Prototype
+
+The repo now also includes `scripts/persistence_model.py`, which defines a local profile payload for:
+
+- faction ID
+- personal storage contents
+- partial and completed hub project progress
+- run history entries
+
+This is the current SaveGame-style contract the Unreal graybox should mirror before any server-authoritative Realm architecture is introduced.

@@ -36,6 +36,9 @@ Created: 2026-05-07
 - `scripts/social_model.py` - same-faction squad/radio/no-team-kill helper
 - `scripts/level_layout_model.py` - Level 1 route and foothold helper
 - `scripts/loot_model.py` - loot preview and roll helper
+- `scripts/project_board_model.py` - faction hub contribution helper
+- `scripts/playable_loop_model.py` - end-to-end run outcome simulator
+- `scripts/persistence_model.py` - local profile/save payload prototype
 - `scripts/export_unreal_datatables.py` - Unreal CSV export bridge
 - `scripts/check_dev_environment.py` - local dev smoke check
 - `scripts/check_unreal_scaffold.py` - content-first/legacy Unreal scaffold verification

@@ -35,10 +35,10 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 
 - Expanded JSON schemas and seed data cover V0.1 items, factions, loot, entities, storage, sanity, extractions, hub upgrades, player state, and run state.
 - `scripts/validate_seed_data.py` validates schemas, duplicate IDs, and cross-data references.
-- Prototype Python modules model registries, loot rolls, inventory/storage, capped personal-storage overflow, sanity, and extraction requirements before Unreal integration.
+- Prototype Python modules model registries, loot rolls, inventory/storage, capped personal-storage overflow, sanity, extraction requirements, project-board contributions, end-to-end run outcomes, and local profile persistence before Unreal integration.
 - A content-first UE5 project now exists in `LiminalDominion.uproject`, `Config/`, and `Content/`.
 - The earlier C++ gameplay scaffold is preserved in `Source_Legacy/` and can be re-enabled later when the Windows toolchain is ready.
-- Non-Unreal framework docs and prototypes now cover faction loadouts, no-team-kill social rules, trader purchases, the 21-NPC master roster, NPC/quest contracts, weapons/ammo, Trail String navigation, gun-noise responses, loot density, and the playable loop contract.
+- Non-Unreal framework docs and prototypes now cover faction loadouts, no-team-kill social rules, trader purchases, the 21-NPC master roster, NPC/quest contracts, weapons/ammo, Trail String navigation, gun-noise responses, loot density, project-board contribution rules, the playable loop contract, and a local save-profile contract.
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
 
 Start with `docs/SYSTEM_INDEX.md` when handing the project to another AI agent or developer.
@@ -52,6 +52,8 @@ python3 -m pip install -r requirements.txt
 python3 scripts/validate_seed_data.py
 python3 -m unittest discover -s tests -v
 python3 scripts/check_dev_environment.py
+python3 scripts/playable_loop_model.py
+python3 scripts/persistence_model.py
 ```
 
 On Windows PowerShell:
@@ -61,6 +63,8 @@ py -3 -m pip install -r requirements.txt
 py -3 scripts/validate_seed_data.py
 py -3 -m unittest discover -s tests -v
 py -3 scripts/check_dev_environment.py
+py -3 scripts/playable_loop_model.py
+py -3 scripts/persistence_model.py
 ```
 
 To run the Windows Unreal startup sequence from the repo:

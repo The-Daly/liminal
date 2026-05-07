@@ -91,6 +91,7 @@
 
 ## Phase 7 — Playtest Loop
 
+- Repo-side Python simulation now covers loot, sanity drain, extraction, personal-storage deposit, death wipe, project-board contribution, and local save-payload persistence. The Unreal graybox implementation for the checklist below is still pending.
 - [ ] Deploy.
 - [ ] Loot.
 - [ ] Sanity drain.

@@ -11,11 +11,12 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - Saved repo-owned maps, Blueprint assets, and a packaged playable build still do not exist yet.
 - Python validation exists and requires `jsonschema` from `requirements.txt`.
 - Version 0.1 remains a graybox, single-player/local prototype target.
+- The repo-side Python layer can now simulate successful and failed runs, including loot, sanity drain, extraction, personal storage deposit, death wipe, project-board contribution, and local profile persistence.
 
 ## V0.1 Foundation
 
 - Data schemas and seeds for items, factions, loot tables, entities, inventory, storage, sanity, extractions, hub upgrades, player state, and run state.
-- Importable Python prototypes for registry loading, loot rolls, inventory, storage, sanity, extraction, and basic run state.
+- Importable Python prototypes for registry loading, loot rolls, inventory, storage, sanity, extraction, project-board contribution, local save payloads, and basic run-state outcomes.
 - Validation for duplicate IDs and cross-data references.
 - Negative validation tests for enum errors, duplicate IDs, missing item references, and invalid runtime data.
 
@@ -29,6 +30,7 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - Sanity meter, sanity drain, Almond Water effect, and low-sanity event hook.
 - Flicker Stalker prototype with patrol, perception, chase, attack, and return-to-patrol.
 - Minimal HUD for sanity, inventory, prompts, pickup feedback, extraction, and death.
+- Repo-side simulation coverage for successful extraction and failed-run inventory loss before Unreal implementation.
 
 ## Full Game Gaps
 
