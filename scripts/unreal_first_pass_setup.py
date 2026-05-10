@@ -28,6 +28,10 @@ BLUEPRINTS = [
     ("BP_PersonalStorage", unreal.Actor),
     ("BP_FactionVaultPlaceholder", unreal.Actor),
     ("BP_ProjectBoard", unreal.Actor),
+    ("BP_QuartermasterPlaceholder", unreal.Actor),
+    ("BP_TraderPlaceholder", unreal.Actor),
+    ("BP_FactionSelectorPlaceholder", unreal.Actor),
+    ("BP_RelicDisplayPlaceholder", unreal.Actor),
     ("BP_FlickerStalker", unreal.Character),
 ]
 
@@ -41,9 +45,13 @@ MAP_PLACEMENTS = {
         ("BP_DeploymentGate", unreal.Vector(0.0, 0.0, 120.0)),
         ("BP_ProjectBoard", unreal.Vector(300.0, 0.0, 120.0)),
         ("BP_FactionVaultPlaceholder", unreal.Vector(-300.0, 0.0, 120.0)),
+        ("BP_QuartermasterPlaceholder", unreal.Vector(-150.0, -250.0, 120.0)),
+        ("BP_TraderPlaceholder", unreal.Vector(150.0, -250.0, 120.0)),
+        ("BP_FactionSelectorPlaceholder", unreal.Vector(0.0, -150.0, 120.0)),
     ],
     "/Game/Maps/LD_PersonalRoom_Greybox": [
         ("BP_PersonalStorage", unreal.Vector(0.0, 0.0, 120.0)),
+        ("BP_RelicDisplayPlaceholder", unreal.Vector(-250.0, 0.0, 120.0)),
     ],
     "/Game/Maps/LD_Level1_ServiceHalls_Greybox": [
         ("BP_LootContainer", unreal.Vector(0.0, 0.0, 120.0)),

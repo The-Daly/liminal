@@ -17,7 +17,11 @@ LEGACY_PLACEHOLDER_LABELS = {
     "BP_DeploymentGate",
     "BP_ProjectBoard",
     "BP_FactionVaultPlaceholder",
+    "BP_QuartermasterPlaceholder",
+    "BP_TraderPlaceholder",
+    "BP_FactionSelectorPlaceholder",
     "BP_PersonalStorage",
+    "BP_RelicDisplayPlaceholder",
     "BP_LootContainer",
     "BP_ExtractionTrigger_Stable",
     "BP_ExtractionTrigger_HiddenTicketBooth",
@@ -28,7 +32,11 @@ BLUEPRINT_PATHS = {
     "DeploymentGate": "/Game/Blueprints/BP_DeploymentGate",
     "ProjectBoard": "/Game/Blueprints/BP_ProjectBoard",
     "FactionVault": "/Game/Blueprints/BP_FactionVaultPlaceholder",
+    "Quartermaster": "/Game/Blueprints/BP_QuartermasterPlaceholder",
+    "Trader": "/Game/Blueprints/BP_TraderPlaceholder",
+    "FactionSelector": "/Game/Blueprints/BP_FactionSelectorPlaceholder",
     "PersonalStorage": "/Game/Blueprints/BP_PersonalStorage",
+    "RelicDisplay": "/Game/Blueprints/BP_RelicDisplayPlaceholder",
     "LootContainer": "/Game/Blueprints/BP_LootContainer",
     "StableExtraction": "/Game/Blueprints/BP_ExtractionTrigger_Stable",
     "HiddenExtraction": "/Game/Blueprints/BP_ExtractionTrigger_HiddenTicketBooth",
@@ -218,24 +226,40 @@ def build_hub_map() -> None:
 
     spawn_floor(f"{PREFIX}HubBoardPad", (0.0, 8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubVaultPad", (-10.0, 8.0), (7.0, 4.0))
+    spawn_floor(f"{PREFIX}HubQuartermasterPad", (-8.0, -8.0), (7.0, 4.0))
+    spawn_floor(f"{PREFIX}HubTraderPad", (8.0, -8.0), (7.0, 4.0))
+    spawn_floor(f"{PREFIX}HubFactionSelectorPad", (0.0, -4.0), (5.0, 3.0))
 
     add_landmark_pillar("HubSignalLampBase", (11.0, 8.0, 2.0), (1.2, 1.2, 4.0))
+    add_landmark_pillar("HubSignalLampCore", (11.0, 8.0, 4.8), (0.5, 0.5, 1.2))
     add_landmark_pillar("HubDeploymentFrameLeft", (30.0, -2.5, 2.5), (1.0, 1.0, 5.0))
     add_landmark_pillar("HubDeploymentFrameRight", (30.0, 2.5, 2.5), (1.0, 1.0, 5.0))
+    add_landmark_pillar("HubQuartermasterDesk", (-8.0, -6.4, 1.1), (4.5, 1.2, 2.2))
+    add_landmark_pillar("HubTraderDesk", (8.0, -6.4, 1.1), (4.5, 1.2, 2.2))
+    add_landmark_pillar("HubFactionSelectorMonolith", (0.0, -4.0, 1.8), (1.2, 1.2, 3.6))
 
     spawn_player_start("HubPlayerStart", (-12.0, 0.0, 0.5))
     spawn_point_light("HubLight01", (-10.0, 0.0, 3.6), intensity=20000.0)
     spawn_point_light("HubLight02", (0.0, 0.0, 3.6), intensity=22000.0)
     spawn_point_light("HubLight03", (12.0, 0.0, 3.6), intensity=22000.0)
     spawn_point_light("HubLight04", (0.0, 8.0, 3.6), intensity=18000.0)
+    spawn_point_light("HubLight05", (-8.0, -8.0, 3.4), intensity=17000.0)
+    spawn_point_light("HubLight06", (8.0, -8.0, 3.4), intensity=17000.0)
+    spawn_point_light("HubSignalLampLight", (11.0, 8.0, 5.2), intensity=30000.0, attenuation_radius=2200.0)
 
     spawn_text("HubSignDeployment", "DEPLOYMENT", (22.0, 0.0, 3.2))
     spawn_text("HubSignPersonalRoom", "PERSONAL ROOM", (-22.0, 0.0, 3.2))
     spawn_text("HubSignBoard", "SIGNAL LAMP PROJECT", (0.0, 10.0, 2.4), scale=1.5)
+    spawn_text("HubSignQuartermaster", "QUARTERMASTER", (-8.0, -10.2, 2.2), scale=1.2)
+    spawn_text("HubSignTrader", "TRADER", (8.0, -10.2, 2.2), scale=1.2)
+    spawn_text("HubSignFaction", "FACTION SELECTOR", (0.0, -1.6, 2.3), scale=1.1)
 
     spawn_blueprint_actor(BLUEPRINT_PATHS["DeploymentGate"], f"{PREFIX}HubDeploymentGate", meters(29.0, 0.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["ProjectBoard"], f"{PREFIX}HubProjectBoard", meters(0.0, 8.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["FactionVault"], f"{PREFIX}HubFactionVault", meters(-10.0, 8.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["Quartermaster"], f"{PREFIX}HubQuartermaster", meters(-8.0, -8.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["Trader"], f"{PREFIX}HubTrader", meters(8.0, -8.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["FactionSelector"], f"{PREFIX}HubFactionSelector", meters(0.0, -4.0, 1.2))
 
     unreal.EditorLevelLibrary.save_current_level()
     log("Saved LD_Hub_Greybox")
@@ -251,18 +275,23 @@ def build_personal_room_map() -> None:
     spawn_floor(f"{PREFIX}PersonalStoragePad", (4.0, 3.0), (5.0, 2.6))
     spawn_floor(f"{PREFIX}RelicDisplayPad", (-2.5, 3.0), (3.5, 2.2))
     spawn_floor(f"{PREFIX}BedPad", (2.0, -2.8), (4.0, 2.4))
+    spawn_floor(f"{PREFIX}WorkbenchPad", (-1.0, -2.6), (3.6, 2.0))
 
     add_landmark_pillar("PersonalRoomLocker", (5.8, 3.0, 1.6), (0.8, 0.8, 3.2))
     add_landmark_pillar("PersonalRoomDisplayCase", (-2.5, 3.0, 1.4), (1.0, 0.8, 2.8))
+    add_landmark_pillar("PersonalRoomWorkbench", (-1.0, -2.4, 1.0), (3.2, 1.0, 2.0))
 
     spawn_player_start("PersonalRoomPlayerStart", (-3.5, 0.0, 0.5))
     spawn_point_light("PersonalRoomLight01", (-3.0, 0.0, 3.2), intensity=18000.0, attenuation_radius=2200.0)
     spawn_point_light("PersonalRoomLight02", (4.0, 0.0, 3.2), intensity=15000.0, attenuation_radius=2200.0)
+    spawn_point_light("PersonalRoomLight03", (-2.5, 3.0, 2.8), intensity=12000.0, attenuation_radius=1800.0)
 
     spawn_text("PersonalRoomSignStorage", "SAFE STORAGE", (4.0, 4.8, 2.2), scale=1.2)
     spawn_text("PersonalRoomSignRelics", "RELIC DISPLAY", (-2.5, 4.8, 2.2), scale=1.2)
+    spawn_text("PersonalRoomSignWorkbench", "WORKBENCH", (-1.0, -0.7, 2.1), scale=1.0)
 
     spawn_blueprint_actor(BLUEPRINT_PATHS["PersonalStorage"], f"{PREFIX}PersonalRoomStorage", meters(4.0, 3.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["RelicDisplay"], f"{PREFIX}PersonalRoomRelicDisplay", meters(-2.5, 3.0, 1.2))
 
     unreal.EditorLevelLibrary.save_current_level()
     log("Saved LD_PersonalRoom_Greybox")
@@ -346,17 +375,27 @@ def build_service_halls_map() -> None:
     add_landmark_pillar("UtilityBenchB", (634.0, 88.0, 0.6), (3.4, 1.3, 1.2))
 
     spawn_text("ServiceSignArchive", "M.E.G. ARCHIVE", (70.0, 482.0, 2.6), scale=1.3)
+    spawn_text("ServiceSignStorage", "FOGGED STORAGE BAY", (-90.0, 264.0, 2.5), scale=1.1)
+    spawn_text("ServiceSignTheater", "ABANDONED THEATER", (140.0, -196.0, 2.4), scale=1.1)
     spawn_text("ServiceSignFlicker", "FLICKER CORRIDOR", (500.0, 350.0, 2.6), scale=1.2)
     spawn_text("ServiceSignKiosk", "B.N.T.G. KIOSK", (540.0, -176.0, 2.4), scale=1.2)
+    spawn_text("ServiceSignCrawlspace", "CRAWLSPACE ROUTE", (220.0, -408.0, 2.2), scale=1.0)
+    spawn_text("ServiceSignRouteWall", "CLIPPERS ROUTE WALL", (470.0, -506.0, 2.4), scale=1.0)
+    spawn_text("ServiceSignChalkA", "TICKETS ->", (206.0, -438.0, 1.8), scale=0.8)
+    spawn_text("ServiceSignChalkB", "EXIT?", (456.0, -534.0, 1.8), scale=0.8)
     spawn_text("ServiceSignHidden", "TICKET BOOTH EXIT", (40.0, -548.0, 2.4), scale=1.1)
     spawn_text("ServiceSignStable", "STABLE EXTRACTION", (-240.0, 102.0, 2.4), scale=1.1)
 
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_FoggedStorage", meters(-92.0, 246.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_ArchiveOffice", meters(74.0, 466.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_UtilityRooms", meters(614.0, 76.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_TheaterCorner", meters(132.0, -216.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_KioskPocket", meters(546.0, -202.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_CrawlspaceRoute", meters(228.0, -426.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["StableExtraction"], f"{PREFIX}Extraction_Stable", meters(-240.0, 90.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["HiddenExtraction"], f"{PREFIX}Extraction_HiddenTicketBooth", meters(40.0, -560.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["FlickerStalker"], f"{PREFIX}FlickerStalker_MainPatrol", meters(500.0, 340.0, 1.2))
+    spawn_blueprint_actor(BLUEPRINT_PATHS["Trader"], f"{PREFIX}ServiceTraderKioskPlaceholder", meters(540.0, -190.0, 1.2))
 
     unreal.EditorLevelLibrary.save_current_level()
     log("Saved LD_Level1_ServiceHalls_Greybox")

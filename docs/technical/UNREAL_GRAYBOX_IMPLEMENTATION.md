@@ -42,6 +42,7 @@ This file is the build target for the first Unreal pass. The repo now includes `
 - `LiminalDominion.uproject` opens as a content-first Unreal project and now starts from `LD_Hub_Greybox`.
 - `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` are the repo-owned target folders for the current Unreal pass.
 - The repo now contains saved graybox maps, placeholder Blueprint/UI assets, and an automated shell-layout pass.
+- The current graybox readability pass adds quartermaster, trader, faction-selector, relic-display, and extra route/objective anchors to the maps.
 - The previous gameplay C++ skeletons are preserved in `Source_Legacy/` for later reactivation once the Windows Visual Studio toolchain is fully ready.
 - `scripts/run_unreal_first_pass.ps1` creates the first placeholder actors and widgets.
 - `scripts/run_unreal_graybox_layout.ps1` stamps the first hub, personal room, and Service Halls shell geometry into the maps.
