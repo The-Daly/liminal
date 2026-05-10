@@ -77,7 +77,23 @@ def spawn_actor(actor_class, label: str, location: unreal.Vector, rotation: unre
     return actor
 
 
-def spawn_blueprint_actor(asset_path: str, label: str, location: unreal.Vector):
+def stamp_properties(actor, properties: dict[str, object] | None) -> None:
+    if not properties:
+        return
+
+    for property_name, property_value in properties.items():
+        try:
+            actor.set_editor_property(property_name, property_value)
+        except Exception as exc:
+            log(f"Skipped property {property_name} on {actor.get_actor_label()}: {exc}")
+
+
+def spawn_blueprint_actor(
+    asset_path: str,
+    label: str,
+    location: unreal.Vector,
+    properties: dict[str, object] | None = None,
+):
     blueprint = load_asset(asset_path)
     actor = unreal.EditorLevelLibrary.spawn_actor_from_object(
         blueprint,
@@ -85,6 +101,7 @@ def spawn_blueprint_actor(asset_path: str, label: str, location: unreal.Vector):
         unreal.Rotator(0.0, 0.0, 0.0),
     )
     actor.set_actor_label(label)
+    stamp_properties(actor, properties)
     return actor
 
 
@@ -265,8 +282,32 @@ def build_hub_map() -> None:
     spawn_text("HubStepContribute", "STEP 6: CONTRIBUTE", (5.5, 10.4, 1.4), scale=0.85)
     spawn_text("HubFlowReminder", "RUN FLOW: DEPLOY -> LOOT -> EXTRACT -> RETURN", (0.0, -11.0, 2.0), scale=0.9)
 
-    spawn_blueprint_actor(BLUEPRINT_PATHS["DeploymentGate"], f"{PREFIX}HubDeploymentGate", meters(29.0, 0.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["ProjectBoard"], f"{PREFIX}HubProjectBoard", meters(0.0, 8.0, 1.2))
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["DeploymentGate"],
+        f"{PREFIX}HubDeploymentGate",
+        meters(29.0, 0.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to deploy to the Service Halls.",
+            "TargetMapPath": "/Game/Maps/LD_Level1_ServiceHalls_Greybox.LD_Level1_ServiceHalls_Greybox",
+            "ReturnMapPath": "/Game/Maps/LD_PersonalRoom_Greybox.LD_PersonalRoom_Greybox",
+            "RunStateId": "run_level1_service_halls_v0",
+            "PlayerStateId": "player_state_v0_meg",
+            "BoardUpgradeId": "hub_project_board_signal_lamp_v0",
+            "StartsRun": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["ProjectBoard"],
+        f"{PREFIX}HubProjectBoard",
+        meters(0.0, 8.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to contribute loot to the Signal Lamp Project.",
+            "HubUpgradeId": "hub_project_board_signal_lamp_v0",
+            "FactionId": "meg",
+            "TracksPartialProgress": True,
+            "VisibleUnlockLabel": "Signal Lamp Project",
+        },
+    )
     spawn_blueprint_actor(BLUEPRINT_PATHS["FactionVault"], f"{PREFIX}HubFactionVault", meters(-10.0, 8.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["Quartermaster"], f"{PREFIX}HubQuartermaster", meters(-8.0, -8.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["Trader"], f"{PREFIX}HubTrader", meters(8.0, -8.0, 1.2))
@@ -305,7 +346,17 @@ def build_personal_room_map() -> None:
     spawn_text("PersonalRoomStepReturn", "RETURN POINT", (-3.5, 1.6, 1.7), scale=0.8)
     spawn_text("PersonalRoomStepDeposit", "STEP 5: DEPOSIT LOOT", (4.0, 1.2, 1.7), scale=0.8)
 
-    spawn_blueprint_actor(BLUEPRINT_PATHS["PersonalStorage"], f"{PREFIX}PersonalRoomStorage", meters(4.0, 3.0, 1.2))
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["PersonalStorage"],
+        f"{PREFIX}PersonalRoomStorage",
+        meters(4.0, 3.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to deposit carried loot into safe storage.",
+            "StorageId": "storage_personal_room_tier0",
+            "DepositLabel": "Personal Room Safe Storage",
+            "PreservesLootOnDeath": True,
+        },
+    )
     spawn_blueprint_actor(BLUEPRINT_PATHS["RelicDisplay"], f"{PREFIX}PersonalRoomRelicDisplay", meters(-2.5, 3.0, 1.2))
 
     unreal.EditorLevelLibrary.save_current_level()
@@ -412,16 +463,124 @@ def build_service_halls_map() -> None:
     spawn_text("ServiceStepHidden", "ALT EXIT: MOVIE TICKET", (40.0, -576.0, 1.9), scale=0.8)
     spawn_text("ServiceFlowReminder", "FOLLOW SIGNS: LOOT -> STALKER -> EXTRACT", (220.0, 90.0, 2.0), scale=0.9)
 
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_StartRoute", meters(32.0, 14.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_FoggedStorage", meters(-92.0, 246.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_ArchiveOffice", meters(74.0, 466.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_UtilityRooms", meters(614.0, 76.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_TheaterCorner", meters(132.0, -216.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_KioskPocket", meters(546.0, -202.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_CrawlspaceRoute", meters(228.0, -426.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["StableExtraction"], f"{PREFIX}Extraction_Stable", meters(-240.0, 90.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["HiddenExtraction"], f"{PREFIX}Extraction_HiddenTicketBooth", meters(40.0, -560.0, 1.2))
-    spawn_blueprint_actor(BLUEPRINT_PATHS["FlickerStalker"], f"{PREFIX}FlickerStalker_MainPatrol", meters(500.0, 340.0, 1.2))
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_StartRoute",
+        meters(32.0, 14.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the arrival cache.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Arrival Cache",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_FoggedStorage",
+        meters(-92.0, 246.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the fogged storage crates.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Fogged Storage Crates",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_ArchiveOffice",
+        meters(74.0, 466.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the archive office desk.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Archive Office Desk",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_UtilityRooms",
+        meters(614.0, 76.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the utility workbench.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Utility Workbench",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_TheaterCorner",
+        meters(132.0, -216.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the theater corner stash.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Theater Corner Stash",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_KioskPocket",
+        meters(546.0, -202.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the kiosk pocket cache.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Kiosk Pocket Cache",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["LootContainer"],
+        f"{PREFIX}LootContainer_CrawlspaceRoute",
+        meters(228.0, -426.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to search the crawlspace stash.",
+            "LootTableId": "loot_level1_basic",
+            "ContainerLabel": "Crawlspace Stash",
+            "SingleUse": True,
+            "TracksCarriedInventory": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["StableExtraction"],
+        f"{PREFIX}Extraction_Stable",
+        meters(-240.0, 90.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to extract through the stable service door.",
+            "ExtractionId": "extract_level1_stable_service_door",
+            "ReturnMapPath": "/Game/Maps/LD_PersonalRoom_Greybox.LD_PersonalRoom_Greybox",
+            "RequiredItemId": "",
+            "ReturnsToPersonalRoom": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["HiddenExtraction"],
+        f"{PREFIX}Extraction_HiddenTicketBooth",
+        meters(40.0, -560.0, 1.2),
+        {
+            "InteractionPrompt": "Press E to use the hidden ticket booth exit.",
+            "ExtractionId": "extract_level1_hidden_ticket_booth",
+            "ReturnMapPath": "/Game/Maps/LD_PersonalRoom_Greybox.LD_PersonalRoom_Greybox",
+            "RequiredItemId": "currency_old_movie_ticket",
+            "ReturnsToPersonalRoom": True,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["FlickerStalker"],
+        f"{PREFIX}FlickerStalker_MainPatrol",
+        meters(500.0, 340.0, 1.2),
+        {
+            "EncounterLabel": "Flicker Stalker Patrol",
+            "SanityRuleId": "sanity_level1_service_halls_v0",
+            "ForcesRetreatPath": True,
+        },
+    )
     spawn_blueprint_actor(BLUEPRINT_PATHS["Trader"], f"{PREFIX}ServiceTraderKioskPlaceholder", meters(540.0, -190.0, 1.2))
 
     unreal.EditorLevelLibrary.save_current_level()

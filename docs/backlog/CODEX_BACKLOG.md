@@ -88,11 +88,15 @@
 - [x] Add extraction trigger.
 - [x] Add Flicker Stalker placeholder.
 - [x] Add player HUD widget.
+- [x] Add Blueprint-side data contract variables for deployment, loot, extraction, storage, project board, player shell, game mode shell, and placeholder widgets.
+- [x] Stamp prompts, IDs, and map-path metadata onto the placed graybox interaction actors.
+- [ ] Replace the crashing Python-row-struct Unreal import path with editor-authored or native row structs.
+- [ ] Import the first eight loop-critical DataTables into `Content/Data`.
 
 ## Phase 7 — Playtest Loop
 
 - Repo-side Python simulation now covers loot, sanity drain, extraction, personal-storage deposit, death wipe, project-board contribution, and local save-payload persistence. The Unreal graybox implementation for the checklist below is still pending.
-- The current Unreal map automation now adds smoke-test route signage and objective pads so the loop beats are easier to follow in-editor before interaction wiring is finished.
+- The current Unreal map automation now adds smoke-test route signage, objective pads, and interaction metadata so the loop beats are easier to follow in-editor before interaction wiring is finished.
 - [ ] Deploy.
 - [ ] Loot.
 - [ ] Sanity drain.

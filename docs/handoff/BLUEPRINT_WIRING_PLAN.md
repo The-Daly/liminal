@@ -13,6 +13,13 @@ Do not aim for final systems. Aim for:
 - stable
 - easy to iterate
 
+The current repo already provides two useful setup layers:
+
+- the first-wave Blueprint assets now expose data variables for prompts, IDs, and map paths
+- the placed map instances are already stamped with loop-specific values by `scripts/unreal_graybox_layout.py`
+
+The next pass should build behavior around those stamped values rather than hardcoding a separate set of constants in each graph.
+
 ## First-Wave Actors
 
 ### `BP_DeploymentGate`
@@ -27,6 +34,12 @@ Needed data:
 
 - simple run-active flag
 - optional selected faction/loadout placeholder
+- already stamped on placed instance:
+  - `InteractionPrompt`
+  - `TargetMapPath`
+  - `ReturnMapPath`
+  - `RunStateId`
+  - `PlayerStateId`
 
 ### `BP_LootContainer`
 
@@ -41,6 +54,11 @@ Needed data:
 
 - `DT_Items`
 - `DT_LootTables`
+- already stamped on placed instances:
+  - `InteractionPrompt`
+  - `LootTableId`
+  - `ContainerLabel`
+  - `SingleUse`
 
 ### `BP_ExtractionTrigger_Stable`
 
@@ -54,6 +72,10 @@ Minimum behavior:
 Needed data:
 
 - `DT_Extractions`
+- already stamped on placed instance:
+  - `InteractionPrompt`
+  - `ExtractionId`
+  - `ReturnMapPath`
 
 ### `BP_ExtractionTrigger_HiddenTicketBooth`
 
@@ -68,6 +90,11 @@ Needed data:
 
 - `DT_Items`
 - `DT_Extractions`
+- already stamped on placed instance:
+  - `InteractionPrompt`
+  - `ExtractionId`
+  - `RequiredItemId`
+  - `ReturnMapPath`
 
 ### `BP_PersonalStorage`
 
@@ -82,6 +109,10 @@ Needed data:
 
 - `DT_Items`
 - `DT_Storage`
+- already stamped on placed instance:
+  - `InteractionPrompt`
+  - `StorageId`
+  - `DepositLabel`
 
 ### `BP_ProjectBoard`
 
@@ -96,6 +127,11 @@ Needed data:
 
 - `DT_HubUpgrades`
 - `DT_Items`
+- already stamped on placed instance:
+  - `InteractionPrompt`
+  - `HubUpgradeId`
+  - `FactionId`
+  - `VisibleUnlockLabel`
 
 ## Second-Wave Actors
 
@@ -178,6 +214,12 @@ This pass is successful when:
 - the player can also fail a run and lose carried inventory
 - personal storage survives failure
 - the board can accept at least one contribution
+
+The current repo is partially through this pass:
+
+- data variables exist
+- map instances are stamped
+- interaction graphs still need to be authored
 
 ## Do Not Overbuild Yet
 

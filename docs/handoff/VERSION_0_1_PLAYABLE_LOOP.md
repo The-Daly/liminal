@@ -8,6 +8,8 @@ Turn the current Unreal graybox into a short, readable, replayable local prototy
 
 The loop does not need polish yet. It needs clarity.
 
+The repo already has the layout, route markers, and stamped actor metadata for this loop. What remains is turning those placed actors into working interactions.
+
 ## Start State
 
 - Player starts in `LD_Hub_Greybox` or returns to `LD_PersonalRoom_Greybox`.

@@ -16,6 +16,9 @@ DATA_IMPORTS = {
     "DT_Extractions": "DT_Extractions.csv",
     "DT_Storage": "DT_Storage.csv",
     "DT_Sanity": "DT_Sanity.csv",
+    "DT_HubUpgrades": "DT_HubUpgrades.csv",
+    "DT_PlayerState": "DT_PlayerState.csv",
+    "DT_RunState": "DT_RunState.csv",
 }
 
 BLUEPRINTS = [
@@ -84,8 +87,8 @@ def save_asset(asset) -> None:
 
 
 def compile_blueprint_if_possible(asset) -> None:
-    if hasattr(unreal, "KismetEditorUtilities"):
-        unreal.KismetEditorUtilities.compile_blueprint(asset)
+    if hasattr(unreal, "BlueprintEditorLibrary"):
+        unreal.BlueprintEditorLibrary.compile_blueprint(asset)
 
 
 def create_blueprint_asset(asset_name: str, parent_class) -> object:
@@ -145,7 +148,7 @@ def create_or_fill_data_table(asset_name: str, csv_name: str) -> object:
         log(f"Created data table asset shell: {asset_path}")
 
     csv_path = os.path.join(CSV_DIR, csv_name)
-    success = asset.fill_from_csv_file(csv_path, row_struct)
+    success = asset.fill_from_csv_file(csv_path)
     save_asset(asset)
     if not success:
         raise RuntimeError(f"Failed to import {csv_name} into {asset_path}")
@@ -193,7 +196,7 @@ def main() -> None:
         for asset_name, csv_name in DATA_IMPORTS.items():
             create_or_fill_data_table(asset_name, csv_name)
     else:
-        log("Skipping DataTable import by default; UE 5.7 currently crashes when Python-generated row structs are used for automated CSV import")
+        log("Skipping DataTable import by default; run scripts/run_unreal_data_bootstrap.ps1 when you want the full Unreal data pass")
 
     for map_path, placements in MAP_PLACEMENTS.items():
         place_blueprints_in_map(map_path, placements)

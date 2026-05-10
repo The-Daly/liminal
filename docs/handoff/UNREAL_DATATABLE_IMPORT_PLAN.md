@@ -6,8 +6,9 @@ This file describes the safest current plan for getting the repo CSV exports int
 
 - CSV export is working from `generated/unreal_datatables/`.
 - The UE 5.7 automated Python import path is currently unsafe when using Python-generated row structs.
+- `scripts/run_unreal_data_bootstrap.ps1` and `scripts/unreal_data_bootstrap.py` now attempt the eight-table import pass directly and currently reproduce the crash during `DT_Items` import.
 - The reference row definitions currently live in `Content/Python/ld_datatable_rows.py`.
-- Those Python structs are useful for field shape, but they are not the safe final import path.
+- Those Python structs now cover the first eight loop-critical table shapes, but they are still a field reference rather than the safe final import path.
 
 ## Goal
 
@@ -24,6 +25,9 @@ Create stable Unreal row structs for the first required tables:
 - extraction row
 - storage row
 - sanity row
+- hub upgrade row
+- player state row
+- run state row
 
 If Blueprint struct assets are sufficient and stable, use those.
 If they are not reliable enough for the final import path, use a native struct path later.
@@ -37,6 +41,9 @@ Import these first:
 - `DT_Extractions.csv`
 - `DT_Storage.csv`
 - `DT_Sanity.csv`
+- `DT_HubUpgrades.csv`
+- `DT_PlayerState.csv`
+- `DT_RunState.csv`
 
 These unlock the first interaction wiring pass:
 
@@ -48,11 +55,8 @@ These unlock the first interaction wiring pass:
 
 ## Step 3: Import The Extended Support Tables
 
-After the first five are stable, import:
+After the first eight are stable, import:
 
-- `DT_HubUpgrades.csv`
-- `DT_PlayerState.csv`
-- `DT_RunState.csv`
 - `DT_Traders.csv`
 - `DT_NPCs.csv`
 - `DT_NPCRoster.csv`
@@ -91,7 +95,7 @@ Do not treat it as the final safe automation path.
 
 The DataTable pass is complete when:
 
-- the first required five DataTables exist in `Content/Data`
+- the first required eight DataTables exist in `Content/Data`
 - Unreal opens without a crash after those imports
 - the tables can be referenced by Blueprint assets
 - the project remains commit-clean outside intended content/config changes
@@ -107,6 +111,6 @@ The DataTable pass is complete when:
 Codex should guide or implement the import plan in this order:
 
 1. verify the exported CSV set
-2. create safe Unreal row structs
-3. import the first five DataTables
-4. confirm those tables can be consumed by the first Blueprint wiring pass
+2. replace the Python-row-struct import path with editor-authored or native row structs
+3. run `scripts/run_unreal_data_bootstrap.ps1`
+4. confirm the first eight DataTables can be consumed by the first Blueprint wiring pass

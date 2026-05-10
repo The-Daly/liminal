@@ -27,11 +27,14 @@ This file replaces the old starter-pack mental model with the current repo state
   - `Content/Maps/LD_Level1_ServiceHalls_Greybox.umap`
 - Placeholder Blueprint assets exist under `Content/Blueprints`.
 - Placeholder UI widgets exist under `Content/UI`.
+- Blueprint data-contract variables now exist on the first-wave interaction actors, the player shell, the game mode shell, and the two placeholder widgets.
+- The placed graybox actors are now stamped with repo-owned prompts, run IDs, extraction IDs, storage IDs, hub-upgrade IDs, and map-return paths.
 - The automated graybox pass now stamps:
   - shell geometry
   - route landmarks
   - objective pads
   - smoke-test signage
+  - first-pass interaction metadata on placed Blueprint instances
 
 ### Current Unreal Automation
 
@@ -39,8 +42,12 @@ This file replaces the old starter-pack mental model with the current repo state
   - validates data, exports CSVs, ensures repo-owned folders exist, launches Unreal
 - `scripts/run_unreal_first_pass.ps1`
   - creates placeholder Blueprint and widget assets if missing
+- `scripts/run_unreal_blueprint_data_wiring.ps1`
+  - adds the first Blueprint-side data variables needed for the deploy -> loot -> extract -> store -> contribute loop
+- `scripts/run_unreal_data_bootstrap.ps1`
+  - attempts the eight-table Unreal import pass and currently serves as the reproducible UE 5.7 crash harness for Python-defined row structs
 - `scripts/run_unreal_graybox_layout.ps1`
-  - stamps the current map shell, route layout, and smoke-test path markers
+  - stamps the current map shell, route layout, smoke-test path markers, and first-wave interaction metadata
 
 ## What Is Working
 
@@ -50,13 +57,16 @@ This file replaces the old starter-pack mental model with the current repo state
 - graybox maps exist and are versioned
 - placeholder hub/personal-room/service-halls spaces exist
 - route readability and playtest signage now exist in the maps
+- first-wave Blueprint assets now carry instance-editable data variables for prompts, IDs, and target map paths
+- the current graybox maps now place deployment, loot, extraction, storage, project-board, and Flicker Stalker actors with loop-specific metadata
+- `Config/DefaultGame.ini` now points at the intended DataTable asset paths and the default map/run IDs for the V0.1 loop
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
 
-- DataTables are not safely imported into Unreal yet.
-- Most Blueprint actors are still placeholders with little or no behavior.
-- The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not wired in-editor yet.
+- DataTables are still not safely imported into Unreal as assets under `Content/Data`.
+- Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
+- The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
 - SaveGame and persistence are not yet bridged through Blueprint runtime behavior.
 - HUD widgets exist but are not yet driving a real player loop.
 
@@ -64,21 +74,25 @@ This file replaces the old starter-pack mental model with the current repo state
 
 ### DataTable Import
 
-- Automated Python DataTable import is currently unsafe in UE 5.7 when using Python-generated row structs.
-- `Content/Python/ld_datatable_rows.py` is useful as a field reference, but not as the safe final import path.
-- The practical next move is to create editor-authored row structs or a native struct path, then manually import the CSVs.
+- Automated Python DataTable import is now reproducibly crashing in UE 5.7 during `DT_Items` import when Python-generated row structs are used.
+- `Content/Python/ld_datatable_rows.py` now covers the first eight loop-critical table shapes, but it remains a field reference, not the safe final import path.
+- `scripts/run_unreal_data_bootstrap.ps1` is useful for regression-checking the crash, but the practical next move is still to replace the row-struct path with editor-authored or native structs.
 
 ### Blueprint Wiring
 
-- The world is readable enough to test flow, but the core interaction actors are not fully wired.
-- The next high-value step is interaction wiring, not more static layout.
+- The world is readable enough to test flow, and the placed actors now know which run/item/extraction/storage records they represent.
+- The next high-value step is interaction graph wiring, not more static layout.
 
 ## Most Important Current Files
 
 - `docs/status/Liminal_Project_Status_2026-05-10.xlsx`
 - `docs/systems/PLAYABLE_LOOP_CONTRACT.md`
 - `docs/technical/UNREAL_PROJECT_SETUP.md`
+- `Config/DefaultGame.ini`
+- `Content/Python/ld_datatable_rows.py`
 - `scripts/unreal_first_pass_setup.py`
+- `scripts/unreal_blueprint_data_wiring.py`
+- `scripts/unreal_data_bootstrap.py`
 - `scripts/unreal_graybox_layout.py`
 - `generated/unreal_datatables/`
 
@@ -86,6 +100,6 @@ This file replaces the old starter-pack mental model with the current repo state
 
 The repo is ready for a Codex pass focused on:
 
-1. safe Unreal DataTable import planning
-2. Blueprint wiring for deployment, loot, extraction, storage, and project board
+1. replacing the crashing Python-row-struct DataTable import path with editor-authored or native structs
+2. turning the stamped Blueprint metadata into real deployment, loot, extraction, storage, and board behavior
 3. the first real in-editor smoke-test loop

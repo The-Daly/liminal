@@ -4,29 +4,34 @@ This file is the recommended execution order for the next Codex work on the repo
 
 ## Priority Order
 
-1. Complete the Unreal DataTable import path.
-2. Wire the core Blueprint interactions.
+1. Replace the crashing Unreal DataTable row-struct path.
+2. Turn the stamped Blueprint metadata into interaction logic.
 3. Wire the first readable playable loop.
 4. Bridge persistence and HUD state.
 5. Run a full in-editor smoke test and tighten the backlog.
 
-## Task 1: Finish the DataTable Path
+## Task 1: Replace the DataTable Row-Struct Path
 
 - Read `docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md`.
 - Treat the current Python row structs in `Content/Python/ld_datatable_rows.py` as field references only.
+- Keep `scripts/run_unreal_data_bootstrap.ps1` as the validation harness for the import pass, but do not rely on it until the row structs are replaced.
 - Create the safe Unreal-side import path using editor-authored row structs or a native struct path.
 - Import the exported CSVs into `Content/Data`.
-- Start with:
+- Start with these eight loop-critical tables:
   - `DT_Items`
   - `DT_LootTables`
   - `DT_Extractions`
   - `DT_Storage`
   - `DT_Sanity`
+  - `DT_HubUpgrades`
+  - `DT_PlayerState`
+  - `DT_RunState`
 - Then continue with the broader prototype-support tables.
 
-## Task 2: Wire Core Blueprint Actors
+## Task 2: Turn Metadata Into Core Blueprint Behavior
 
 - Read `docs/handoff/BLUEPRINT_WIRING_PLAN.md`.
+- The data variables already exist on the key Blueprint assets, and the placed actors already have prompts, IDs, and map paths stamped into the maps.
 - Focus first on these actors:
   - `BP_DeploymentGate`
   - `BP_LootContainer`
@@ -40,6 +45,7 @@ This file is the recommended execution order for the next Codex work on the repo
 ## Task 3: Make the V0.1 Loop Walkable
 
 - Read `docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md`.
+- Use the current stamped actor metadata instead of hardcoding values in every interaction graph.
 - The first real target is:
   - start in hub
   - deploy
@@ -73,7 +79,7 @@ This file is the recommended execution order for the next Codex work on the repo
 - Update:
   - `docs/handoff/CURRENT_STATUS.md`
   - `docs/backlog/CODEX_BACKLOG.md`
-  - `docs/status/Liminal_Project_Status_2026-05-10.xlsx` or its successor workbook if needed
+  - `docs/status/Liminal_Project_Status_2026-05-10.xlsx` or its successor workbook if the implementation snapshot materially changes
 
 ## Important Guardrails
 

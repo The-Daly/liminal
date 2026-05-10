@@ -58,11 +58,44 @@ class LDSanityRow(unreal.TableRowBase):
     description = unreal.uproperty(str)
 
 
+@unreal.ustruct()
+class LDHubUpgradeRow(unreal.TableRowBase):
+    hub_upgrade_id = unreal.uproperty(str)
+    display_name = unreal.uproperty(str)
+    faction_id = unreal.uproperty(str)
+    contribution_requirements = unreal.uproperty(str)
+    visible_unlock = unreal.uproperty(str)
+    description = unreal.uproperty(str)
+
+
+@unreal.ustruct()
+class LDPlayerStateRow(unreal.TableRowBase):
+    player_state_id = unreal.uproperty(str)
+    faction_id = unreal.uproperty(str)
+    carried_storage_id = unreal.uproperty(str)
+    personal_storage_id = unreal.uproperty(str)
+    starting_sanity = unreal.uproperty(float)
+    description = unreal.uproperty(str)
+
+
+@unreal.ustruct()
+class LDRunStateRow(unreal.TableRowBase):
+    run_state_id = unreal.uproperty(str)
+    level_id = unreal.uproperty(str)
+    loot_table_id = unreal.uproperty(str)
+    entity_ids = unreal.uproperty(str)
+    extraction_ids = unreal.uproperty(str)
+    sanity_rule_id = unreal.uproperty(str)
+    description = unreal.uproperty(str)
+
+
 ROW_STRUCTS = {
     "DT_Items": LDItemRow,
     "DT_LootTables": LDLootTableRow,
     "DT_Extractions": LDExtractionRow,
     "DT_Storage": LDStorageRow,
     "DT_Sanity": LDSanityRow,
+    "DT_HubUpgrades": LDHubUpgradeRow,
+    "DT_PlayerState": LDPlayerStateRow,
+    "DT_RunState": LDRunStateRow,
 }
-
