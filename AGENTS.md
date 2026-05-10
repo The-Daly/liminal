@@ -59,9 +59,18 @@ Build a graybox prototype proving this loop:
 11. Keep scripts and data tooling cross-platform between macOS and Windows.
 12. Treat Windows packaged builds as the playable release gate once Unreal project files exist.
 
-## First Tasks
+## Current Start Path
 
-Use `tasks/codex/000_START_HERE.md`.
+Use these as the current Codex entrypoint:
+
+1. `docs/handoff/CURRENT_STATUS.md`
+2. `docs/handoff/NEXT_CODEX_TASKS.md`
+3. `docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md`
+4. `docs/handoff/BLUEPRINT_WIRING_PLAN.md`
+5. `docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md`
+6. `docs/status/Liminal_Project_Status_2026-05-10.xlsx`
+
+The older `tasks/codex/` files are archive-era startup material from the earlier validation-first scaffold phase, not the current execution path.
 
 ## Verification
 

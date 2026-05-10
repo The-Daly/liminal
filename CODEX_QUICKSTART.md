@@ -14,7 +14,7 @@ codex
 ## 3. First Prompt to Paste into Codex
 
 ```text
-Read AGENTS.md first. Then read tasks/codex/000_START_HERE.md. Start with Task 001 only. Verify the data validation pipeline. Do not build gameplay yet.
+Read AGENTS.md first. Then read docs/handoff/CURRENT_STATUS.md, docs/handoff/NEXT_CODEX_TASKS.md, docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md, docs/handoff/BLUEPRINT_WIRING_PLAN.md, and docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md. Continue from the current Unreal graybox/DataTable/Blueprint wiring phase. Do not restart the old validation-only scaffold tasks.
 ```
 
 ## 4. First Local Test

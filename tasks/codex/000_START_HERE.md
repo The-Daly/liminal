@@ -1,52 +1,41 @@
 # Codex Start Here
 
-## Do This First
+This file now acts as a redirect from the old validation-first starter sequence to the current Unreal-phase handoff pack.
 
-Read these files in order:
+## Read First
 
 1. `AGENTS.md`
-2. `docs/source_truth/SOURCE_OF_TRUTH_SUMMARY.md`
-3. `docs/design/MVP_SCOPE_LOCK.md`
-4. `docs/technical/TECHNICAL_ARCHITECTURE.md`
-5. `docs/backlog/CODEX_BACKLOG.md`
+2. `docs/handoff/CURRENT_STATUS.md`
+3. `docs/handoff/NEXT_CODEX_TASKS.md`
+4. `docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md`
+5. `docs/handoff/BLUEPRINT_WIRING_PLAN.md`
+6. `docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md`
+7. `docs/status/Liminal_Project_Status_2026-05-10.xlsx`
 
-## First Development Sequence
+## Current Phase
 
-### Task 001 — Validate Seed Data
+The repo is no longer in the "start with seed validation only" phase.
 
-Goal:
-- Make sure the repo has working JSON schemas and seed data validation.
+The current phase is:
 
-Acceptance:
-- `python3 scripts/validate_seed_data.py` runs without errors.
-- Missing required fields are caught.
-- Bad enum values are caught.
-- Output is readable.
+- content-first Unreal graybox buildout on Windows
+- safe DataTable import planning
+- Blueprint interaction wiring
+- first readable playable loop
 
-### Task 002 — Create Item Registry Prototype
+## Immediate Work
 
-Goal:
-- Create a simple item registry loader that loads all item seed data and exposes lookup by `item_id`.
+1. finish the safe Unreal DataTable import path
+2. wire deployment, loot, extraction, storage, and project board Blueprints
+3. make the first in-editor loop work end to end
+4. bridge HUD and persistence after the interaction loop behaves
 
-Acceptance:
-- Duplicate IDs fail validation.
-- Missing referenced item IDs in faction loadouts fail validation.
-- CLI prints loaded item and faction counts.
+## Legacy Note
 
-### Task 003 — Create Inventory Model Prototype
+The older task files in:
 
-Goal:
-- Create a standalone inventory/storage prototype before Unreal implementation.
+- `tasks/codex/001_VALIDATE_SEED_DATA.md`
+- `tasks/codex/002_ITEM_REGISTRY.md`
+- `tasks/codex/003_INVENTORY_MODEL.md`
 
-Acceptance:
-- Add/remove item operations work.
-- Stackable item support works.
-- Death inventory wipe clears carried inventory and preserves personal storage.
-
-## Do Not Start With
-
-- Full Unreal gameplay.
-- Multiplayer.
-- Procedural generation.
-- Weapon ballistics.
-- Full raid system.
+describe work that is already complete and remain useful only as historical context.

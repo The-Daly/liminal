@@ -6,7 +6,8 @@ Created: 2026-05-07
 
 - `AGENTS.md` - persistent Codex repo instructions
 - `CODEX_QUICKSTART.md` - first-run Codex usage notes
-- `tasks/codex/000_START_HERE.md` - ordered startup task flow
+- `docs/handoff/` - current Codex handoff update pack and active execution path
+- `tasks/codex/000_START_HERE.md` - redirect from the old startup task flow to the current handoff pack
 - `tasks/codex/001_VALIDATE_SEED_DATA.md` - validation task
 - `tasks/codex/002_ITEM_REGISTRY.md` - registry task
 - `tasks/codex/003_INVENTORY_MODEL.md` - inventory task

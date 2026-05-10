@@ -2,7 +2,7 @@
 
 This package is structured for **Codex**, not Claude.
 
-Codex should use `AGENTS.md` as the persistent project instruction file, then work from `tasks/codex/000_START_HERE.md`.
+Codex should use `AGENTS.md` as the persistent project instruction file, then work from the current handoff pack in `docs/handoff/`.
 
 ## What This Is
 
@@ -15,7 +15,7 @@ This is not the full game. This is not a finished Unreal build. This repo is the
 ## Recommended First Codex Prompt
 
 ```text
-Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 only: verify and improve the data validation pipeline. Do not build gameplay yet.
+Read AGENTS.md, then read `docs/handoff/CURRENT_STATUS.md` and `docs/handoff/NEXT_CODEX_TASKS.md`. Continue from the current Unreal graybox, DataTable import, and Blueprint wiring phase rather than restarting the old validation-first scaffold tasks.
 ```
 
 ## Current Prototype Target
