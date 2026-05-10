@@ -5,6 +5,10 @@
   "Description": "Liminal Dominion V0.1 graybox extraction prototype.",
   "Plugins": [
     {
+      "Name": "AndroidFileServer",
+      "Enabled": false
+    },
+    {
       "Name": "PythonScriptPlugin",
       "Enabled": true,
       "TargetAllowList": [

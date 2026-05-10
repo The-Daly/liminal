@@ -8,7 +8,8 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - `LiminalDominion.uproject` now exists and launches as a content-first Unreal Engine 5 project.
 - `Config/`, `Content/`, generated DataTable CSV exports, and Windows startup tooling are now in the repo.
 - The previous C++ gameplay scaffold is preserved in `Source_Legacy/` but is not active in the current visualization-first project path.
-- Saved repo-owned maps, Blueprint assets, and a packaged playable build still do not exist yet.
+- Saved repo-owned maps, Blueprint/UI placeholders, and automated graybox shell passes now exist in the UE5 project.
+- A packaged playable build still does not exist yet.
 - Python validation exists and requires `jsonschema` from `requirements.txt`.
 - Version 0.1 remains a graybox, single-player/local prototype target.
 - The repo-side Python layer can now simulate successful and failed runs, including loot, sanity drain, extraction, personal storage deposit, death wipe, project-board contribution, and local profile persistence.

@@ -81,13 +81,13 @@
 - [x] Add local SaveGame bridge for personal storage, hub upgrades, and run history.
 - [x] Add deployment gate and extraction map transition hooks.
 - [x] Add simple Flicker Stalker patrol/chase/attack runtime behavior.
-- [ ] Create hub shell.
-- [ ] Create personal room shell.
-- [ ] Create Level 1 Service Halls shell.
-- [ ] Add loot containers.
-- [ ] Add extraction trigger.
-- [ ] Add Flicker Stalker placeholder.
-- [ ] Add player HUD widget.
+- [x] Create hub shell.
+- [x] Create personal room shell.
+- [x] Create Level 1 Service Halls shell.
+- [x] Add loot containers.
+- [x] Add extraction trigger.
+- [x] Add Flicker Stalker placeholder.
+- [x] Add player HUD widget.
 
 ## Phase 7 — Playtest Loop
 

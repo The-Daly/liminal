@@ -8,8 +8,10 @@ This is the first task list for the Windows machine with Unreal Engine installed
 - Run `py -3 scripts/preflight_release.py`.
 - Run `powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1`.
 - Open `LiminalDominion.uproject`.
-- Confirm the project reaches the editor and opens the UE5 Open World template.
-- After the three repo-owned maps exist, close the editor and run `powershell -ExecutionPolicy Bypass -File scripts/run_unreal_first_pass.ps1` to create and place the first placeholder Blueprint/UI assets.
+- Confirm the project reaches the editor and opens `LD_Hub_Greybox`.
+- If the repo-owned maps do not exist yet, save them first.
+- Close the editor and run `powershell -ExecutionPolicy Bypass -File scripts/run_unreal_first_pass.ps1` to create and place the first placeholder Blueprint/UI assets.
+- Close the editor again and run `powershell -ExecutionPolicy Bypass -File scripts/run_unreal_graybox_layout.ps1` to stamp the hub, personal room, and Service Halls shell layouts into the maps.
 - If Unreal asks to build missing modules, cancel unless you are intentionally re-enabling the legacy C++ path.
 - Commit only source/config/content changes, not generated Unreal folders.
 
@@ -36,10 +38,7 @@ This is the first task list for the Windows machine with Unreal Engine installed
 
 - Create Blueprint-only placeholders for deployment gate, loot containers, extraction triggers, storage, project board, player, and Flicker Stalker.
 - The repo automation script already creates the first pass of these placeholders if they are missing.
-- Place the deployment gate in the hub.
-- Place loot containers and a Flicker Stalker placeholder in Service Halls.
-- Place extraction triggers in Service Halls.
-- Place storage and the project board in the personal room and hub.
+- The repo automation now creates and places the first pass of these placeholders and stamps them into the graybox shells.
 
 ## Task 5: HUD
 

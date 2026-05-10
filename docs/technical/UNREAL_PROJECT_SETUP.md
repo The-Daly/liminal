@@ -26,7 +26,7 @@ From PowerShell in the repo root:
 powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
 ```
 
-This startup script validates seed data, exports DataTables, ensures `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` exist, and launches Unreal Editor. If code modules are re-enabled later, it can also generate project files and build the editor target.
+This startup script validates seed data, exports DataTables, ensures `Content/Maps`, `Content/Blueprints`, `Content/Data`, and `Content/UI` exist, and launches Unreal Editor into the repo-owned hub map. If code modules are re-enabled later, it can also generate project files and build the editor target.
 
 For the first automated placeholder pass after the maps exist, close the editor and run:
 
@@ -36,16 +36,24 @@ powershell -ExecutionPolicy Bypass -File scripts/run_unreal_first_pass.ps1
 
 That pass safely creates the first Blueprint and widget placeholders and places them into the repo-owned maps.
 
+For the current shell-layout automation pass after the placeholder assets exist, close the editor and run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_unreal_graybox_layout.ps1
+```
+
+That pass stamps the current hub, personal room, and Level 1 Service Halls graybox geometry into the repo-owned maps.
+
 ## First Open
 
 1. Install Unreal Engine 5 through Epic Games Launcher.
 2. Run the startup script above or open `LiminalDominion.uproject` directly.
-3. Let the project open into the UE5 Open World template.
-4. Immediately save the current level into `Content/Maps/LD_Hub_Greybox`.
-5. Create or duplicate and save:
+3. Let the project open into `LD_Hub_Greybox`.
+4. If the repo-owned maps do not exist yet, immediately save the current level into `Content/Maps/LD_Hub_Greybox`.
+5. Create or duplicate and save if needed:
    - `Content/Maps/LD_PersonalRoom_Greybox`
    - `Content/Maps/LD_Level1_ServiceHalls_Greybox`
-6. Set `LD_Hub_Greybox` as the startup map after the first save so the repo opens into a repo-owned world instead of the engine template.
+6. Set `LD_Hub_Greybox` as the startup map after the first save so the repo opens into a repo-owned world.
 
 ## First Blueprint Pass
 
@@ -69,7 +77,7 @@ Create UI assets under `Content/UI`:
 
 If the legacy C++ module path is re-enabled later, these Blueprint assets can be reparented to the archived gameplay classes instead of being recreated.
 
-The current `run_unreal_first_pass.ps1` script creates these placeholder assets automatically if they are missing, then places them into the current graybox maps.
+The current `run_unreal_first_pass.ps1` script creates these placeholder assets automatically if they are missing, then places them into the current graybox maps. The `run_unreal_graybox_layout.ps1` script then adds the first shell geometry and landmark layout around them.
 
 ## Input And HUD Contract
 

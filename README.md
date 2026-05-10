@@ -73,7 +73,7 @@ To run the Windows Unreal startup sequence from the repo:
 powershell -ExecutionPolicy Bypass -File scripts/start_windows_unreal.ps1
 ```
 
-The current visualization-first startup opens the UE5 Open World template by default. If code modules are re-enabled later, the same script will require Visual Studio 2022 build tools and a Windows 10/11 SDK.
+The current visualization-first startup opens the repo-owned `LD_Hub_Greybox` map by default. If code modules are re-enabled later, the same script will require Visual Studio 2022 build tools and a Windows 10/11 SDK.
 
 See `docs/technical/CROSS_PLATFORM_COMPATIBILITY.md` for macOS Terminal basics, Windows PowerShell equivalents, and the Windows-first build policy.
 See `docs/technical/UNREAL_PROJECT_SETUP.md` for the first UE5 editor open, map creation, Blueprint pass, and Windows build gate.
