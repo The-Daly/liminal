@@ -9,6 +9,7 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - `Config/`, `Content/`, generated DataTable CSV exports, and Windows startup tooling are now in the repo.
 - The previous C++ gameplay scaffold is preserved in `Source_Legacy/` but is not active in the current visualization-first project path.
 - Saved repo-owned maps, Blueprint/UI placeholders, and automated graybox shell passes now exist in the UE5 project.
+- The current Unreal automation now also stamps explicit smoke-test route signage and objective pads into the graybox maps.
 - A packaged playable build still does not exist yet.
 - Python validation exists and requires `jsonschema` from `requirements.txt`.
 - Version 0.1 remains a graybox, single-player/local prototype target.

@@ -43,6 +43,7 @@ powershell -ExecutionPolicy Bypass -File scripts/run_unreal_graybox_layout.ps1
 ```
 
 That pass stamps the current hub, personal room, and Level 1 Service Halls graybox geometry into the repo-owned maps.
+It also adds route signage and objective pads for the current smoke-test flow.
 
 ## First Open
 

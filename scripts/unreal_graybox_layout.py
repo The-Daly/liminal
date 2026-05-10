@@ -216,6 +216,10 @@ def add_landmark_pillar(label: str, location_m: tuple[float, float, float], size
     spawn_box(f"{PREFIX}{label}", meters(*location_m), size_m)
 
 
+def add_objective_pad(label: str, center_xy_m: tuple[float, float], size_m: tuple[float, float]) -> None:
+    spawn_floor(f"{PREFIX}{label}", center_xy_m, size_m, top_z_m=0.08)
+
+
 def build_hub_map() -> None:
     unreal.EditorLevelLibrary.load_level(HUB_MAP)
     remove_generated_actors()
@@ -229,6 +233,9 @@ def build_hub_map() -> None:
     spawn_floor(f"{PREFIX}HubQuartermasterPad", (-8.0, -8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubTraderPad", (8.0, -8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubFactionSelectorPad", (0.0, -4.0), (5.0, 3.0))
+    add_objective_pad("HubDeployStepPad", (20.0, 0.0), (6.0, 3.2))
+    add_objective_pad("HubStoreStepPad", (-2.0, 8.0), (7.0, 2.8))
+    add_objective_pad("HubContributeStepPad", (5.5, 8.0), (8.0, 2.8))
 
     add_landmark_pillar("HubSignalLampBase", (11.0, 8.0, 2.0), (1.2, 1.2, 4.0))
     add_landmark_pillar("HubSignalLampCore", (11.0, 8.0, 4.8), (0.5, 0.5, 1.2))
@@ -253,6 +260,10 @@ def build_hub_map() -> None:
     spawn_text("HubSignQuartermaster", "QUARTERMASTER", (-8.0, -10.2, 2.2), scale=1.2)
     spawn_text("HubSignTrader", "TRADER", (8.0, -10.2, 2.2), scale=1.2)
     spawn_text("HubSignFaction", "FACTION SELECTOR", (0.0, -1.6, 2.3), scale=1.1)
+    spawn_text("HubStepDeploy", "STEP 1: DEPLOY", (20.0, 2.8, 1.4), scale=0.95)
+    spawn_text("HubStepStore", "STEP 5: STORE LOOT", (-2.0, 10.4, 1.4), scale=0.85)
+    spawn_text("HubStepContribute", "STEP 6: CONTRIBUTE", (5.5, 10.4, 1.4), scale=0.85)
+    spawn_text("HubFlowReminder", "RUN FLOW: DEPLOY -> LOOT -> EXTRACT -> RETURN", (0.0, -11.0, 2.0), scale=0.9)
 
     spawn_blueprint_actor(BLUEPRINT_PATHS["DeploymentGate"], f"{PREFIX}HubDeploymentGate", meters(29.0, 0.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["ProjectBoard"], f"{PREFIX}HubProjectBoard", meters(0.0, 8.0, 1.2))
@@ -276,6 +287,8 @@ def build_personal_room_map() -> None:
     spawn_floor(f"{PREFIX}RelicDisplayPad", (-2.5, 3.0), (3.5, 2.2))
     spawn_floor(f"{PREFIX}BedPad", (2.0, -2.8), (4.0, 2.4))
     spawn_floor(f"{PREFIX}WorkbenchPad", (-1.0, -2.6), (3.6, 2.0))
+    add_objective_pad("PersonalReturnPad", (-3.5, 0.0), (4.2, 2.4))
+    add_objective_pad("PersonalDepositPad", (4.0, 3.0), (5.8, 3.0))
 
     add_landmark_pillar("PersonalRoomLocker", (5.8, 3.0, 1.6), (0.8, 0.8, 3.2))
     add_landmark_pillar("PersonalRoomDisplayCase", (-2.5, 3.0, 1.4), (1.0, 0.8, 2.8))
@@ -289,6 +302,8 @@ def build_personal_room_map() -> None:
     spawn_text("PersonalRoomSignStorage", "SAFE STORAGE", (4.0, 4.8, 2.2), scale=1.2)
     spawn_text("PersonalRoomSignRelics", "RELIC DISPLAY", (-2.5, 4.8, 2.2), scale=1.2)
     spawn_text("PersonalRoomSignWorkbench", "WORKBENCH", (-1.0, -0.7, 2.1), scale=1.0)
+    spawn_text("PersonalRoomStepReturn", "RETURN POINT", (-3.5, 1.6, 1.7), scale=0.8)
+    spawn_text("PersonalRoomStepDeposit", "STEP 5: DEPOSIT LOOT", (4.0, 1.2, 1.7), scale=0.8)
 
     spawn_blueprint_actor(BLUEPRINT_PATHS["PersonalStorage"], f"{PREFIX}PersonalRoomStorage", meters(4.0, 3.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["RelicDisplay"], f"{PREFIX}PersonalRoomRelicDisplay", meters(-2.5, 3.0, 1.2))
@@ -373,6 +388,11 @@ def build_service_halls_map() -> None:
     add_landmark_pillar("StorageCrateStackB", (-72.0, 258.0, 0.8), (2.8, 1.6, 1.6))
     add_landmark_pillar("UtilityBenchA", (606.0, 58.0, 0.6), (4.0, 1.2, 1.2))
     add_landmark_pillar("UtilityBenchB", (634.0, 88.0, 0.6), (3.4, 1.3, 1.2))
+    add_objective_pad("ServiceStartPad", (18.0, 0.0), (5.0, 3.2))
+    add_objective_pad("ServiceLootPad", (-92.0, 246.0), (6.0, 3.0))
+    add_objective_pad("ServiceEncounterPad", (500.0, 340.0), (8.0, 3.0))
+    add_objective_pad("ServiceExtractPad", (-240.0, 90.0), (6.0, 3.0))
+    add_objective_pad("ServiceHiddenExitPad", (40.0, -560.0), (5.0, 3.0))
 
     spawn_text("ServiceSignArchive", "M.E.G. ARCHIVE", (70.0, 482.0, 2.6), scale=1.3)
     spawn_text("ServiceSignStorage", "FOGGED STORAGE BAY", (-90.0, 264.0, 2.5), scale=1.1)
@@ -385,7 +405,14 @@ def build_service_halls_map() -> None:
     spawn_text("ServiceSignChalkB", "EXIT?", (456.0, -534.0, 1.8), scale=0.8)
     spawn_text("ServiceSignHidden", "TICKET BOOTH EXIT", (40.0, -548.0, 2.4), scale=1.1)
     spawn_text("ServiceSignStable", "STABLE EXTRACTION", (-240.0, 102.0, 2.4), scale=1.1)
+    spawn_text("ServiceStepStart", "STEP 2: ENTER RAID ZONE", (18.0, 12.0, 1.8), scale=0.8)
+    spawn_text("ServiceStepLoot", "STEP 3: LOOT HERE", (-92.0, 230.0, 1.8), scale=0.9)
+    spawn_text("ServiceStepEncounter", "STEP 4: ENTITY ENCOUNTER", (500.0, 356.0, 1.9), scale=0.9)
+    spawn_text("ServiceStepExtract", "STEP 4B: EXTRACT", (-240.0, 76.0, 1.9), scale=0.9)
+    spawn_text("ServiceStepHidden", "ALT EXIT: MOVIE TICKET", (40.0, -576.0, 1.9), scale=0.8)
+    spawn_text("ServiceFlowReminder", "FOLLOW SIGNS: LOOT -> STALKER -> EXTRACT", (220.0, 90.0, 2.0), scale=0.9)
 
+    spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_StartRoute", meters(32.0, 14.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_FoggedStorage", meters(-92.0, 246.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_ArchiveOffice", meters(74.0, 466.0, 1.2))
     spawn_blueprint_actor(BLUEPRINT_PATHS["LootContainer"], f"{PREFIX}LootContainer_UtilityRooms", meters(614.0, 76.0, 1.2))

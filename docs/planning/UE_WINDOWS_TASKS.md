@@ -40,6 +40,7 @@ This is the first task list for the Windows machine with Unreal Engine installed
 - The repo automation script already creates the first pass of these placeholders if they are missing.
 - The repo automation now creates and places the first pass of these placeholders and stamps them into the graybox shells.
 - The current placeholder pass also creates and places quartermaster, trader, faction-selector, and relic-display anchors for readability.
+- The current graybox layout pass adds smoke-test route labels and objective pads so the first loop beats are easier to follow in-editor.
 
 ## Task 5: HUD
 
