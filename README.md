@@ -43,6 +43,7 @@ Read AGENTS.md, then read tasks/codex/000_START_HERE.md. Start with Task 001 onl
 - `docs/planning/MISSING_SYSTEMS_ROADMAP.md` tracks the gap between this scaffold, the V0.1 graybox, and the full game.
 
 Start with `docs/SYSTEM_INDEX.md` when handing the project to another AI agent or developer.
+The current repo handoff pack now lives under `docs/handoff/` and supersedes the earlier starter-pack framing.
 
 ## Local Verification
 

@@ -2,6 +2,15 @@
 
 This is the navigation page for AI agents and developers working without Unreal Editor access.
 
+## Current Handoff Pack
+
+- `docs/handoff/CURRENT_STATUS.md`
+- `docs/handoff/NEXT_CODEX_TASKS.md`
+- `docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md`
+- `docs/handoff/BLUEPRINT_WIRING_PLAN.md`
+- `docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md`
+- `docs/status/Liminal_Project_Status_2026-05-10.xlsx`
+
 ## Locked Rules
 
 - `AGENTS.md`
