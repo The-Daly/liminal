@@ -19,6 +19,7 @@ from frontend_menu_model import (
     bootstrap_menu_flow,
     build_main_player_menu_snapshot,
     build_server_browser_snapshot,
+    build_title_shell_copy,
     character_setup_defaults,
     faction_lock_warning,
     ordered_routes,
@@ -548,6 +549,11 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("MEG 30/30 Q6", summary.faction_population_summary)
 
     def test_frontend_menu_helpers_build_server_and_faction_copy(self):
+        title_copy = build_title_shell_copy()
+        self.assertEqual(title_copy.current_route_id, "menu_title_shell")
+        self.assertEqual(title_copy.headline_text, "Liminal Dominion")
+        self.assertIn("mass wipe", title_copy.subhead_text.lower())
+
         server_snapshot = build_server_browser_snapshot(
             self.registry,
             "official_north_america_01",

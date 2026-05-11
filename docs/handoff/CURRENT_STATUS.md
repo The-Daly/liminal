@@ -47,7 +47,9 @@ This file replaces the old starter-pack mental model with the current repo state
 - `scripts/run_unreal_blueprint_data_wiring.ps1`
   - adds the first Blueprint-side data variables needed for the deploy -> loot -> extract -> store -> contribute loop
 - `scripts/run_unreal_frontend_shell_pass.ps1`
-  - refreshes the serious frontend shell widgets and menu controller placeholder variables
+  - refreshes the serious frontend shell widgets, menu controller variables, and default frontend state
+- `scripts/run_unreal_frontend_state_defaults.ps1`
+  - stamps default title/server/faction/character/main-menu values into the frontend controller and widgets
 - `scripts/run_unreal_data_bootstrap.ps1`
   - attempts the eight-table Unreal import pass and currently serves as the reproducible UE 5.7 crash harness for Python-defined row structs
 - `scripts/run_unreal_graybox_layout.ps1`
@@ -67,6 +69,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - persistent-world contract seeds now exist for server realms, wipe schedules, minimal character appearance presets, and menu routes
 - repo-side menu helpers now generate title copy, server browser summaries, faction-lock warnings, character setup defaults, main-menu snapshots, and saved frontend session state
 - the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
+- the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state in their class defaults
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet

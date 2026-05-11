@@ -36,6 +36,13 @@ This file is the recommended execution order for the next Codex work on the repo
   - selected realm/server type/faction/character/appearance
   - server name, region, wipe summary, faction population summary
   - faction-lock warning, callsign, identity item, and deploy-enabled state
+- The frontend shell pass now also stamps default class values into:
+  - `BP_MenuFlowController`
+  - `WBP_TitleShell`
+  - `WBP_ServerBrowser`
+  - `WBP_FactionSelection`
+  - `WBP_CharacterSetup`
+  - `WBP_MainPlayerMenu`
 - The hub map now also contains a serious frontend staging wing with:
   - one placed `BP_MenuFlowController`
   - one operator preview anchor
