@@ -36,6 +36,7 @@ This file replaces the old starter-pack mental model with the current repo state
   - objective pads
   - smoke-test signage
   - first-pass interaction metadata on placed Blueprint instances
+  - a serious frontend staging wing inside the hub with menu controller placement and operator/faction preview anchors
 
 ### Current Unreal Automation
 
@@ -65,6 +66,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - `Config/DefaultGame.ini` now points at the intended DataTable asset paths and the default map/run IDs for the V0.1 loop
 - persistent-world contract seeds now exist for server realms, wipe schedules, minimal character appearance presets, and menu routes
 - repo-side menu helpers now generate title copy, server browser summaries, faction-lock warnings, character setup defaults, main-menu snapshots, and saved frontend session state
+- the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
@@ -72,6 +74,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - DataTables are still not safely imported into Unreal as assets under `Content/Data`.
 - The serious frontend exists as a repo-side shell target, not yet as a fully interactive menu implementation.
 - The serious frontend now has repo-backed state and summary helpers, but its UMG graphs are still shell-level rather than interactive.
+- The serious frontend now has an in-world staging space and preview-anchor placements, but it is still not a clickable UMG flow yet.
 - Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
 - The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
 - SaveGame and persistence are not yet bridged through Blueprint runtime behavior.

@@ -36,6 +36,10 @@ This file is the recommended execution order for the next Codex work on the repo
   - selected realm/server type/faction/character/appearance
   - server name, region, wipe summary, faction population summary
   - faction-lock warning, callsign, identity item, and deploy-enabled state
+- The hub map now also contains a serious frontend staging wing with:
+  - one placed `BP_MenuFlowController`
+  - one operator preview anchor
+  - three faction/NPC preview anchors
 - Use the repo-side helpers in:
   - `scripts/frontend_menu_model.py`
   - `scripts/persistent_world_model.py`

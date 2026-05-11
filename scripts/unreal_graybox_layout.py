@@ -14,6 +14,9 @@ PERSONAL_ROOM_MAP = "/Game/Maps/LD_PersonalRoom_Greybox"
 SERVICE_HALLS_MAP = "/Game/Maps/LD_Level1_ServiceHalls_Greybox"
 
 LEGACY_PLACEHOLDER_LABELS = {
+    "BP_MenuFlowController",
+    "BP_CharacterPreviewAnchor",
+    "BP_FactionNpcPreviewAnchor",
     "BP_DeploymentGate",
     "BP_ProjectBoard",
     "BP_FactionVaultPlaceholder",
@@ -29,6 +32,9 @@ LEGACY_PLACEHOLDER_LABELS = {
 }
 
 BLUEPRINT_PATHS = {
+    "MenuFlowController": "/Game/Blueprints/BP_MenuFlowController",
+    "CharacterPreviewAnchor": "/Game/Blueprints/BP_CharacterPreviewAnchor",
+    "FactionNpcPreviewAnchor": "/Game/Blueprints/BP_FactionNpcPreviewAnchor",
     "DeploymentGate": "/Game/Blueprints/BP_DeploymentGate",
     "ProjectBoard": "/Game/Blueprints/BP_ProjectBoard",
     "FactionVault": "/Game/Blueprints/BP_FactionVaultPlaceholder",
@@ -244,15 +250,25 @@ def build_hub_map() -> None:
     build_room_shell("HubMainHall", (0.0, 0.0), (34.0, 24.0), open_sides=("east", "west"))
     build_corridor("HubToPersonal", (-26.0, 0.0), (-8.0, 0.0), width_m=6.0)
     build_corridor("HubToDeployment", (8.0, 0.0), (28.0, 0.0), width_m=7.0)
+    build_corridor("HubToFrontendOps", (0.0, -12.0), (0.0, -17.0), width_m=6.0)
+    build_room_shell("HubFrontendOps", (0.0, -24.0), (24.0, 14.0), open_sides=("north",))
 
     spawn_floor(f"{PREFIX}HubBoardPad", (0.0, 8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubVaultPad", (-10.0, 8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubQuartermasterPad", (-8.0, -8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubTraderPad", (8.0, -8.0), (7.0, 4.0))
     spawn_floor(f"{PREFIX}HubFactionSelectorPad", (0.0, -4.0), (5.0, 3.0))
+    spawn_floor(f"{PREFIX}HubFrontendControllerPad", (0.0, -21.0), (6.0, 2.6))
+    spawn_floor(f"{PREFIX}HubFrontendOperatorPad", (0.0, -26.0), (4.0, 4.0))
+    spawn_floor(f"{PREFIX}HubFrontendFactionPadA", (-7.0, -26.0), (3.2, 3.2))
+    spawn_floor(f"{PREFIX}HubFrontendFactionPadB", (7.0, -26.0), (3.2, 3.2))
+    spawn_floor(f"{PREFIX}HubFrontendFactionPadC", (0.0, -29.2), (3.2, 3.2))
     add_objective_pad("HubDeployStepPad", (20.0, 0.0), (6.0, 3.2))
     add_objective_pad("HubStoreStepPad", (-2.0, 8.0), (7.0, 2.8))
     add_objective_pad("HubContributeStepPad", (5.5, 8.0), (8.0, 2.8))
+    add_objective_pad("HubFrontendServerStepPad", (-7.0, -20.8), (4.4, 2.2))
+    add_objective_pad("HubFrontendFactionStepPad", (0.0, -20.8), (4.4, 2.2))
+    add_objective_pad("HubFrontendCharacterStepPad", (7.0, -20.8), (4.4, 2.2))
 
     add_landmark_pillar("HubSignalLampBase", (11.0, 8.0, 2.0), (1.2, 1.2, 4.0))
     add_landmark_pillar("HubSignalLampCore", (11.0, 8.0, 4.8), (0.5, 0.5, 1.2))
@@ -261,6 +277,10 @@ def build_hub_map() -> None:
     add_landmark_pillar("HubQuartermasterDesk", (-8.0, -6.4, 1.1), (4.5, 1.2, 2.2))
     add_landmark_pillar("HubTraderDesk", (8.0, -6.4, 1.1), (4.5, 1.2, 2.2))
     add_landmark_pillar("HubFactionSelectorMonolith", (0.0, -4.0, 1.8), (1.2, 1.2, 3.6))
+    add_landmark_pillar("HubFrontendWallNorth", (0.0, -17.2, 2.0), (10.0, 0.8, 4.0))
+    add_landmark_pillar("HubFrontendWallWest", (-10.5, -24.0, 2.0), (0.8, 5.8, 4.0))
+    add_landmark_pillar("HubFrontendWallEast", (10.5, -24.0, 2.0), (0.8, 5.8, 4.0))
+    add_landmark_pillar("HubFrontendOpsDesk", (0.0, -21.2, 1.1), (5.0, 1.0, 2.2))
 
     spawn_player_start("HubPlayerStart", (-12.0, 0.0, 0.5))
     spawn_point_light("HubLight01", (-10.0, 0.0, 3.6), intensity=20000.0)
@@ -269,6 +289,10 @@ def build_hub_map() -> None:
     spawn_point_light("HubLight04", (0.0, 8.0, 3.6), intensity=18000.0)
     spawn_point_light("HubLight05", (-8.0, -8.0, 3.4), intensity=17000.0)
     spawn_point_light("HubLight06", (8.0, -8.0, 3.4), intensity=17000.0)
+    spawn_point_light("HubLight07", (0.0, -20.5, 3.4), intensity=15000.0)
+    spawn_point_light("HubLight08", (-7.0, -26.0, 3.0), intensity=9500.0, attenuation_radius=1800.0)
+    spawn_point_light("HubLight09", (7.0, -26.0, 3.0), intensity=9500.0, attenuation_radius=1800.0)
+    spawn_point_light("HubLight10", (0.0, -29.2, 2.8), intensity=8500.0, attenuation_radius=1600.0)
     spawn_point_light("HubSignalLampLight", (11.0, 8.0, 5.2), intensity=30000.0, attenuation_radius=2200.0)
 
     spawn_text("HubSignDeployment", "DEPLOYMENT", (22.0, 0.0, 3.2))
@@ -277,11 +301,95 @@ def build_hub_map() -> None:
     spawn_text("HubSignQuartermaster", "QUARTERMASTER", (-8.0, -10.2, 2.2), scale=1.2)
     spawn_text("HubSignTrader", "TRADER", (8.0, -10.2, 2.2), scale=1.2)
     spawn_text("HubSignFaction", "FACTION SELECTOR", (0.0, -1.6, 2.3), scale=1.1)
+    spawn_text("HubFrontendTitle", "SERIOUS FRONTEND STAGING", (0.0, -17.2, 3.0), scale=1.1)
+    spawn_text("HubFrontendIntro", "TITLE -> SERVER -> FACTION -> CHARACTER -> MENU", (0.0, -18.7, 2.2), scale=0.85)
+    spawn_text("HubFrontendStepServer", "STEP A: SERVER REALM", (-7.0, -19.0, 1.8), scale=0.8)
+    spawn_text("HubFrontendStepFaction", "STEP B: FACTION LOCK", (0.0, -19.0, 1.8), scale=0.8)
+    spawn_text("HubFrontendStepCharacter", "STEP C: CHARACTER SETUP", (7.0, -19.0, 1.8), scale=0.8)
+    spawn_text("HubFrontendPreview", "OPERATOR PREVIEW", (0.0, -23.0, 2.0), scale=0.9)
+    spawn_text("HubFrontendMeg", "M.E.G.", (-7.0, -23.0, 1.9), scale=0.85)
+    spawn_text("HubFrontendBntg", "B.N.T.G.", (7.0, -23.0, 1.9), scale=0.85)
+    spawn_text("HubFrontendClippers", "CLIPPERS", (0.0, -31.0, 1.9), scale=0.85)
     spawn_text("HubStepDeploy", "STEP 1: DEPLOY", (20.0, 2.8, 1.4), scale=0.95)
     spawn_text("HubStepStore", "STEP 5: STORE LOOT", (-2.0, 10.4, 1.4), scale=0.85)
     spawn_text("HubStepContribute", "STEP 6: CONTRIBUTE", (5.5, 10.4, 1.4), scale=0.85)
     spawn_text("HubFlowReminder", "RUN FLOW: DEPLOY -> LOOT -> EXTRACT -> RETURN", (0.0, -11.0, 2.0), scale=0.9)
 
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["MenuFlowController"],
+        f"{PREFIX}HubMenuFlowController",
+        meters(0.0, -21.0, 1.2),
+        {
+            "CurrentRouteId": "menu_title_shell",
+            "NextRouteId": "menu_server_browser",
+            "SelectedRealmId": "official_north_america_01",
+            "SelectedServerType": "official",
+            "SelectedFactionId": "meg",
+            "SelectedCharacterId": "",
+            "SelectedAppearanceId": "appearance_meg_operator_field_v0",
+            "CharacterCallsign": "MEG-01",
+            "HasExistingCharacter": False,
+            "CharacterConfigured": False,
+            "CurrentWipeLabel": "Biannual Official Wipe | Next wipe 2028-01-01",
+            "CurrentServerName": "Official Realm NA-01",
+            "CurrentServerRegion": "US East | Official Realm",
+            "FactionPopulationSummary": "MEG 27/30 | BNTG 24/30 | CLIPPERS 22/30",
+            "FactionLockWarningText": "M.E.G. becomes your locked faction on Official Realm NA-01 until the next wipe.",
+            "DeployEnabled": False,
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["CharacterPreviewAnchor"],
+        f"{PREFIX}HubOperatorPreviewAnchor",
+        meters(0.0, -26.0, 1.2),
+        {
+            "AppearanceId": "appearance_meg_operator_field_v0",
+            "FactionId": "meg",
+            "PreviewRole": "PlayerOperator",
+            "DisplayNameText": "M.E.G. Field Operator",
+            "IdentityItemId": "tool_meg_entity_scanner",
+            "PreviewSceneLabel": "Main Menu Character Preview",
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["FactionNpcPreviewAnchor"],
+        f"{PREFIX}HubMegNpcPreview",
+        meters(-7.0, -26.0, 1.2),
+        {
+            "AppearanceId": "appearance_meg_archive_staff_v0",
+            "FactionId": "meg",
+            "PreviewRole": "FactionNpc",
+            "DisplayNameText": "M.E.G. Archive Staff",
+            "IdentityItemId": "tool_meg_entity_scanner",
+            "PreviewSceneLabel": "Faction Preview Left",
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["FactionNpcPreviewAnchor"],
+        f"{PREFIX}HubBntgNpcPreview",
+        meters(7.0, -26.0, 1.2),
+        {
+            "AppearanceId": "appearance_bntg_market_clerk_v0",
+            "FactionId": "bntg",
+            "PreviewRole": "FactionNpc",
+            "DisplayNameText": "B.N.T.G. Market Clerk",
+            "IdentityItemId": "tool_bntg_crowbar",
+            "PreviewSceneLabel": "Faction Preview Right",
+        },
+    )
+    spawn_blueprint_actor(
+        BLUEPRINT_PATHS["FactionNpcPreviewAnchor"],
+        f"{PREFIX}HubClippersNpcPreview",
+        meters(0.0, -29.2, 1.2),
+        {
+            "AppearanceId": "appearance_clippers_route_scribe_v0",
+            "FactionId": "clippers",
+            "PreviewRole": "FactionNpc",
+            "DisplayNameText": "Clippers Route Scribe",
+            "IdentityItemId": "tool_clippers_camcorder",
+            "PreviewSceneLabel": "Faction Preview Rear",
+        },
+    )
     spawn_blueprint_actor(
         BLUEPRINT_PATHS["DeploymentGate"],
         f"{PREFIX}HubDeploymentGate",

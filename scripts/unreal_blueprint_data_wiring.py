@@ -53,11 +53,17 @@ BLUEPRINT_VARIABLES = {
         ("AppearanceId", STRING, True),
         ("FactionId", STRING, True),
         ("PreviewRole", STRING, True),
+        ("DisplayNameText", STRING, True),
+        ("IdentityItemId", STRING, True),
+        ("PreviewSceneLabel", STRING, True),
     ],
     "/Game/Blueprints/BP_FactionNpcPreviewAnchor": [
         ("AppearanceId", STRING, True),
         ("FactionId", STRING, True),
         ("PreviewRole", STRING, True),
+        ("DisplayNameText", STRING, True),
+        ("IdentityItemId", STRING, True),
+        ("PreviewSceneLabel", STRING, True),
     ],
     "/Game/Blueprints/BP_LDPlayer": [
         ("CurrentSanity", FLOAT, False),
