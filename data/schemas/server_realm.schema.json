@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "required": [
+    "realm_id",
+    "display_name",
+    "server_type",
+    "region",
+    "population_cap",
+    "faction_caps",
+    "queue_cap",
+    "wipe_schedule_id",
+    "ruleset_summary",
+    "supports_character_creation"
+  ],
+  "properties": {
+    "realm_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "server_type": { "enum": ["official", "community"] },
+    "region": { "type": "string" },
+    "population_cap": { "type": "integer", "minimum": 1 },
+    "faction_caps": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["faction_id", "cap"],
+        "properties": {
+          "faction_id": { "type": "string" },
+          "cap": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "queue_cap": { "type": "integer", "minimum": 0 },
+    "wipe_schedule_id": { "type": "string" },
+    "ruleset_summary": { "type": "string" },
+    "supports_character_creation": { "type": "boolean" }
+  }
+}

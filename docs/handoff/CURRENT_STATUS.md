@@ -27,6 +27,7 @@ This file replaces the old starter-pack mental model with the current repo state
   - `Content/Maps/LD_Level1_ServiceHalls_Greybox.umap`
 - Placeholder Blueprint assets exist under `Content/Blueprints`.
 - Placeholder UI widgets exist under `Content/UI`.
+- Frontend shell widget targets are now defined for title, server browser, faction selection, character setup, and main player menu.
 - Blueprint data-contract variables now exist on the first-wave interaction actors, the player shell, the game mode shell, and the two placeholder widgets.
 - The placed graybox actors are now stamped with repo-owned prompts, run IDs, extraction IDs, storage IDs, hub-upgrade IDs, and map-return paths.
 - The automated graybox pass now stamps:
@@ -44,6 +45,8 @@ This file replaces the old starter-pack mental model with the current repo state
   - creates placeholder Blueprint and widget assets if missing
 - `scripts/run_unreal_blueprint_data_wiring.ps1`
   - adds the first Blueprint-side data variables needed for the deploy -> loot -> extract -> store -> contribute loop
+- `scripts/run_unreal_frontend_shell_pass.ps1`
+  - refreshes the serious frontend shell widgets and menu controller placeholder variables
 - `scripts/run_unreal_data_bootstrap.ps1`
   - attempts the eight-table Unreal import pass and currently serves as the reproducible UE 5.7 crash harness for Python-defined row structs
 - `scripts/run_unreal_graybox_layout.ps1`
@@ -60,11 +63,13 @@ This file replaces the old starter-pack mental model with the current repo state
 - first-wave Blueprint assets now carry instance-editable data variables for prompts, IDs, and target map paths
 - the current graybox maps now place deployment, loot, extraction, storage, project-board, and Flicker Stalker actors with loop-specific metadata
 - `Config/DefaultGame.ini` now points at the intended DataTable asset paths and the default map/run IDs for the V0.1 loop
+- persistent-world contract seeds now exist for server realms, wipe schedules, minimal character appearance presets, and menu routes
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
 
 - DataTables are still not safely imported into Unreal as assets under `Content/Data`.
+- The serious frontend exists as a repo-side shell target, not yet as a fully interactive menu implementation.
 - Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
 - The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
 - SaveGame and persistence are not yet bridged through Blueprint runtime behavior.

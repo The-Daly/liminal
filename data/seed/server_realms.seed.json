@@ -1,0 +1,34 @@
+[
+  {
+    "realm_id": "official_north_america_01",
+    "display_name": "Official Realm NA-01",
+    "server_type": "official",
+    "region": "US East",
+    "population_cap": 90,
+    "faction_caps": [
+      { "faction_id": "meg", "cap": 30 },
+      { "faction_id": "bntg", "cap": 30 },
+      { "faction_id": "clippers", "cap": 30 }
+    ],
+    "queue_cap": 60,
+    "wipe_schedule_id": "wipe_official_biannual",
+    "ruleset_summary": "Official persistent shard with faction-locked characters and a two-year wipe cadence.",
+    "supports_character_creation": true
+  },
+  {
+    "realm_id": "community_rustwater_lab_01",
+    "display_name": "Community Realm Rustwater Lab",
+    "server_type": "community",
+    "region": "US Central",
+    "population_cap": 90,
+    "faction_caps": [
+      { "faction_id": "meg", "cap": 30 },
+      { "faction_id": "bntg", "cap": 30 },
+      { "faction_id": "clippers", "cap": 30 }
+    ],
+    "queue_cap": 30,
+    "wipe_schedule_id": "wipe_community_biannual",
+    "ruleset_summary": "Community-hosted realm with separate character progression from the official worlds.",
+    "supports_character_creation": true
+  }
+]

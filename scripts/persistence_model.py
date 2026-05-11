@@ -59,6 +59,30 @@ class LocalProfileState:
             del self.run_history[:-max_entries]
 
 
+@dataclass(frozen=True)
+class RealmCharacterRecord:
+    character_id: str
+    realm_id: str
+    server_type: str
+    faction_id: str
+    wipe_schedule_id: str
+    wipe_id: str
+    slot_index: int
+    callsign: str
+    appearance_id: str
+    role_preset: str
+    created_at_utc: str
+    last_login_utc: str
+    locked_until_wipe: bool
+
+
+@dataclass
+class PersistentRealmCollection:
+    official_characters: list[RealmCharacterRecord] = field(default_factory=list)
+    community_characters: list[RealmCharacterRecord] = field(default_factory=list)
+    wipe_state: dict[str, dict] = field(default_factory=dict)
+
+
 def new_local_profile(registry: DataRegistry, player_state_id: str = "player_state_v0_meg") -> LocalProfileState:
     player_state = registry.player_states.get(player_state_id)
     if player_state is None:
@@ -167,6 +191,36 @@ def save_profile(path: Path, profile: LocalProfileState) -> None:
 def load_profile(registry: DataRegistry, path: Path) -> LocalProfileState:
     with path.open("r", encoding="utf-8") as handle:
         return profile_from_dict(registry, json.load(handle))
+
+
+def persistent_collection_to_dict(collection: PersistentRealmCollection) -> dict:
+    return {
+        "official_characters": [record.__dict__ for record in collection.official_characters],
+        "community_characters": [record.__dict__ for record in collection.community_characters],
+        "wipe_state": collection.wipe_state,
+    }
+
+
+def persistent_collection_from_dict(data: dict) -> PersistentRealmCollection:
+    def records(key: str) -> list[RealmCharacterRecord]:
+        return [RealmCharacterRecord(**entry) for entry in data.get(key, [])]
+
+    return PersistentRealmCollection(
+        official_characters=records("official_characters"),
+        community_characters=records("community_characters"),
+        wipe_state=dict(data.get("wipe_state", {})),
+    )
+
+
+def save_persistent_collection(path: Path, collection: PersistentRealmCollection) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(persistent_collection_to_dict(collection), handle, indent=2)
+
+
+def load_persistent_collection(path: Path) -> PersistentRealmCollection:
+    with path.open("r", encoding="utf-8") as handle:
+        return persistent_collection_from_dict(json.load(handle))
 
 
 def main() -> None:

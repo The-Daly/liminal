@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "menu_route_id",
+    "display_name",
+    "route_order",
+    "next_route_ids",
+    "blocks_deploy",
+    "description"
+  ],
+  "properties": {
+    "menu_route_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "route_order": { "type": "integer", "minimum": 1 },
+    "next_route_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "blocks_deploy": { "type": "boolean" },
+    "description": { "type": "string" }
+  }
+}

@@ -14,6 +14,7 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - Python validation exists and requires `jsonschema` from `requirements.txt`.
 - Version 0.1 remains a graybox, single-player/local prototype target.
 - The repo-side Python layer can now simulate successful and failed runs, including loot, sanity drain, extraction, personal storage deposit, death wipe, project-board contribution, and local profile persistence.
+- The repo should now grow a serious frontend and persistent-world contract layer before any real multiplayer backend is attempted.
 
 ## V0.1 Foundation
 
@@ -33,6 +34,8 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 - Flicker Stalker prototype with patrol, perception, chase, attack, and return-to-patrol.
 - Minimal HUD for sanity, inventory, prompts, pickup feedback, extraction, and death.
 - Repo-side simulation coverage for successful extraction and failed-run inventory loss before Unreal implementation.
+- Serious title shell, server browser, faction-bound character flow, and main player menu shells.
+- Persistent-world contracts for official realms, community realms, wipe schedules, and server-bound character records.
 
 ## Full Game Gaps
 
@@ -53,5 +56,6 @@ This roadmap tracks what is missing from the starter package before Liminal Domi
 2. Save repo-owned maps and first Blueprint/UI assets into the existing UE5 project.
 3. Build the complete graybox extraction loop.
 4. Playtest V0.1 until the 10-minute loop is readable.
-5. Add persistence/session architecture only after the loop works.
-6. Expand factions, raids, NPCs, economy, and levels through approved proposals.
+5. Add the serious frontend and persistent-world contract layer after the loop foundation is stable.
+6. Add persistence/session architecture only after the menu and loop contracts are coherent.
+7. Expand factions, raids, NPCs, economy, and levels through approved proposals.

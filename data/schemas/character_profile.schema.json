@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "character_id",
+    "realm_id",
+    "server_type",
+    "faction_id",
+    "wipe_schedule_id",
+    "wipe_id",
+    "slot_index",
+    "callsign",
+    "appearance_id",
+    "role_preset",
+    "created_at_utc",
+    "last_login_utc",
+    "locked_until_wipe"
+  ],
+  "properties": {
+    "character_id": { "type": "string" },
+    "realm_id": { "type": "string" },
+    "server_type": { "enum": ["official", "community"] },
+    "faction_id": { "type": "string" },
+    "wipe_schedule_id": { "type": "string" },
+    "wipe_id": { "type": "string" },
+    "slot_index": { "type": "integer", "minimum": 1 },
+    "callsign": { "type": "string" },
+    "appearance_id": { "type": "string" },
+    "role_preset": { "type": "string" },
+    "created_at_utc": { "type": "string" },
+    "last_login_utc": { "type": "string" },
+    "locked_until_wipe": { "type": "boolean" }
+  }
+}

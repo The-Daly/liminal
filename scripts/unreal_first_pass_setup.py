@@ -24,6 +24,9 @@ DATA_IMPORTS = {
 BLUEPRINTS = [
     ("BP_LDPlayer", unreal.Character),
     ("BP_LDGameMode", unreal.GameModeBase),
+    ("BP_MenuFlowController", unreal.Actor),
+    ("BP_CharacterPreviewAnchor", unreal.Actor),
+    ("BP_FactionNpcPreviewAnchor", unreal.Actor),
     ("BP_DeploymentGate", unreal.Actor),
     ("BP_LootContainer", unreal.Actor),
     ("BP_ExtractionTrigger_Stable", unreal.Actor),
@@ -39,6 +42,11 @@ BLUEPRINTS = [
 ]
 
 WIDGETS = [
+    "WBP_TitleShell",
+    "WBP_ServerBrowser",
+    "WBP_FactionSelection",
+    "WBP_CharacterSetup",
+    "WBP_MainPlayerMenu",
     "WBP_PlayerHUD",
     "WBP_RunResult",
 ]

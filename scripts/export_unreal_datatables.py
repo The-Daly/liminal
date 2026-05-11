@@ -32,6 +32,10 @@ EXPORTS = {
     "noise_responses.seed.json": "DT_NoiseResponses.csv",
     "loot_density.seed.json": "DT_LootDensity.csv",
     "social_rules.seed.json": "DT_SocialRules.csv",
+    "server_realms.seed.json": "DT_ServerRealms.csv",
+    "wipe_schedules.seed.json": "DT_WipeSchedules.csv",
+    "character_appearance.seed.json": "DT_CharacterAppearance.csv",
+    "menu_routes.seed.json": "DT_MenuRoutes.csv",
 }
 
 ROW_NAME_FIELDS = [
@@ -58,6 +62,10 @@ ROW_NAME_FIELDS = [
     "noise_response_id",
     "density_profile_id",
     "social_rule_id",
+    "realm_id",
+    "wipe_schedule_id",
+    "appearance_id",
+    "menu_route_id",
 ]
 
 

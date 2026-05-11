@@ -57,6 +57,10 @@ class DataRegistry:
     noise_responses: dict[str, dict[str, Any]]
     loot_density: dict[str, dict[str, Any]]
     social_rules: dict[str, dict[str, Any]]
+    server_realms: dict[str, dict[str, Any]]
+    wipe_schedules: dict[str, dict[str, Any]]
+    character_appearance: dict[str, dict[str, Any]]
+    menu_routes: dict[str, dict[str, Any]]
 
     def item(self, item_id: str) -> dict[str, Any]:
         try:
@@ -96,6 +100,10 @@ def load_registry(seed_dir: Path = SEED_DIR) -> DataRegistry:
         noise_responses=index_by(load_json(seed_dir / "noise_responses.seed.json"), "noise_response_id", "noise_responses.seed.json"),
         loot_density=index_by(load_json(seed_dir / "loot_density.seed.json"), "density_profile_id", "loot_density.seed.json"),
         social_rules=index_by(load_json(seed_dir / "social_rules.seed.json"), "social_rule_id", "social_rules.seed.json"),
+        server_realms=index_by(load_json(seed_dir / "server_realms.seed.json"), "realm_id", "server_realms.seed.json"),
+        wipe_schedules=index_by(load_json(seed_dir / "wipe_schedules.seed.json"), "wipe_schedule_id", "wipe_schedules.seed.json"),
+        character_appearance=index_by(load_json(seed_dir / "character_appearance.seed.json"), "appearance_id", "character_appearance.seed.json"),
+        menu_routes=index_by(load_json(seed_dir / "menu_routes.seed.json"), "menu_route_id", "menu_routes.seed.json"),
     )
 
 
@@ -120,6 +128,10 @@ def main() -> None:
     print(f"Loaded {len(registry.noise_responses)} noise response tables")
     print(f"Loaded {len(registry.loot_density)} loot density profiles")
     print(f"Loaded {len(registry.social_rules)} social rule sets")
+    print(f"Loaded {len(registry.server_realms)} server realms")
+    print(f"Loaded {len(registry.wipe_schedules)} wipe schedules")
+    print(f"Loaded {len(registry.character_appearance)} character appearance presets")
+    print(f"Loaded {len(registry.menu_routes)} menu routes")
 
 
 if __name__ == "__main__":

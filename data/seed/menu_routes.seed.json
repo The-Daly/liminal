@@ -1,0 +1,74 @@
+[
+  {
+    "menu_route_id": "menu_title_shell",
+    "display_name": "Title Shell",
+    "route_order": 1,
+    "next_route_ids": ["menu_server_browser"],
+    "blocks_deploy": true,
+    "description": "Atmospheric landing shell that establishes tone and hands off to server selection."
+  },
+  {
+    "menu_route_id": "menu_server_browser",
+    "display_name": "Server Browser",
+    "route_order": 2,
+    "next_route_ids": ["menu_character_selection", "menu_faction_selection"],
+    "blocks_deploy": true,
+    "description": "Server selection comes first for official or community realms."
+  },
+  {
+    "menu_route_id": "menu_character_selection",
+    "display_name": "Character Selection",
+    "route_order": 3,
+    "next_route_ids": ["menu_faction_selection", "menu_main_player_hub"],
+    "blocks_deploy": true,
+    "description": "Shows any existing characters for the selected server before faction choice."
+  },
+  {
+    "menu_route_id": "menu_faction_selection",
+    "display_name": "Faction Selection",
+    "route_order": 4,
+    "next_route_ids": ["menu_character_setup"],
+    "blocks_deploy": true,
+    "description": "Permanent faction lock for the selected server is confirmed here."
+  },
+  {
+    "menu_route_id": "menu_character_setup",
+    "display_name": "Character Setup",
+    "route_order": 5,
+    "next_route_ids": ["menu_main_player_hub"],
+    "blocks_deploy": true,
+    "description": "Minimal preset-driven operator setup for a newly created character."
+  },
+  {
+    "menu_route_id": "menu_main_player_hub",
+    "display_name": "Main Player Hub",
+    "route_order": 6,
+    "next_route_ids": ["menu_deploy_panel", "menu_stash_panel", "menu_settings_panel"],
+    "blocks_deploy": false,
+    "description": "Main serious operations screen showing character, stash, faction, and wipe context."
+  },
+  {
+    "menu_route_id": "menu_deploy_panel",
+    "display_name": "Deploy Panel",
+    "route_order": 7,
+    "next_route_ids": ["menu_main_player_hub"],
+    "blocks_deploy": false,
+    "description": "Deployment subpanel for raids and world entry."
+  },
+  {
+    "menu_route_id": "menu_stash_panel",
+    "display_name": "Stash Panel",
+    "route_order": 8,
+    "next_route_ids": ["menu_main_player_hub"],
+    "blocks_deploy": false,
+    "description": "Stash, trader, and project-board adjacent inventory workflow."
+  },
+  {
+    "menu_route_id": "menu_settings_panel",
+    "display_name": "Settings Panel",
+    "route_order": 9,
+    "next_route_ids": ["menu_main_player_hub"],
+    "blocks_deploy": false,
+    "description": "Settings and exit panel inside the serious frontend shell."
+  }
+]

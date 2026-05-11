@@ -1,0 +1,15 @@
+{
+  "character_id": "char_official_na01_meg_001",
+  "realm_id": "official_north_america_01",
+  "server_type": "official",
+  "faction_id": "meg",
+  "wipe_schedule_id": "wipe_official_biannual",
+  "wipe_id": "wipe_official_biannual_2028",
+  "slot_index": 1,
+  "callsign": "Archive-Delta",
+  "appearance_id": "appearance_meg_operator_field_v0",
+  "role_preset": "operator",
+  "created_at_utc": "2026-05-11T12:00:00Z",
+  "last_login_utc": "2026-05-11T12:00:00Z",
+  "locked_until_wipe": true
+}

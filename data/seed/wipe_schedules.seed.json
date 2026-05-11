@@ -1,0 +1,20 @@
+[
+  {
+    "wipe_schedule_id": "wipe_official_biannual",
+    "display_name": "Official Biannual Wipe",
+    "cadence_years": 2,
+    "last_wipe_utc": "2026-01-01T00:00:00Z",
+    "next_wipe_utc": "2028-01-01T00:00:00Z",
+    "warning_window_days": 30,
+    "description": "Standard wipe cadence for official persistent realms."
+  },
+  {
+    "wipe_schedule_id": "wipe_community_biannual",
+    "display_name": "Community Biannual Wipe",
+    "cadence_years": 2,
+    "last_wipe_utc": "2026-03-01T00:00:00Z",
+    "next_wipe_utc": "2028-03-01T00:00:00Z",
+    "warning_window_days": 14,
+    "description": "Default community wipe cadence used by the baseline hosted-community template."
+  }
+]

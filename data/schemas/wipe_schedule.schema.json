@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "required": [
+    "wipe_schedule_id",
+    "display_name",
+    "cadence_years",
+    "last_wipe_utc",
+    "next_wipe_utc",
+    "warning_window_days",
+    "description"
+  ],
+  "properties": {
+    "wipe_schedule_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "cadence_years": { "type": "integer", "minimum": 1 },
+    "last_wipe_utc": { "type": "string" },
+    "next_wipe_utc": { "type": "string" },
+    "warning_window_days": { "type": "integer", "minimum": 0 },
+    "description": { "type": "string" }
+  }
+}

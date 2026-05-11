@@ -6,9 +6,9 @@ This file is the recommended execution order for the next Codex work on the repo
 
 1. Replace the crashing Unreal DataTable row-struct path.
 2. Turn the stamped Blueprint metadata into interaction logic.
-3. Wire the first readable playable loop.
-4. Bridge persistence and HUD state.
-5. Run a full in-editor smoke test and tighten the backlog.
+3. Build the serious frontend menu shells around the new realm/character contracts.
+4. Wire the first readable playable loop.
+5. Bridge persistence and HUD state.
 
 ## Task 1: Replace the DataTable Row-Struct Path
 

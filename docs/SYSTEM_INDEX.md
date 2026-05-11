@@ -74,6 +74,9 @@ This is the navigation page for AI agents and developers working without Unreal 
 - Level layout: `scripts/level_layout_model.py`
 - Navigation markers: `scripts/navigation_marker_model.py`
 - Social/team safety: `scripts/social_model.py`
+- Persistent world contracts: `scripts/persistent_world_model.py`
+- Frontend menu flow: `scripts/frontend_menu_model.py`
+- Character appearance framework: `scripts/character_framework_model.py`
 
 ## Verification
 

@@ -28,6 +28,11 @@ This file is the build target for the first Unreal pass. The repo now includes `
 
 ## Required UI
 
+- Title shell widget.
+- Server browser widget.
+- Faction selection widget.
+- Minimal character setup widget.
+- Main player menu widget.
 - Sanity meter.
 - Inventory list.
 - Interaction prompt.
@@ -45,6 +50,7 @@ This file is the build target for the first Unreal pass. The repo now includes `
 - The current graybox readability pass adds quartermaster, trader, faction-selector, relic-display, extra route/objective anchors, and smoke-test step markers to the maps.
 - The previous gameplay C++ skeletons are preserved in `Source_Legacy/` for later reactivation once the Windows Visual Studio toolchain is fully ready.
 - `scripts/run_unreal_first_pass.ps1` creates the first placeholder actors and widgets.
+- `scripts/run_unreal_frontend_shell_pass.ps1` refreshes the serious frontend shell widgets and menu controller variables.
 - `scripts/run_unreal_graybox_layout.ps1` stamps the hub, personal room, and Service Halls shell geometry plus playtest signage into the maps.
 
 ## Data Dependency

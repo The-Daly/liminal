@@ -1,0 +1,10 @@
+Name,menu_route_id,display_name,route_order,next_route_ids,blocks_deploy,description
+menu_title_shell,menu_title_shell,Title Shell,1,"[""menu_server_browser""]",True,Atmospheric landing shell that establishes tone and hands off to server selection.
+menu_server_browser,menu_server_browser,Server Browser,2,"[""menu_character_selection"",""menu_faction_selection""]",True,Server selection comes first for official or community realms.
+menu_character_selection,menu_character_selection,Character Selection,3,"[""menu_faction_selection"",""menu_main_player_hub""]",True,Shows any existing characters for the selected server before faction choice.
+menu_faction_selection,menu_faction_selection,Faction Selection,4,"[""menu_character_setup""]",True,Permanent faction lock for the selected server is confirmed here.
+menu_character_setup,menu_character_setup,Character Setup,5,"[""menu_main_player_hub""]",True,Minimal preset-driven operator setup for a newly created character.
+menu_main_player_hub,menu_main_player_hub,Main Player Hub,6,"[""menu_deploy_panel"",""menu_stash_panel"",""menu_settings_panel""]",False,"Main serious operations screen showing character, stash, faction, and wipe context."
+menu_deploy_panel,menu_deploy_panel,Deploy Panel,7,"[""menu_main_player_hub""]",False,Deployment subpanel for raids and world entry.
+menu_stash_panel,menu_stash_panel,Stash Panel,8,"[""menu_main_player_hub""]",False,"Stash, trader, and project-board adjacent inventory workflow."
+menu_settings_panel,menu_settings_panel,Settings Panel,9,"[""menu_main_player_hub""]",False,Settings and exit panel inside the serious frontend shell.

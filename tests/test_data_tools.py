@@ -10,17 +10,34 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from character_framework_model import appearance_presets_for_faction, can_use_appearance, faction_character_rules
 from extraction_model import can_extract
 from economy_model import buy_item, can_buy, sell_preview
 from faction_model import build_new_realm_inventory, hub_upgrade_focus, reset_realm_for_faction, resolve_starting_loadout
+from frontend_menu_model import MenuFlowState, ordered_routes, resolve_next_route
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
 from loot_model import container_owner, is_level1_weapon_armor_sparse, preview_table, roll_loot
 from navigation_marker_model import is_marker_expired, marker_visibility
 from npc_roster_model import faction_roster, hireable_security_npcs, npcs_by_service, security_brokers
-from persistence_model import load_profile, new_local_profile, save_profile
+from persistence_model import (
+    PersistentRealmCollection,
+    RealmCharacterRecord,
+    load_persistent_collection,
+    load_profile,
+    new_local_profile,
+    save_persistent_collection,
+    save_profile,
+)
 from playable_loop_model import LoopOutcome, simulate_death_run, simulate_successful_run
+from persistent_world_model import (
+    can_change_faction,
+    can_create_character_on_realm,
+    create_character_profile,
+    profiles_by_server_type,
+    realm_descriptor,
+)
 from project_board_model import HubProgressState, contribute_all_possible, contribute_item, is_upgrade_complete
 from quest_model import is_quest_complete, quest_ids_for_npc, reward_preview
 from social_model import can_form_squad, can_players_damage_each_other, radio_connects_squadmates
@@ -51,6 +68,12 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("social_faction_safe_squads_v0", self.registry.social_rules)
         self.assertIn("level1_service_halls", self.registry.level_layouts)
         self.assertEqual(len(self.registry.factions), 3)
+
+    def test_registry_loads_frontend_and_persistent_world_data(self):
+        self.assertIn("official_north_america_01", self.registry.server_realms)
+        self.assertIn("wipe_official_biannual", self.registry.wipe_schedules)
+        self.assertIn("appearance_meg_operator_field_v0", self.registry.character_appearance)
+        self.assertIn("menu_title_shell", self.registry.menu_routes)
 
     def test_duplicate_ids_fail(self):
         records = [{"item_id": "same"}, {"item_id": "same"}]
@@ -244,6 +267,56 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(profile.run_history[0].run_state_id, "run_5")
         self.assertEqual(profile.run_history[-1].run_state_id, "run_24")
 
+    def test_persistent_realm_collection_separates_official_and_community(self):
+        official = RealmCharacterRecord(
+            character_id="char_official_001",
+            realm_id="official_north_america_01",
+            server_type="official",
+            faction_id="meg",
+            wipe_schedule_id="wipe_official_biannual",
+            wipe_id="wipe_official_biannual_2028",
+            slot_index=1,
+            callsign="Archive-Delta",
+            appearance_id="appearance_meg_operator_field_v0",
+            role_preset="operator",
+            created_at_utc="2026-05-11T12:00:00Z",
+            last_login_utc="2026-05-11T12:00:00Z",
+            locked_until_wipe=True,
+        )
+        community = RealmCharacterRecord(
+            character_id="char_community_001",
+            realm_id="community_rustwater_lab_01",
+            server_type="community",
+            faction_id="clippers",
+            wipe_schedule_id="wipe_community_biannual",
+            wipe_id="wipe_community_biannual_2028",
+            slot_index=1,
+            callsign="Route-Knot",
+            appearance_id="appearance_clippers_route_runner_v0",
+            role_preset="operator",
+            created_at_utc="2026-05-11T12:00:00Z",
+            last_login_utc="2026-05-11T12:00:00Z",
+            locked_until_wipe=True,
+        )
+        collection = PersistentRealmCollection(
+            official_characters=[official],
+            community_characters=[community],
+            wipe_state={
+                "official_north_america_01": {"next_wipe_utc": "2028-01-01T00:00:00Z"},
+                "community_rustwater_lab_01": {"next_wipe_utc": "2028-03-01T00:00:00Z"},
+            },
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "persistent_realms.json"
+            save_persistent_collection(path, collection)
+            restored = load_persistent_collection(path)
+
+        self.assertEqual(len(restored.official_characters), 1)
+        self.assertEqual(len(restored.community_characters), 1)
+        self.assertEqual(restored.official_characters[0].realm_id, "official_north_america_01")
+        self.assertEqual(restored.community_characters[0].realm_id, "community_rustwater_lab_01")
+
     def test_faction_loadout_and_realm_reset(self):
         loadout = resolve_starting_loadout(self.registry, "meg")
         self.assertIn("tool_meg_entity_scanner", loadout.item_ids)
@@ -390,6 +463,76 @@ class DataToolTests(unittest.TestCase):
         self.assertGreaterEqual(len(hireable_security_npcs(self.registry)), 4)
         self.assertGreaterEqual(len(security_brokers(self.registry)), 4)
         self.assertGreaterEqual(len(faction_roster(self.registry, "meg")), 5)
+
+    def test_official_realm_cap_and_queue_snapshot(self):
+        descriptor = realm_descriptor(
+            self.registry,
+            "official_north_america_01",
+            active_counts={"meg": 30, "bntg": 28, "clippers": 24},
+            queue_counts={"meg": 6, "bntg": 1, "clippers": 0},
+        )
+        self.assertEqual(descriptor.population_cap, 90)
+        self.assertEqual({state.cap for state in descriptor.faction_caps}, {30})
+        meg_state = next(state for state in descriptor.faction_caps if state.faction_id == "meg")
+        self.assertEqual(meg_state.current_active, 30)
+        self.assertEqual(meg_state.queue_count, 6)
+        self.assertFalse(can_create_character_on_realm(self.registry, "official_north_america_01", "meg", {"meg": 30}))
+        self.assertTrue(can_create_character_on_realm(self.registry, "official_north_america_01", "bntg", {"bntg": 29}))
+
+    def test_character_profile_is_server_bound_and_faction_locked(self):
+        profile = create_character_profile(
+            self.registry,
+            realm_id="official_north_america_01",
+            faction_id="meg",
+            callsign="Archive-Delta",
+            appearance_id="appearance_meg_operator_field_v0",
+            slot_index=1,
+            timestamp_utc="2026-05-11T12:00:00Z",
+        )
+        self.assertEqual(profile.server_type, "official")
+        self.assertEqual(profile.realm_id, "official_north_america_01")
+        self.assertFalse(can_change_faction(profile, profile.wipe_id))
+        self.assertTrue(can_change_faction(profile, "wipe_official_biannual_2030"))
+
+        grouped = profiles_by_server_type([profile])
+        self.assertEqual(len(grouped["official"]), 1)
+        self.assertEqual(len(grouped["community"]), 0)
+
+    def test_character_profile_example_matches_schema(self):
+        schema = json.loads((ROOT / "data/schemas/character_profile.schema.json").read_text(encoding="utf-8"))
+        example = json.loads((ROOT / "data/examples/character_profile.example.json").read_text(encoding="utf-8"))
+        errors = list(Draft202012Validator(schema).iter_errors(example))
+        self.assertEqual(errors, [])
+
+    def test_menu_flow_respects_server_first_and_existing_character_rules(self):
+        routes = ordered_routes(self.registry)
+        self.assertEqual(routes[0].menu_route_id, "menu_title_shell")
+        self.assertEqual(resolve_next_route(MenuFlowState("menu_title_shell", None, False, False, False)), "menu_server_browser")
+        self.assertEqual(
+            resolve_next_route(MenuFlowState("menu_server_browser", "official_north_america_01", False, False, False)),
+            "menu_faction_selection",
+        )
+        self.assertEqual(
+            resolve_next_route(MenuFlowState("menu_server_browser", "official_north_america_01", True, False, False)),
+            "menu_character_selection",
+        )
+        self.assertEqual(
+            resolve_next_route(MenuFlowState("menu_character_selection", "official_north_america_01", True, False, False)),
+            "menu_main_player_hub",
+        )
+
+    def test_character_appearance_presets_are_minimal_and_faction_safe(self):
+        meg_player_presets = appearance_presets_for_faction(self.registry, "meg", usable_by="player")
+        bntg_player_presets = appearance_presets_for_faction(self.registry, "bntg", usable_by="player")
+        clippers_player_presets = appearance_presets_for_faction(self.registry, "clippers", usable_by="player")
+        self.assertGreaterEqual(len(meg_player_presets), 1)
+        self.assertGreaterEqual(len(bntg_player_presets), 1)
+        self.assertGreaterEqual(len(clippers_player_presets), 1)
+        self.assertTrue(can_use_appearance(self.registry, "meg", "appearance_meg_operator_field_v0", "player"))
+        self.assertFalse(can_use_appearance(self.registry, "meg", "appearance_bntg_salvage_runner_v0", "player"))
+        rules = faction_character_rules(self.registry, "clippers")
+        self.assertIn("appearance_clippers_route_runner_v0", rules.allowed_appearance_ids)
+        self.assertEqual(rules.starter_identity_item_id, "tool_clippers_camcorder")
 
     def test_level_layout_faction_footholds_and_spacing(self):
         level_id = "level1_service_halls"

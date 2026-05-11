@@ -31,9 +31,21 @@ Build only enough to prove the extraction loop.
 ## Excluded
 
 - Full MMO/persistent faction servers.
+- Real 90-player backend authority in Version 0.1.
 - Full raids.
 - Full NPC capture/kidnapping.
 - Full weapon attachments.
 - All 160 relic 3D models.
 - Full procedural generation.
 - Full Level 2 gameplay.
+
+## Allowed Directional Work
+
+The repo may still add:
+
+- serious frontend shells
+- server-browser contracts
+- wipe and character-profile contracts
+- faction-lock UI and persistence rules
+
+as long as those remain frontend, data, and prototype-contract work rather than a full live backend implementation.

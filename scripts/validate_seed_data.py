@@ -52,6 +52,10 @@ PAIRINGS = {
     "noise_responses.seed.json": "noise_response.schema.json",
     "loot_density.seed.json": "loot_density.schema.json",
     "social_rules.seed.json": "social_rule.schema.json",
+    "server_realms.seed.json": "server_realm.schema.json",
+    "wipe_schedules.seed.json": "wipe_schedule.schema.json",
+    "character_appearance.seed.json": "character_appearance.schema.json",
+    "menu_routes.seed.json": "menu_route.schema.json",
 }
 
 
@@ -145,6 +149,10 @@ def check_references():
     navigation_markers = load_json(SEED_DIR / "navigation_markers.seed.json")
     noise_responses = load_json(SEED_DIR / "noise_responses.seed.json")
     loot_density = load_json(SEED_DIR / "loot_density.seed.json")
+    server_realms = load_json(SEED_DIR / "server_realms.seed.json")
+    wipe_schedules = load_json(SEED_DIR / "wipe_schedules.seed.json")
+    character_appearance = load_json(SEED_DIR / "character_appearance.seed.json")
+    menu_routes = load_json(SEED_DIR / "menu_routes.seed.json")
 
     item_ids = {item["item_id"] for item in items}
     faction_ids = {faction["faction_id"] for faction in factions}
@@ -158,6 +166,8 @@ def check_references():
     weapon_ids = {entry["weapon_id"] for entry in weapons}
     ammo_type_ids = {entry["ammo_type_id"] for entry in ammo}
     density_profile_ids = {entry["density_profile_id"] for entry in loot_density}
+    wipe_schedule_ids = {entry["wipe_schedule_id"] for entry in wipe_schedules}
+    menu_route_ids = {entry["menu_route_id"] for entry in menu_routes}
 
     missing = []
 
@@ -290,6 +300,25 @@ def check_references():
             if entity_id is not None and entity_id not in entity_ids:
                 missing.append(f"Noise response {response_table['noise_response_id']} references missing entity {entity_id}")
 
+    for realm in server_realms:
+        if realm["wipe_schedule_id"] not in wipe_schedule_ids:
+            missing.append(f"Server realm {realm['realm_id']} references missing wipe schedule {realm['wipe_schedule_id']}")
+        for faction_cap in realm.get("faction_caps", []):
+            if faction_cap["faction_id"] not in faction_ids:
+                missing.append(f"Server realm {realm['realm_id']} references missing faction {faction_cap['faction_id']}")
+
+    for appearance in character_appearance:
+        if appearance["faction_id"] not in faction_ids:
+            missing.append(f"Character appearance {appearance['appearance_id']} references missing faction {appearance['faction_id']}")
+        starter_item = appearance.get("identity_item_id")
+        if starter_item is not None and starter_item not in item_ids:
+            missing.append(f"Character appearance {appearance['appearance_id']} references missing identity item {starter_item}")
+
+    for route in menu_routes:
+        for next_route_id in route.get("next_route_ids", []):
+            if next_route_id not in menu_route_ids:
+                missing.append(f"Menu route {route['menu_route_id']} references missing next route {next_route_id}")
+
     if missing:
         raise ValueError("\\n".join(missing))
 
@@ -323,6 +352,10 @@ def main():
     check_duplicate_ids("noise_responses.seed.json", "noise_response_id")
     check_duplicate_ids("loot_density.seed.json", "density_profile_id")
     check_duplicate_ids("social_rules.seed.json", "social_rule_id")
+    check_duplicate_ids("server_realms.seed.json", "realm_id")
+    check_duplicate_ids("wipe_schedules.seed.json", "wipe_schedule_id")
+    check_duplicate_ids("character_appearance.seed.json", "appearance_id")
+    check_duplicate_ids("menu_routes.seed.json", "menu_route_id")
     check_references()
 
     print(f"SUCCESS: validated {total} records.")

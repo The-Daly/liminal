@@ -1,0 +1,3 @@
+Name,wipe_schedule_id,display_name,cadence_years,last_wipe_utc,next_wipe_utc,warning_window_days,description
+wipe_official_biannual,wipe_official_biannual,Official Biannual Wipe,2,2026-01-01T00:00:00Z,2028-01-01T00:00:00Z,30,Standard wipe cadence for official persistent realms.
+wipe_community_biannual,wipe_community_biannual,Community Biannual Wipe,2,2026-03-01T00:00:00Z,2028-03-01T00:00:00Z,14,Default community wipe cadence used by the baseline hosted-community template.
