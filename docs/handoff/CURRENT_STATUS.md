@@ -28,7 +28,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - Placeholder Blueprint assets exist under `Content/Blueprints`.
 - Placeholder UI widgets exist under `Content/UI`.
 - Frontend shell widget targets are now defined for title, server browser, faction selection, character setup, and main player menu.
-- Blueprint data-contract variables now exist on the first-wave interaction actors, the player shell, the game mode shell, and the two placeholder widgets.
+- Blueprint data-contract variables now exist on the first-wave interaction actors, the player shell, the game mode shell, the menu flow controller, and the serious frontend widgets.
 - The placed graybox actors are now stamped with repo-owned prompts, run IDs, extraction IDs, storage IDs, hub-upgrade IDs, and map-return paths.
 - The automated graybox pass now stamps:
   - shell geometry
@@ -64,12 +64,14 @@ This file replaces the old starter-pack mental model with the current repo state
 - the current graybox maps now place deployment, loot, extraction, storage, project-board, and Flicker Stalker actors with loop-specific metadata
 - `Config/DefaultGame.ini` now points at the intended DataTable asset paths and the default map/run IDs for the V0.1 loop
 - persistent-world contract seeds now exist for server realms, wipe schedules, minimal character appearance presets, and menu routes
+- repo-side menu helpers now generate title copy, server browser summaries, faction-lock warnings, character setup defaults, main-menu snapshots, and saved frontend session state
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
 
 - DataTables are still not safely imported into Unreal as assets under `Content/Data`.
 - The serious frontend exists as a repo-side shell target, not yet as a fully interactive menu implementation.
+- The serious frontend now has repo-backed state and summary helpers, but its UMG graphs are still shell-level rather than interactive.
 - Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
 - The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
 - SaveGame and persistence are not yet bridged through Blueprint runtime behavior.
@@ -99,6 +101,9 @@ This file replaces the old starter-pack mental model with the current repo state
 - `scripts/unreal_blueprint_data_wiring.py`
 - `scripts/unreal_data_bootstrap.py`
 - `scripts/unreal_graybox_layout.py`
+- `scripts/frontend_menu_model.py`
+- `scripts/persistent_world_model.py`
+- `scripts/persistence_model.py`
 - `generated/unreal_datatables/`
 
 ## Immediate Direction
@@ -106,5 +111,6 @@ This file replaces the old starter-pack mental model with the current repo state
 The repo is ready for a Codex pass focused on:
 
 1. replacing the crashing Python-row-struct DataTable import path with editor-authored or native structs
-2. turning the stamped Blueprint metadata into real deployment, loot, extraction, storage, and board behavior
-3. the first real in-editor smoke-test loop
+2. turning the menu controller and serious frontend widgets into an actual title -> server -> faction -> character -> main-menu flow
+3. turning the stamped Blueprint metadata into real deployment, loot, extraction, storage, and board behavior
+4. the first real in-editor smoke-test loop

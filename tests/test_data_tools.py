@@ -14,7 +14,16 @@ from character_framework_model import appearance_presets_for_faction, can_use_ap
 from extraction_model import can_extract
 from economy_model import buy_item, can_buy, sell_preview
 from faction_model import build_new_realm_inventory, hub_upgrade_focus, reset_realm_for_faction, resolve_starting_loadout
-from frontend_menu_model import MenuFlowState, ordered_routes, resolve_next_route
+from frontend_menu_model import (
+    MenuFlowState,
+    bootstrap_menu_flow,
+    build_main_player_menu_snapshot,
+    build_server_browser_snapshot,
+    character_setup_defaults,
+    faction_lock_warning,
+    ordered_routes,
+    resolve_next_route,
+)
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
@@ -24,9 +33,12 @@ from npc_roster_model import faction_roster, hireable_security_npcs, npcs_by_ser
 from persistence_model import (
     PersistentRealmCollection,
     RealmCharacterRecord,
+    FrontendSessionState,
+    load_frontend_session,
     load_persistent_collection,
     load_profile,
     new_local_profile,
+    save_frontend_session,
     save_persistent_collection,
     save_profile,
 )
@@ -36,6 +48,7 @@ from persistent_world_model import (
     can_create_character_on_realm,
     create_character_profile,
     profiles_by_server_type,
+    realm_menu_summary,
     realm_descriptor,
 )
 from project_board_model import HubProgressState, contribute_all_possible, contribute_item, is_upgrade_complete
@@ -520,6 +533,95 @@ class DataToolTests(unittest.TestCase):
             resolve_next_route(MenuFlowState("menu_character_selection", "official_north_america_01", True, False, False)),
             "menu_main_player_hub",
         )
+
+    def test_realm_menu_summary_formats_population_and_wipe_context(self):
+        summary = realm_menu_summary(
+            self.registry,
+            "official_north_america_01",
+            active_counts={"meg": 30, "bntg": 28, "clippers": 24},
+            queue_counts={"meg": 6, "bntg": 1, "clippers": 0},
+        )
+        self.assertEqual(summary.total_active, 82)
+        self.assertEqual(summary.total_capacity, 90)
+        self.assertEqual(summary.total_queue, 7)
+        self.assertIn("Next wipe", summary.wipe_summary_text)
+        self.assertIn("MEG 30/30 Q6", summary.faction_population_summary)
+
+    def test_frontend_menu_helpers_build_server_and_faction_copy(self):
+        server_snapshot = build_server_browser_snapshot(
+            self.registry,
+            "official_north_america_01",
+            active_counts={"meg": 30, "bntg": 28, "clippers": 24},
+            queue_counts={"meg": 6, "bntg": 1, "clippers": 0},
+        )
+        self.assertEqual(server_snapshot.selected_server_type, "official")
+        self.assertIn("Official Realm", server_snapshot.server_name_text)
+        self.assertIn("Population 82/90 | Queue 7", server_snapshot.queue_summary_text)
+
+        warning = faction_lock_warning(self.registry, "official_north_america_01", "meg")
+        self.assertIn("M.E.G.", warning)
+        self.assertIn("next wipe", warning.lower())
+
+        setup_defaults = character_setup_defaults(self.registry, "meg", slot_index=2)
+        self.assertEqual(setup_defaults.selected_faction_id, "meg")
+        self.assertEqual(setup_defaults.selected_appearance_id, "appearance_meg_operator_field_v0")
+        self.assertEqual(setup_defaults.character_callsign, "MEG-02")
+
+    def test_menu_bootstrap_and_main_player_snapshot_follow_existing_character(self):
+        profile = create_character_profile(
+            self.registry,
+            realm_id="official_north_america_01",
+            faction_id="meg",
+            callsign="Archive-Delta",
+            appearance_id="appearance_meg_operator_field_v0",
+            slot_index=1,
+            timestamp_utc="2026-05-11T12:00:00Z",
+        )
+        bootstrap = bootstrap_menu_flow(
+            self.registry,
+            "official_north_america_01",
+            profiles=(profile,),
+            route_id="menu_server_browser",
+        )
+        self.assertTrue(bootstrap.has_existing_character)
+        self.assertEqual(bootstrap.next_route_id, "menu_character_selection")
+        self.assertEqual(bootstrap.selected_character_id, profile.character_id)
+        self.assertEqual(bootstrap.selected_faction_id, "meg")
+
+        snapshot = build_main_player_menu_snapshot(
+            self.registry,
+            profile,
+            active_counts={"meg": 27, "bntg": 23, "clippers": 22},
+            queue_counts={"meg": 2, "bntg": 0, "clippers": 1},
+        )
+        self.assertTrue(snapshot.deploy_enabled)
+        self.assertEqual(snapshot.selected_character_id, profile.character_id)
+        self.assertIn("Archive-Delta", snapshot.character_summary_text)
+        self.assertIn("MEG 27/30 Q2", snapshot.faction_population_summary)
+
+    def test_frontend_session_round_trips_menu_state(self):
+        session = FrontendSessionState(
+            current_route_id="menu_main_player_hub",
+            selected_realm_id="official_north_america_01",
+            selected_server_type="official",
+            selected_faction_id="meg",
+            selected_character_id="char_official_001",
+            selected_appearance_id="appearance_meg_operator_field_v0",
+            character_callsign="Archive-Delta",
+            has_existing_character=True,
+            character_configured=True,
+            current_wipe_label="Biannual Official Wipe | Next wipe 2028-01-01",
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "frontend_session.json"
+            save_frontend_session(path, session)
+            restored = load_frontend_session(path)
+
+        self.assertEqual(restored.current_route_id, "menu_main_player_hub")
+        self.assertEqual(restored.selected_realm_id, "official_north_america_01")
+        self.assertEqual(restored.selected_server_type, "official")
+        self.assertTrue(restored.has_existing_character)
 
     def test_character_appearance_presets_are_minimal_and_faction_safe(self):
         meg_player_presets = appearance_presets_for_faction(self.registry, "meg", usable_by="player")

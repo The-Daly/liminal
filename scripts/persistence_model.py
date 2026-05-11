@@ -83,6 +83,20 @@ class PersistentRealmCollection:
     wipe_state: dict[str, dict] = field(default_factory=dict)
 
 
+@dataclass
+class FrontendSessionState:
+    current_route_id: str = "menu_title_shell"
+    selected_realm_id: str | None = None
+    selected_server_type: str | None = None
+    selected_faction_id: str | None = None
+    selected_character_id: str | None = None
+    selected_appearance_id: str | None = None
+    character_callsign: str = ""
+    has_existing_character: bool = False
+    character_configured: bool = False
+    current_wipe_label: str = ""
+
+
 def new_local_profile(registry: DataRegistry, player_state_id: str = "player_state_v0_meg") -> LocalProfileState:
     player_state = registry.player_states.get(player_state_id)
     if player_state is None:
@@ -223,6 +237,55 @@ def load_persistent_collection(path: Path) -> PersistentRealmCollection:
         return persistent_collection_from_dict(json.load(handle))
 
 
+def frontend_session_to_dict(session: FrontendSessionState) -> dict:
+    return {
+        "current_route_id": session.current_route_id,
+        "selected_realm_id": session.selected_realm_id,
+        "selected_server_type": session.selected_server_type,
+        "selected_faction_id": session.selected_faction_id,
+        "selected_character_id": session.selected_character_id,
+        "selected_appearance_id": session.selected_appearance_id,
+        "character_callsign": session.character_callsign,
+        "has_existing_character": session.has_existing_character,
+        "character_configured": session.character_configured,
+        "current_wipe_label": session.current_wipe_label,
+    }
+
+
+def frontend_session_from_dict(data: dict) -> FrontendSessionState:
+    return FrontendSessionState(
+        current_route_id=str(data.get("current_route_id", "menu_title_shell")),
+        selected_realm_id=str(data["selected_realm_id"]) if data.get("selected_realm_id") is not None else None,
+        selected_server_type=(
+            str(data["selected_server_type"]) if data.get("selected_server_type") is not None else None
+        ),
+        selected_faction_id=(
+            str(data["selected_faction_id"]) if data.get("selected_faction_id") is not None else None
+        ),
+        selected_character_id=(
+            str(data["selected_character_id"]) if data.get("selected_character_id") is not None else None
+        ),
+        selected_appearance_id=(
+            str(data["selected_appearance_id"]) if data.get("selected_appearance_id") is not None else None
+        ),
+        character_callsign=str(data.get("character_callsign", "")),
+        has_existing_character=bool(data.get("has_existing_character", False)),
+        character_configured=bool(data.get("character_configured", False)),
+        current_wipe_label=str(data.get("current_wipe_label", "")),
+    )
+
+
+def save_frontend_session(path: Path, session: FrontendSessionState) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(frontend_session_to_dict(session), handle, indent=2)
+
+
+def load_frontend_session(path: Path) -> FrontendSessionState:
+    with path.open("r", encoding="utf-8") as handle:
+        return frontend_session_from_dict(json.load(handle))
+
+
 def main() -> None:
     registry = load_registry()
     profile = new_local_profile(registry)
@@ -236,11 +299,24 @@ def main() -> None:
         profile_path = Path(temp_dir) / "local_profile.json"
         save_profile(profile_path, profile)
         restored = load_profile(registry, profile_path)
+        session_path = Path(temp_dir) / "frontend_session.json"
+        save_frontend_session(
+            session_path,
+            FrontendSessionState(
+                selected_realm_id="official_north_america_01",
+                selected_server_type="official",
+                selected_faction_id="meg",
+                character_callsign="MEG-01",
+                current_wipe_label="Biannual Official Wipe | Next wipe 2028-01-01",
+            ),
+        )
+        restored_session = load_frontend_session(session_path)
         print(
             f"Saved profile for {restored.faction_id} with "
             f"{len(inventory_records(restored.personal))} stored item types and "
             f"{len(restored.run_history)} run record(s)"
         )
+        print(f"Saved frontend session for realm {restored_session.selected_realm_id}")
 
 
 if __name__ == "__main__":

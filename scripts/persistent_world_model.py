@@ -70,6 +70,21 @@ class CharacterSlotSummary:
     wipe_id: str
 
 
+@dataclass(frozen=True)
+class RealmMenuSummary:
+    realm_id: str
+    display_name: str
+    server_type: str
+    region: str
+    ruleset_summary: str
+    wipe_summary_text: str
+    faction_population_summary: str
+    total_active: int
+    total_capacity: int
+    total_queue: int
+    supports_character_creation: bool
+
+
 def realm_descriptor(
     registry: DataRegistry,
     realm_id: str,
@@ -110,6 +125,60 @@ def wipe_schedule(registry: DataRegistry, wipe_schedule_id: str) -> WipeSchedule
     if schedule is None:
         raise RegistryError(f"Unknown wipe_schedule_id: {wipe_schedule_id}")
     return WipeSchedule(**schedule)
+
+
+def wipe_summary_label(registry: DataRegistry, wipe_schedule_id: str) -> str:
+    schedule = wipe_schedule(registry, wipe_schedule_id)
+    return (
+        f"{schedule.display_name} | Next wipe {schedule.next_wipe_utc[:10]} | "
+        f"Last wipe {schedule.last_wipe_utc[:10]}"
+    )
+
+
+def faction_population_summary(descriptor: ServerRealmDescriptor) -> str:
+    summary_parts = []
+    for state in descriptor.faction_caps:
+        label = state.faction_id.upper()
+        part = f"{label} {state.current_active}/{state.cap}"
+        if state.queue_count > 0:
+            part += f" Q{state.queue_count}"
+        summary_parts.append(part)
+    return " | ".join(summary_parts)
+
+
+def total_active_population(descriptor: ServerRealmDescriptor) -> int:
+    return sum(state.current_active for state in descriptor.faction_caps)
+
+
+def total_queue_population(descriptor: ServerRealmDescriptor) -> int:
+    return sum(state.queue_count for state in descriptor.faction_caps)
+
+
+def realm_menu_summary(
+    registry: DataRegistry,
+    realm_id: str,
+    active_counts: dict[str, int] | None = None,
+    queue_counts: dict[str, int] | None = None,
+) -> RealmMenuSummary:
+    descriptor = realm_descriptor(
+        registry,
+        realm_id,
+        active_counts=active_counts,
+        queue_counts=queue_counts,
+    )
+    return RealmMenuSummary(
+        realm_id=descriptor.realm_id,
+        display_name=descriptor.display_name,
+        server_type=descriptor.server_type,
+        region=descriptor.region,
+        ruleset_summary=descriptor.ruleset_summary,
+        wipe_summary_text=wipe_summary_label(registry, descriptor.wipe_schedule_id),
+        faction_population_summary=faction_population_summary(descriptor),
+        total_active=total_active_population(descriptor),
+        total_capacity=descriptor.population_cap,
+        total_queue=total_queue_population(descriptor),
+        supports_character_creation=descriptor.supports_character_creation,
+    )
 
 
 def can_create_character_on_realm(
@@ -184,6 +253,23 @@ def slot_summary(profile: CharacterProfile) -> CharacterSlotSummary:
     )
 
 
+def profiles_for_realm(
+    profiles: Iterable[CharacterProfile],
+    realm_id: str,
+) -> list[CharacterProfile]:
+    return [profile for profile in profiles if profile.realm_id == realm_id]
+
+
+def first_profile_for_realm(
+    profiles: Iterable[CharacterProfile],
+    realm_id: str,
+) -> CharacterProfile | None:
+    matches = profiles_for_realm(profiles, realm_id)
+    if not matches:
+        return None
+    return sorted(matches, key=lambda profile: profile.slot_index)[0]
+
+
 def main() -> None:
     registry = load_registry()
     descriptor = realm_descriptor(
@@ -195,6 +281,7 @@ def main() -> None:
     print(descriptor.display_name)
     for state in descriptor.faction_caps:
         print(f"{state.faction_id}: {state.current_active}/{state.cap} active, queue {state.queue_count}")
+    print(realm_menu_summary(registry, "official_north_america_01").wipe_summary_text)
 
 
 if __name__ == "__main__":

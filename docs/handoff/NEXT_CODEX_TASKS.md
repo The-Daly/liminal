@@ -5,8 +5,8 @@ This file is the recommended execution order for the next Codex work on the repo
 ## Priority Order
 
 1. Replace the crashing Unreal DataTable row-struct path.
-2. Turn the stamped Blueprint metadata into interaction logic.
-3. Build the serious frontend menu shells around the new realm/character contracts.
+2. Turn the serious frontend menu shells into a real flow controller pass.
+3. Turn the stamped Blueprint metadata into interaction logic.
 4. Wire the first readable playable loop.
 5. Bridge persistence and HUD state.
 
@@ -28,7 +28,22 @@ This file is the recommended execution order for the next Codex work on the repo
   - `DT_RunState`
 - Then continue with the broader prototype-support tables.
 
-## Task 2: Turn Metadata Into Core Blueprint Behavior
+## Task 2: Turn the Serious Frontend Shell Into Real Menu Flow
+
+- The repo now has server/wipe/faction/menu contracts plus local frontend session persistence.
+- The menu controller and widgets now have variables for:
+  - current and next route
+  - selected realm/server type/faction/character/appearance
+  - server name, region, wipe summary, faction population summary
+  - faction-lock warning, callsign, identity item, and deploy-enabled state
+- Use the repo-side helpers in:
+  - `scripts/frontend_menu_model.py`
+  - `scripts/persistent_world_model.py`
+  - `scripts/persistence_model.py`
+- Wire the title -> server browser -> faction selection -> character setup -> main player hub sequence in Unreal.
+- Keep it shell-simple but functional.
+
+## Task 3: Turn Metadata Into Core Blueprint Behavior
 
 - Read `docs/handoff/BLUEPRINT_WIRING_PLAN.md`.
 - The data variables already exist on the key Blueprint assets, and the placed actors already have prompts, IDs, and map paths stamped into the maps.
@@ -42,7 +57,7 @@ This file is the recommended execution order for the next Codex work on the repo
 - Keep the implementations simple and testable.
 - Prefer one reliable placeholder behavior over overbuilding.
 
-## Task 3: Make the V0.1 Loop Walkable
+## Task 4: Make the V0.1 Loop Walkable
 
 - Read `docs/handoff/VERSION_0_1_PLAYABLE_LOOP.md`.
 - Use the current stamped actor metadata instead of hardcoding values in every interaction graph.
@@ -58,7 +73,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - contribute to project board
 - Use the smoke-test signage now stamped into the maps as the guide rails.
 
-## Task 4: Wire HUD + Persistence
+## Task 5: Wire HUD + Persistence
 
 - Make `WBP_PlayerHUD` reflect:
   - sanity
@@ -72,7 +87,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - carried-loot outcome
 - Add simple local SaveGame placeholders only after the basic loop is behaving.
 
-## Task 5: Smoke-Test and Update Docs
+## Task 6: Smoke-Test and Update Docs
 
 - Run the loop in-editor on Windows.
 - Note what works, what fakes it, and what is still broken.
