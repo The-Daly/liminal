@@ -61,6 +61,11 @@ This file is the recommended execution order for the next Codex work on the repo
   - server browser to character/faction paths
   - hub to deploy/stash
   - subpanel return to hub
+- The operations-hub presentation model now exposes:
+  - left-rail nav defaults
+  - center deployment brief copy
+  - right-rail operator status copy
+  - footer telemetry copy
 - Wire the title -> server browser -> faction selection -> character setup -> main player hub sequence in Unreal.
 - Keep it shell-simple but functional.
 

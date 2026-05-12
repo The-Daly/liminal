@@ -29,6 +29,7 @@ from frontend_menu_model import (
     resolve_next_route,
     transition_targets,
 )
+from frontend_operations_hub_model import build_operations_hub_snapshot
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
 from level_layout_model import faction_foothold_zones, shortest_route_seconds
@@ -628,6 +629,18 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("personal storage", stash_panel.panel_summary_text.lower())
         self.assertEqual(settings_panel.secondary_action_label, "Return to Main Menu")
         self.assertIn("Deploy", deploy_panel.breadcrumb_text)
+
+        operations_snapshot = build_operations_hub_snapshot(
+            self.registry,
+            profile,
+            deploy_enabled=snapshot.deploy_enabled,
+        )
+        self.assertEqual(operations_snapshot.nav_section_title_text, "Main Menu")
+        self.assertEqual(operations_snapshot.operation_brief.zone_code_text, "Zone // SH-17")
+        self.assertIn("Investigate service halls", operations_snapshot.operation_brief.brief_objective_text)
+        self.assertEqual(operations_snapshot.operator_status.operator_name_text, "Archive-Delta")
+        self.assertIn("Credits", operations_snapshot.operator_status.currency_summary_text)
+        self.assertIn("operators", operations_snapshot.footer.footer_status_text)
 
     def test_frontend_transition_targets_follow_route_roles(self):
         title_targets = transition_targets(MenuFlowState("menu_title_shell", None, False, False, False))

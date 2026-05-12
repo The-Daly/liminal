@@ -21,6 +21,7 @@ from frontend_menu_model import (
     faction_lock_warning,
     transition_targets,
 )
+from frontend_operations_hub_model import build_operations_hub_snapshot
 from item_registry import load_registry
 from persistent_world_model import create_character_profile
 
@@ -87,6 +88,11 @@ def main() -> None:
         preview_profile,
         active_counts=ACTIVE_COUNTS,
         queue_counts=QUEUE_COUNTS,
+    )
+    operations_hub_snapshot = build_operations_hub_snapshot(
+        registry,
+        preview_profile,
+        deploy_enabled=menu_snapshot.deploy_enabled,
     )
     deploy_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_deploy_panel")
     stash_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_stash_panel")
@@ -256,6 +262,27 @@ def main() -> None:
             "SecondaryActionLabel": menu_snapshot.secondary_action_label,
             "BreadcrumbText": menu_snapshot.breadcrumb_text,
             "RouteSummaryText": menu_snapshot.route_summary_text,
+            "NavSectionTitleText": operations_hub_snapshot.nav_section_title_text,
+            "OperationTitleText": operations_hub_snapshot.operation_brief.operation_title_text,
+            "OperationZoneCodeText": operations_hub_snapshot.operation_brief.zone_code_text,
+            "ThreatLevelText": operations_hub_snapshot.operation_brief.threat_level_text,
+            "ExtractionWindowsText": operations_hub_snapshot.operation_brief.extraction_windows_text,
+            "EnvironmentalAnomalyText": operations_hub_snapshot.operation_brief.environmental_anomaly_text,
+            "RecommendedTeamSizeText": operations_hub_snapshot.operation_brief.recommended_team_size_text,
+            "BriefObjectiveText": operations_hub_snapshot.operation_brief.brief_objective_text,
+            "OperationPrimaryActionSubtext": operations_hub_snapshot.operation_brief.primary_action_subtext,
+            "OperatorNameText": operations_hub_snapshot.operator_status.operator_name_text,
+            "OperatorIdText": operations_hub_snapshot.operator_status.operator_id_text,
+            "FactionDisplayNameText": operations_hub_snapshot.operator_status.faction_name_text,
+            "FactionRoleText": operations_hub_snapshot.operator_status.faction_role_text,
+            "HealthConditionText": operations_hub_snapshot.operator_status.health_condition_text,
+            "ReputationSummaryText": operations_hub_snapshot.operator_status.reputation_summary_text,
+            "CurrencySummaryText": operations_hub_snapshot.operator_status.currency_summary_text,
+            "KitSummaryText": operations_hub_snapshot.operator_status.kit_summary_text,
+            "FooterBuildLabelText": operations_hub_snapshot.footer.build_label_text,
+            "FooterEnvironmentLabelText": operations_hub_snapshot.footer.environment_label_text,
+            "FooterStatusText": operations_hub_snapshot.footer.footer_status_text,
+            "FooterLocalTimeText": operations_hub_snapshot.footer.local_time_text,
         },
     )
     set_properties(
