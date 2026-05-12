@@ -61,13 +61,12 @@ def build_blueprint():
 
     widget_class = unreal.EditorAssetLibrary.load_blueprint_class(WIDGET_PATH)
     widget_object.set_editor_property("widget_class", widget_class)
-    widget_object.set_editor_property("space", unreal.WidgetSpace.WORLD)
+    widget_object.set_widget_space(unreal.WidgetSpace.SCREEN)
     widget_object.set_editor_property("draw_size", unreal.IntPoint(1920, 1080))
     widget_object.set_editor_property("pivot", unreal.Vector2D(0.5, 0.5))
-    widget_object.set_editor_property("relative_location", unreal.Vector(1480.0, 0.0, 140.0))
-    widget_object.set_editor_property("relative_rotation", unreal.Rotator(0.0, 180.0, 0.0))
-    widget_object.set_editor_property("relative_scale3d", unreal.Vector(0.72, 0.72, 0.72))
-    widget_object.set_editor_property("blend_mode", unreal.WidgetBlendMode.TRANSPARENT)
+    widget_object.set_editor_property("relative_location", unreal.Vector(0.0, 0.0, 0.0))
+    widget_object.set_editor_property("relative_rotation", unreal.Rotator(0.0, 0.0, 0.0))
+    widget_object.set_editor_property("relative_scale3d", unreal.Vector(1.0, 1.0, 1.0))
     widget_object.set_editor_property("receive_hardware_input", True)
     widget_object.set_editor_property("window_focusable", True)
 
@@ -79,16 +78,20 @@ def build_blueprint():
 
 def configure_game_mode() -> None:
     game_mode = unreal.EditorAssetLibrary.load_asset("/Game/Blueprints/BP_LDGameMode")
+    menu_pawn_class = unreal.EditorAssetLibrary.load_blueprint_class(BLUEPRINT_PATH)
     if game_mode is None:
         raise RuntimeError("Missing /Game/Blueprints/BP_LDGameMode")
+    if menu_pawn_class is None:
+        raise RuntimeError(f"Missing generated class for {BLUEPRINT_PATH}")
 
     generated_class = unreal.BlueprintEditorLibrary.generated_class(game_mode)
     default_object = unreal.get_default_object(generated_class)
-    default_object.set_editor_property("start_players_as_spectators", True)
+    default_object.set_editor_property("default_pawn_class", menu_pawn_class)
+    default_object.set_editor_property("start_players_as_spectators", False)
 
     unreal.BlueprintEditorLibrary.compile_blueprint(game_mode)
     unreal.EditorAssetLibrary.save_loaded_asset(game_mode, only_if_is_dirty=False)
-    log("Configured BP_LDGameMode to start players as spectators for menu boot")
+    log("Configured BP_LDGameMode to spawn BP_MainMenuPawn for menu boot")
 
 
 def place_menu_pawn(blueprint):
