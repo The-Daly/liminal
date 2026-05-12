@@ -50,6 +50,8 @@ This file replaces the old starter-pack mental model with the current repo state
   - refreshes the serious frontend shell widgets, main-menu visual layout, menu controller variables, and default frontend state
 - `scripts/run_unreal_main_menu_visual_pass.ps1`
   - rebuilds `WBP_MainPlayerMenu` into the current operations-console layout with live Level 1 backdrop framing
+- `scripts/run_unreal_ingame_menu_spawn.ps1`
+  - rebuilds and places `BP_MainMenuPawn` so the operations menu appears in playable Level 1 view
 - `scripts/run_unreal_frontend_state_defaults.ps1`
   - stamps default title/server/faction/character/main-menu values into the frontend controller and widgets
 - `WBP_CharacterSelection`
@@ -77,6 +79,8 @@ This file replaces the old starter-pack mental model with the current repo state
 - the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
 - the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state, route-target defaults, and operations-hub dashboard text in their class defaults
 - `WBP_MainPlayerMenu` now carries a deliberate three-column operations layout instead of an empty shell
+- `BP_MainMenuPawn` now exists and is placed in `LD_Level1_ServiceHalls_Greybox` with player auto-possession for in-game menu viewing
+- the project startup map now opens into `LD_Level1_ServiceHalls_Greybox` for the current menu-viewing pass
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
