@@ -27,7 +27,7 @@ This file replaces the old starter-pack mental model with the current repo state
   - `Content/Maps/LD_Level1_ServiceHalls_Greybox.umap`
 - Placeholder Blueprint assets exist under `Content/Blueprints`.
 - Placeholder UI widgets exist under `Content/UI`.
-- Frontend shell widget targets are now defined for title, server browser, character selection, faction selection, character setup, and main player menu.
+- Frontend shell widget targets are now defined for title, server browser, character selection, faction selection, character setup, main player menu, deploy, stash, and settings.
 - Blueprint data-contract variables now exist on the first-wave interaction actors, the player shell, the game mode shell, the menu flow controller, and the serious frontend widgets.
 - The placed graybox actors are now stamped with repo-owned prompts, run IDs, extraction IDs, storage IDs, hub-upgrade IDs, and map-return paths.
 - The automated graybox pass now stamps:

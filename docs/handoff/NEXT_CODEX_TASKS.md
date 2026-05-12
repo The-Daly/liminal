@@ -44,6 +44,9 @@ This file is the recommended execution order for the next Codex work on the repo
   - `WBP_FactionSelection`
   - `WBP_CharacterSetup`
   - `WBP_MainPlayerMenu`
+  - `WBP_DeployPanel`
+  - `WBP_StashPanel`
+  - `WBP_SettingsPanel`
 - The hub map now also contains a serious frontend staging wing with:
   - one placed `BP_MenuFlowController`
   - one operator preview anchor

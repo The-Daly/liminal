@@ -14,6 +14,7 @@ from frontend_menu_model import (
     build_character_selection_snapshot,
     build_main_player_menu_snapshot,
     build_server_browser_snapshot,
+    build_subpanel_snapshot,
     build_title_shell_copy,
     character_setup_defaults,
     faction_lock_warning,
@@ -85,6 +86,9 @@ def main() -> None:
         active_counts=ACTIVE_COUNTS,
         queue_counts=QUEUE_COUNTS,
     )
+    deploy_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_deploy_panel")
+    stash_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_stash_panel")
+    settings_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_settings_panel")
     lock_warning = faction_lock_warning(registry, DEFAULT_REALM_ID, DEFAULT_FACTION_ID)
 
     set_properties(
@@ -189,6 +193,45 @@ def main() -> None:
             "DeployEnabled": menu_snapshot.deploy_enabled,
             "PrimaryActionLabel": menu_snapshot.primary_action_label,
             "SecondaryActionLabel": menu_snapshot.secondary_action_label,
+        },
+    )
+    set_properties(
+        "/Game/UI/WBP_DeployPanel",
+        {
+            "CurrentRouteId": deploy_snapshot.current_route_id,
+            "SelectedRealmId": deploy_snapshot.selected_realm_id,
+            "SelectedCharacterId": deploy_snapshot.selected_character_id,
+            "SelectedFactionId": deploy_snapshot.selected_faction_id,
+            "PanelTitleText": deploy_snapshot.panel_title_text,
+            "PanelSummaryText": deploy_snapshot.panel_summary_text,
+            "PrimaryActionLabel": deploy_snapshot.primary_action_label,
+            "SecondaryActionLabel": deploy_snapshot.secondary_action_label,
+        },
+    )
+    set_properties(
+        "/Game/UI/WBP_StashPanel",
+        {
+            "CurrentRouteId": stash_snapshot.current_route_id,
+            "SelectedRealmId": stash_snapshot.selected_realm_id,
+            "SelectedCharacterId": stash_snapshot.selected_character_id,
+            "SelectedFactionId": stash_snapshot.selected_faction_id,
+            "PanelTitleText": stash_snapshot.panel_title_text,
+            "PanelSummaryText": stash_snapshot.panel_summary_text,
+            "PrimaryActionLabel": stash_snapshot.primary_action_label,
+            "SecondaryActionLabel": stash_snapshot.secondary_action_label,
+        },
+    )
+    set_properties(
+        "/Game/UI/WBP_SettingsPanel",
+        {
+            "CurrentRouteId": settings_snapshot.current_route_id,
+            "SelectedRealmId": settings_snapshot.selected_realm_id,
+            "SelectedCharacterId": settings_snapshot.selected_character_id,
+            "SelectedFactionId": settings_snapshot.selected_faction_id,
+            "PanelTitleText": settings_snapshot.panel_title_text,
+            "PanelSummaryText": settings_snapshot.panel_summary_text,
+            "PrimaryActionLabel": settings_snapshot.primary_action_label,
+            "SecondaryActionLabel": settings_snapshot.secondary_action_label,
         },
     )
 

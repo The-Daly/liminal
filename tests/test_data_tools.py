@@ -20,6 +20,7 @@ from frontend_menu_model import (
     build_character_selection_snapshot,
     build_main_player_menu_snapshot,
     build_server_browser_snapshot,
+    build_subpanel_snapshot,
     build_title_shell_copy,
     character_setup_defaults,
     faction_lock_warning,
@@ -613,6 +614,13 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("Archive-Delta", snapshot.character_summary_text)
         self.assertIn("MEG 27/30 Q2", snapshot.faction_population_summary)
         self.assertEqual(snapshot.primary_action_label, "Deploy Operator")
+
+        deploy_panel = build_subpanel_snapshot(self.registry, profile, "menu_deploy_panel")
+        stash_panel = build_subpanel_snapshot(self.registry, profile, "menu_stash_panel")
+        settings_panel = build_subpanel_snapshot(self.registry, profile, "menu_settings_panel")
+        self.assertEqual(deploy_panel.primary_action_label, "Queue Deployment")
+        self.assertIn("personal storage", stash_panel.panel_summary_text.lower())
+        self.assertEqual(settings_panel.secondary_action_label, "Return to Main Menu")
 
     def test_frontend_session_round_trips_menu_state(self):
         session = FrontendSessionState(

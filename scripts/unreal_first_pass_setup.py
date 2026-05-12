@@ -48,6 +48,9 @@ WIDGETS = [
     "WBP_FactionSelection",
     "WBP_CharacterSetup",
     "WBP_MainPlayerMenu",
+    "WBP_DeployPanel",
+    "WBP_StashPanel",
+    "WBP_SettingsPanel",
     "WBP_PlayerHUD",
     "WBP_RunResult",
 ]

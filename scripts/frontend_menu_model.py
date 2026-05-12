@@ -92,6 +92,18 @@ class MainPlayerMenuSnapshot:
 
 
 @dataclass(frozen=True)
+class SubpanelSnapshot:
+    current_route_id: str
+    selected_realm_id: str
+    selected_character_id: str
+    selected_faction_id: str
+    panel_title_text: str
+    panel_summary_text: str
+    primary_action_label: str
+    secondary_action_label: str
+
+
+@dataclass(frozen=True)
 class MenuFlowBootstrap:
     current_route_id: str
     next_route_id: str
@@ -274,6 +286,56 @@ def build_main_player_menu_snapshot(
         primary_action_label="Deploy Operator",
         secondary_action_label="Open Stash",
     )
+
+
+def build_subpanel_snapshot(
+    registry: DataRegistry,
+    profile: CharacterProfile,
+    route_id: str,
+) -> SubpanelSnapshot:
+    summary = realm_menu_summary(registry, profile.realm_id)
+    slot = slot_summary(profile)
+    if route_id == "menu_deploy_panel":
+        return SubpanelSnapshot(
+            current_route_id=route_id,
+            selected_realm_id=profile.realm_id,
+            selected_character_id=profile.character_id,
+            selected_faction_id=profile.faction_id,
+            panel_title_text="Deploy Panel",
+            panel_summary_text=(
+                f"Queue for {summary.display_name} raids from {summary.region}. "
+                f"Next wipe {summary.wipe_summary_text.split('|')[1].strip()}."
+            ),
+            primary_action_label="Queue Deployment",
+            secondary_action_label="Return to Main Menu",
+        )
+    if route_id == "menu_stash_panel":
+        return SubpanelSnapshot(
+            current_route_id=route_id,
+            selected_realm_id=profile.realm_id,
+            selected_character_id=profile.character_id,
+            selected_faction_id=profile.faction_id,
+            panel_title_text="Stash Panel",
+            panel_summary_text=(
+                f"{slot.callsign} can review personal storage, faction board progress, and trader access from here."
+            ),
+            primary_action_label="Open Personal Stash",
+            secondary_action_label="Return to Main Menu",
+        )
+    if route_id == "menu_settings_panel":
+        return SubpanelSnapshot(
+            current_route_id=route_id,
+            selected_realm_id=profile.realm_id,
+            selected_character_id=profile.character_id,
+            selected_faction_id=profile.faction_id,
+            panel_title_text="Settings Panel",
+            panel_summary_text=(
+                f"Review wipe terms, server region {summary.region}, audio, display, and exit flow for {summary.display_name}."
+            ),
+            primary_action_label="Review Settings",
+            secondary_action_label="Return to Main Menu",
+        )
+    raise RegistryError(f"Unsupported subpanel route: {route_id}")
 
 
 def bootstrap_menu_flow(
