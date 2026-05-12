@@ -77,6 +77,20 @@ def build_blueprint():
     return blueprint
 
 
+def configure_game_mode() -> None:
+    game_mode = unreal.EditorAssetLibrary.load_asset("/Game/Blueprints/BP_LDGameMode")
+    if game_mode is None:
+        raise RuntimeError("Missing /Game/Blueprints/BP_LDGameMode")
+
+    generated_class = unreal.BlueprintEditorLibrary.generated_class(game_mode)
+    default_object = unreal.get_default_object(generated_class)
+    default_object.set_editor_property("start_players_as_spectators", True)
+
+    unreal.BlueprintEditorLibrary.compile_blueprint(game_mode)
+    unreal.EditorAssetLibrary.save_loaded_asset(game_mode, only_if_is_dirty=False)
+    log("Configured BP_LDGameMode to start players as spectators for menu boot")
+
+
 def place_menu_pawn(blueprint):
     unreal.EditorLevelLibrary.load_level(LEVEL_PATH)
     for actor in unreal.EditorLevelLibrary.get_all_level_actors():
@@ -98,6 +112,7 @@ def place_menu_pawn(blueprint):
 
 def main():
     blueprint = build_blueprint()
+    configure_game_mode()
     place_menu_pawn(blueprint)
 
 

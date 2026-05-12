@@ -80,7 +80,8 @@ This file replaces the old starter-pack mental model with the current repo state
 - the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state, route-target defaults, and operations-hub dashboard text in their class defaults
 - `WBP_MainPlayerMenu` now carries a deliberate three-column operations layout instead of an empty shell
 - `BP_MainMenuPawn` now exists and is placed in `LD_Level1_ServiceHalls_Greybox` with player auto-possession for in-game menu viewing
-- the project startup map now opens into `LD_Level1_ServiceHalls_Greybox` for the current menu-viewing pass
+- `BP_MainMenuPawn` now exists and is placed in `LD_Level1_ServiceHalls_Greybox` for in-game menu viewing
+- `BP_LDGameMode` now starts players as spectators for the current menu-boot flow so launch lands on the menu pawn instead of a live player character
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
