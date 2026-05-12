@@ -61,14 +61,16 @@ def build_blueprint():
 
     widget_class = unreal.EditorAssetLibrary.load_blueprint_class(WIDGET_PATH)
     widget_object.set_editor_property("widget_class", widget_class)
-    widget_object.set_widget_space(unreal.WidgetSpace.SCREEN)
+    widget_object.set_widget_space(unreal.WidgetSpace.WORLD)
     widget_object.set_editor_property("draw_size", unreal.IntPoint(1920, 1080))
     widget_object.set_editor_property("pivot", unreal.Vector2D(0.5, 0.5))
-    widget_object.set_editor_property("relative_location", unreal.Vector(0.0, 0.0, 0.0))
-    widget_object.set_editor_property("relative_rotation", unreal.Rotator(0.0, 0.0, 0.0))
-    widget_object.set_editor_property("relative_scale3d", unreal.Vector(1.0, 1.0, 1.0))
+    widget_object.set_editor_property("relative_location", unreal.Vector(620.0, 0.0, 140.0))
+    widget_object.set_editor_property("relative_rotation", unreal.Rotator(0.0, 180.0, 0.0))
+    widget_object.set_editor_property("relative_scale3d", unreal.Vector(0.22, 0.22, 0.22))
+    widget_object.set_editor_property("blend_mode", unreal.WidgetBlendMode.TRANSPARENT)
     widget_object.set_editor_property("receive_hardware_input", True)
     widget_object.set_editor_property("window_focusable", True)
+    widget_object.set_draw_at_desired_size(False)
 
     unreal.BlueprintEditorLibrary.compile_blueprint(blueprint)
     unreal.EditorAssetLibrary.save_loaded_asset(blueprint, only_if_is_dirty=False)
@@ -94,29 +96,28 @@ def configure_game_mode() -> None:
     log("Configured BP_LDGameMode to spawn BP_MainMenuPawn for menu boot")
 
 
-def place_menu_pawn(blueprint):
+def place_menu_start() -> None:
     unreal.EditorLevelLibrary.load_level(LEVEL_PATH)
     for actor in unreal.EditorLevelLibrary.get_all_level_actors():
-        if actor.get_actor_label() == "BP_MainMenuPawn":
+        if actor.get_actor_label() in {"BP_MainMenuPawn", "MenuPlayerStart"}:
             unreal.EditorLevelLibrary.destroy_actor(actor)
 
-    actor = unreal.EditorLevelLibrary.spawn_actor_from_object(
-        blueprint,
+    actor = unreal.EditorLevelLibrary.spawn_actor_from_class(
+        unreal.PlayerStart,
         unreal.Vector(-260.0, -40.0, 20.0),
         unreal.Rotator(0.0, 0.0, 0.0),
     )
-    actor.set_actor_label("BP_MainMenuPawn")
-    actor.set_editor_property("auto_possess_player", unreal.AutoReceiveInput.PLAYER0)
+    actor.set_actor_label("MenuPlayerStart")
 
     unreal.EditorLevelLibrary.save_current_level()
     unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
-    log("Placed BP_MainMenuPawn into Level 1 menu scene")
+    log("Placed MenuPlayerStart into Level 1 menu scene")
 
 
 def main():
-    blueprint = build_blueprint()
+    build_blueprint()
     configure_game_mode()
-    place_menu_pawn(blueprint)
+    place_menu_start()
 
 
 if __name__ == "__main__":
