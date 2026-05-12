@@ -66,6 +66,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - center deployment brief copy
   - right-rail operator status copy
   - footer telemetry copy
+- The frontend shell pass now also rebuilds `WBP_MainPlayerMenu` into the current operations-console layout before wiring variables and defaults.
 - Wire the title -> server browser -> faction selection -> character setup -> main player hub sequence in Unreal.
 - Keep it shell-simple but functional.
 

@@ -47,7 +47,9 @@ This file replaces the old starter-pack mental model with the current repo state
 - `scripts/run_unreal_blueprint_data_wiring.ps1`
   - adds the first Blueprint-side data variables needed for the deploy -> loot -> extract -> store -> contribute loop
 - `scripts/run_unreal_frontend_shell_pass.ps1`
-  - refreshes the serious frontend shell widgets, menu controller variables, and default frontend state
+  - refreshes the serious frontend shell widgets, main-menu visual layout, menu controller variables, and default frontend state
+- `scripts/run_unreal_main_menu_visual_pass.ps1`
+  - rebuilds `WBP_MainPlayerMenu` into the current operations-console layout with live Level 1 backdrop framing
 - `scripts/run_unreal_frontend_state_defaults.ps1`
   - stamps default title/server/faction/character/main-menu values into the frontend controller and widgets
 - `WBP_CharacterSelection`
@@ -74,6 +76,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - repo-side operations-hub helpers now expose left-rail nav, center deployment brief, right-rail operator status, and footer telemetry defaults
 - the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
 - the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state, route-target defaults, and operations-hub dashboard text in their class defaults
+- `WBP_MainPlayerMenu` now carries a deliberate three-column operations layout instead of an empty shell
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
