@@ -50,6 +50,9 @@ BLUEPRINT_VARIABLES = {
         ("DeployEnabled", BOOL, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
+        ("RouteSummaryText", STRING, False),
+        ("StageCounterText", STRING, False),
     ],
     "/Game/Blueprints/BP_CharacterPreviewAnchor": [
         ("AppearanceId", STRING, True),
@@ -139,6 +142,8 @@ BLUEPRINT_VARIABLES = {
         ("NextRouteId", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("StageCounterText", STRING, False),
+        ("RouteSummaryText", STRING, False),
     ],
     "/Game/UI/WBP_ServerBrowser": [
         ("CurrentRouteId", STRING, False),
@@ -153,6 +158,8 @@ BLUEPRINT_VARIABLES = {
         ("CreationStatusText", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
+        ("RouteSummaryText", STRING, False),
     ],
     "/Game/UI/WBP_CharacterSelection": [
         ("CurrentRouteId", STRING, False),
@@ -162,6 +169,7 @@ BLUEPRINT_VARIABLES = {
         ("CharacterSummaryText", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
     ],
     "/Game/UI/WBP_FactionSelection": [
         ("CurrentRouteId", STRING, False),
@@ -169,6 +177,8 @@ BLUEPRINT_VARIABLES = {
         ("SelectedFactionId", STRING, False),
         ("FactionLockWarningText", STRING, False),
         ("WipeSummaryText", STRING, False),
+        ("BreadcrumbText", STRING, False),
+        ("RouteSummaryText", STRING, False),
     ],
     "/Game/UI/WBP_CharacterSetup": [
         ("CurrentRouteId", STRING, False),
@@ -177,6 +187,8 @@ BLUEPRINT_VARIABLES = {
         ("CharacterCallsign", STRING, False),
         ("IdentityItemId", STRING, False),
         ("PrimaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
+        ("RouteSummaryText", STRING, False),
     ],
     "/Game/UI/WBP_MainPlayerMenu": [
         ("CurrentRouteId", STRING, False),
@@ -191,6 +203,8 @@ BLUEPRINT_VARIABLES = {
         ("DeployEnabled", BOOL, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
+        ("RouteSummaryText", STRING, False),
     ],
     "/Game/UI/WBP_DeployPanel": [
         ("CurrentRouteId", STRING, False),
@@ -201,6 +215,7 @@ BLUEPRINT_VARIABLES = {
         ("PanelSummaryText", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
     ],
     "/Game/UI/WBP_StashPanel": [
         ("CurrentRouteId", STRING, False),
@@ -211,6 +226,7 @@ BLUEPRINT_VARIABLES = {
         ("PanelSummaryText", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
     ],
     "/Game/UI/WBP_SettingsPanel": [
         ("CurrentRouteId", STRING, False),
@@ -221,6 +237,7 @@ BLUEPRINT_VARIABLES = {
         ("PanelSummaryText", STRING, False),
         ("PrimaryActionLabel", STRING, False),
         ("SecondaryActionLabel", STRING, False),
+        ("BreadcrumbText", STRING, False),
     ],
     "/Game/UI/WBP_RunResult": [
         ("RunOutcomeLabel", STRING, False),

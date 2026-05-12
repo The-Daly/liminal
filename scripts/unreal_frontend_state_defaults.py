@@ -112,6 +112,9 @@ def main() -> None:
             "DeployEnabled": False,
             "PrimaryActionLabel": title_copy.primary_action_label,
             "SecondaryActionLabel": title_copy.secondary_action_label,
+            "BreadcrumbText": "Frontend Flow Root",
+            "RouteSummaryText": title_copy.route_summary_text,
+            "StageCounterText": title_copy.stage_counter_text,
         },
     )
 
@@ -126,6 +129,8 @@ def main() -> None:
             "NextRouteId": bootstrap.next_route_id,
             "PrimaryActionLabel": title_copy.primary_action_label,
             "SecondaryActionLabel": title_copy.secondary_action_label,
+            "StageCounterText": title_copy.stage_counter_text,
+            "RouteSummaryText": title_copy.route_summary_text,
         },
     )
     set_properties(
@@ -143,6 +148,8 @@ def main() -> None:
             "CreationStatusText": server_snapshot.creation_status_text,
             "PrimaryActionLabel": server_snapshot.primary_action_label,
             "SecondaryActionLabel": server_snapshot.secondary_action_label,
+            "BreadcrumbText": server_snapshot.breadcrumb_text,
+            "RouteSummaryText": server_snapshot.route_summary_text,
         },
     )
     set_properties(
@@ -155,6 +162,7 @@ def main() -> None:
             "CharacterSummaryText": character_selection_snapshot.character_summary_text,
             "PrimaryActionLabel": character_selection_snapshot.primary_action_label,
             "SecondaryActionLabel": character_selection_snapshot.secondary_action_label,
+            "BreadcrumbText": character_selection_snapshot.breadcrumb_text,
         },
     )
     set_properties(
@@ -165,6 +173,8 @@ def main() -> None:
             "SelectedFactionId": DEFAULT_FACTION_ID,
             "FactionLockWarningText": lock_warning,
             "WipeSummaryText": server_snapshot.wipe_summary_text,
+            "BreadcrumbText": "Title Shell / Server Browser / Faction Selection",
+            "RouteSummaryText": "Faction choice becomes a long-term commitment on this realm until the next wipe.",
         },
     )
     set_properties(
@@ -176,6 +186,8 @@ def main() -> None:
             "CharacterCallsign": setup_defaults.character_callsign,
             "IdentityItemId": setup_defaults.identity_item_id,
             "PrimaryActionLabel": setup_defaults.primary_action_label,
+            "BreadcrumbText": setup_defaults.breadcrumb_text,
+            "RouteSummaryText": setup_defaults.route_summary_text,
         },
     )
     set_properties(
@@ -193,6 +205,8 @@ def main() -> None:
             "DeployEnabled": menu_snapshot.deploy_enabled,
             "PrimaryActionLabel": menu_snapshot.primary_action_label,
             "SecondaryActionLabel": menu_snapshot.secondary_action_label,
+            "BreadcrumbText": menu_snapshot.breadcrumb_text,
+            "RouteSummaryText": menu_snapshot.route_summary_text,
         },
     )
     set_properties(
@@ -206,6 +220,7 @@ def main() -> None:
             "PanelSummaryText": deploy_snapshot.panel_summary_text,
             "PrimaryActionLabel": deploy_snapshot.primary_action_label,
             "SecondaryActionLabel": deploy_snapshot.secondary_action_label,
+            "BreadcrumbText": deploy_snapshot.breadcrumb_text,
         },
     )
     set_properties(
@@ -219,6 +234,7 @@ def main() -> None:
             "PanelSummaryText": stash_snapshot.panel_summary_text,
             "PrimaryActionLabel": stash_snapshot.primary_action_label,
             "SecondaryActionLabel": stash_snapshot.secondary_action_label,
+            "BreadcrumbText": stash_snapshot.breadcrumb_text,
         },
     )
     set_properties(
@@ -232,6 +248,7 @@ def main() -> None:
             "PanelSummaryText": settings_snapshot.panel_summary_text,
             "PrimaryActionLabel": settings_snapshot.primary_action_label,
             "SecondaryActionLabel": settings_snapshot.secondary_action_label,
+            "BreadcrumbText": settings_snapshot.breadcrumb_text,
         },
     )
 

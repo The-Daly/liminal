@@ -556,6 +556,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(title_copy.headline_text, "Liminal Dominion")
         self.assertIn("mass wipe", title_copy.subhead_text.lower())
         self.assertEqual(title_copy.primary_action_label, "Enter Server Browser")
+        self.assertEqual(title_copy.stage_counter_text, "Stage 1 / 6")
 
         server_snapshot = build_server_browser_snapshot(
             self.registry,
@@ -567,6 +568,7 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("Official Realm", server_snapshot.server_name_text)
         self.assertIn("Population 82/90 | Queue 7", server_snapshot.queue_summary_text)
         self.assertEqual(server_snapshot.primary_action_label, "Select Realm")
+        self.assertIn("Server Browser", server_snapshot.breadcrumb_text)
 
         warning = faction_lock_warning(self.registry, "official_north_america_01", "meg")
         self.assertIn("M.E.G.", warning)
@@ -602,6 +604,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(character_selection.selected_character_id, profile.character_id)
         self.assertIn("Existing character found", character_selection.existing_character_status_text)
         self.assertEqual(character_selection.primary_action_label, "Enter Character Menu")
+        self.assertIn("Character Selection", character_selection.breadcrumb_text)
 
         snapshot = build_main_player_menu_snapshot(
             self.registry,
@@ -614,6 +617,7 @@ class DataToolTests(unittest.TestCase):
         self.assertIn("Archive-Delta", snapshot.character_summary_text)
         self.assertIn("MEG 27/30 Q2", snapshot.faction_population_summary)
         self.assertEqual(snapshot.primary_action_label, "Deploy Operator")
+        self.assertIn("Character Overview", snapshot.breadcrumb_text)
 
         deploy_panel = build_subpanel_snapshot(self.registry, profile, "menu_deploy_panel")
         stash_panel = build_subpanel_snapshot(self.registry, profile, "menu_stash_panel")
@@ -621,6 +625,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(deploy_panel.primary_action_label, "Queue Deployment")
         self.assertIn("personal storage", stash_panel.panel_summary_text.lower())
         self.assertEqual(settings_panel.secondary_action_label, "Return to Main Menu")
+        self.assertIn("Deploy", deploy_panel.breadcrumb_text)
 
     def test_frontend_session_round_trips_menu_state(self):
         session = FrontendSessionState(

@@ -36,6 +36,8 @@ class TitleShellCopy:
     current_route_id: str
     primary_action_label: str
     secondary_action_label: str
+    stage_counter_text: str
+    route_summary_text: str
 
 
 @dataclass(frozen=True)
@@ -52,6 +54,8 @@ class ServerBrowserSnapshot:
     creation_status_text: str
     primary_action_label: str
     secondary_action_label: str
+    breadcrumb_text: str
+    route_summary_text: str
 
 
 @dataclass(frozen=True)
@@ -63,6 +67,7 @@ class CharacterSelectionSnapshot:
     character_summary_text: str
     primary_action_label: str
     secondary_action_label: str
+    breadcrumb_text: str
 
 
 @dataclass(frozen=True)
@@ -73,6 +78,8 @@ class CharacterSetupDefaults:
     character_callsign: str
     identity_item_id: str
     primary_action_label: str
+    breadcrumb_text: str
+    route_summary_text: str
 
 
 @dataclass(frozen=True)
@@ -89,6 +96,8 @@ class MainPlayerMenuSnapshot:
     deploy_enabled: bool
     primary_action_label: str
     secondary_action_label: str
+    breadcrumb_text: str
+    route_summary_text: str
 
 
 @dataclass(frozen=True)
@@ -101,6 +110,7 @@ class SubpanelSnapshot:
     panel_summary_text: str
     primary_action_label: str
     secondary_action_label: str
+    breadcrumb_text: str
 
 
 @dataclass(frozen=True)
@@ -152,6 +162,36 @@ def ordered_routes(registry: DataRegistry) -> list[MenuRoute]:
     )
 
 
+def route_breadcrumb(route_id: str) -> str:
+    breadcrumbs = {
+        "menu_title_shell": "Title Shell",
+        "menu_server_browser": "Title Shell / Server Browser",
+        "menu_character_selection": "Title Shell / Server Browser / Character Selection",
+        "menu_faction_selection": "Title Shell / Server Browser / Faction Selection",
+        "menu_character_setup": "Title Shell / Server Browser / Character Setup",
+        "menu_main_player_hub": "Main Menu / Character Overview",
+        "menu_deploy_panel": "Main Menu / Deploy",
+        "menu_stash_panel": "Main Menu / Stash",
+        "menu_settings_panel": "Main Menu / Settings",
+    }
+    try:
+        return breadcrumbs[route_id]
+    except KeyError as exc:
+        raise RegistryError(f"Unsupported breadcrumb route: {route_id}") from exc
+
+
+def route_stage_counter(route_id: str) -> str:
+    counters = {
+        "menu_title_shell": "Stage 1 / 6",
+        "menu_server_browser": "Stage 2 / 6",
+        "menu_character_selection": "Stage 3 / 6",
+        "menu_faction_selection": "Stage 4 / 6",
+        "menu_character_setup": "Stage 5 / 6",
+        "menu_main_player_hub": "Stage 6 / 6",
+    }
+    return counters.get(route_id, "Operations Subpanel")
+
+
 def build_title_shell_copy(route_id: str = "menu_title_shell") -> TitleShellCopy:
     return TitleShellCopy(
         headline_text="Liminal Dominion",
@@ -162,6 +202,8 @@ def build_title_shell_copy(route_id: str = "menu_title_shell") -> TitleShellCopy
         current_route_id=route_id,
         primary_action_label="Enter Server Browser",
         secondary_action_label="Review Wipe Terms",
+        stage_counter_text=route_stage_counter(route_id),
+        route_summary_text="Enter the threshold, review the rules, and choose where your operator will belong.",
     )
 
 
@@ -197,6 +239,8 @@ def build_server_browser_snapshot(
         creation_status_text=creation_status_text,
         primary_action_label="Select Realm",
         secondary_action_label="Compare Populations",
+        breadcrumb_text=route_breadcrumb(route_id),
+        route_summary_text="Choose between official and community progression before any faction commitment is made.",
     )
 
 
@@ -215,6 +259,7 @@ def build_character_selection_snapshot(
         ),
         primary_action_label="Enter Character Menu",
         secondary_action_label="Review Faction Lock",
+        breadcrumb_text=route_breadcrumb(route_id),
     )
 
 
@@ -252,6 +297,8 @@ def character_setup_defaults(
         character_callsign=f"{callsign_prefix}-{slot_index:02d}",
         identity_item_id=appearance["identity_item_id"],
         primary_action_label="Confirm Character",
+        breadcrumb_text=route_breadcrumb(route_id),
+        route_summary_text="Lock a minimal preset-driven operator identity to the selected realm and faction.",
     )
 
 
@@ -285,6 +332,8 @@ def build_main_player_menu_snapshot(
         deploy_enabled=not menu_route(registry, route_id).blocks_deploy,
         primary_action_label="Deploy Operator",
         secondary_action_label="Open Stash",
+        breadcrumb_text=route_breadcrumb(route_id),
+        route_summary_text="Review your operator, stash, faction obligations, and server wipe context before deployment.",
     )
 
 
@@ -308,6 +357,7 @@ def build_subpanel_snapshot(
             ),
             primary_action_label="Queue Deployment",
             secondary_action_label="Return to Main Menu",
+            breadcrumb_text=route_breadcrumb(route_id),
         )
     if route_id == "menu_stash_panel":
         return SubpanelSnapshot(
@@ -321,6 +371,7 @@ def build_subpanel_snapshot(
             ),
             primary_action_label="Open Personal Stash",
             secondary_action_label="Return to Main Menu",
+            breadcrumb_text=route_breadcrumb(route_id),
         )
     if route_id == "menu_settings_panel":
         return SubpanelSnapshot(
@@ -334,6 +385,7 @@ def build_subpanel_snapshot(
             ),
             primary_action_label="Review Settings",
             secondary_action_label="Return to Main Menu",
+            breadcrumb_text=route_breadcrumb(route_id),
         )
     raise RegistryError(f"Unsupported subpanel route: {route_id}")
 
