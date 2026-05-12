@@ -33,6 +33,7 @@ This file is the recommended execution order for the next Codex work on the repo
 - The repo now has server/wipe/faction/menu contracts plus local frontend session persistence.
 - The menu controller and widgets now have variables for:
   - current and next route
+  - primary, secondary, and back target routes
   - selected realm/server type/faction/character/appearance
   - server name, region, wipe summary, faction population summary
   - faction-lock warning, callsign, identity item, and deploy-enabled state
@@ -55,6 +56,11 @@ This file is the recommended execution order for the next Codex work on the repo
   - `scripts/frontend_menu_model.py`
   - `scripts/persistent_world_model.py`
   - `scripts/persistence_model.py`
+- The route model now exposes validated transition targets and invalid-hop rejection for:
+  - title to server browser
+  - server browser to character/faction paths
+  - hub to deploy/stash
+  - subpanel return to hub
 - Wire the title -> server browser -> faction selection -> character setup -> main player hub sequence in Unreal.
 - Keep it shell-simple but functional.
 

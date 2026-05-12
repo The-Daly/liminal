@@ -70,8 +70,9 @@ This file replaces the old starter-pack mental model with the current repo state
 - `Config/DefaultGame.ini` now points at the intended DataTable asset paths and the default map/run IDs for the V0.1 loop
 - persistent-world contract seeds now exist for server realms, wipe schedules, minimal character appearance presets, and menu routes
 - repo-side menu helpers now generate title copy, server browser summaries, faction-lock warnings, character setup defaults, main-menu snapshots, and saved frontend session state
+- repo-side menu helpers now also expose validated target-route and back-route decisions for the serious frontend flow
 - the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
-- the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state in their class defaults
+- the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state plus route-target defaults in their class defaults
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet

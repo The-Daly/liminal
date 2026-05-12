@@ -86,6 +86,10 @@ class PersistentRealmCollection:
 @dataclass
 class FrontendSessionState:
     current_route_id: str = "menu_title_shell"
+    next_route_id: str = "menu_server_browser"
+    primary_target_route_id: str = "menu_server_browser"
+    secondary_target_route_id: str = "menu_title_shell"
+    back_target_route_id: str = ""
     selected_realm_id: str | None = None
     selected_server_type: str | None = None
     selected_faction_id: str | None = None
@@ -240,6 +244,10 @@ def load_persistent_collection(path: Path) -> PersistentRealmCollection:
 def frontend_session_to_dict(session: FrontendSessionState) -> dict:
     return {
         "current_route_id": session.current_route_id,
+        "next_route_id": session.next_route_id,
+        "primary_target_route_id": session.primary_target_route_id,
+        "secondary_target_route_id": session.secondary_target_route_id,
+        "back_target_route_id": session.back_target_route_id,
         "selected_realm_id": session.selected_realm_id,
         "selected_server_type": session.selected_server_type,
         "selected_faction_id": session.selected_faction_id,
@@ -255,6 +263,10 @@ def frontend_session_to_dict(session: FrontendSessionState) -> dict:
 def frontend_session_from_dict(data: dict) -> FrontendSessionState:
     return FrontendSessionState(
         current_route_id=str(data.get("current_route_id", "menu_title_shell")),
+        next_route_id=str(data.get("next_route_id", "menu_server_browser")),
+        primary_target_route_id=str(data.get("primary_target_route_id", "menu_server_browser")),
+        secondary_target_route_id=str(data.get("secondary_target_route_id", "menu_title_shell")),
+        back_target_route_id=str(data.get("back_target_route_id", "")),
         selected_realm_id=str(data["selected_realm_id"]) if data.get("selected_realm_id") is not None else None,
         selected_server_type=(
             str(data["selected_server_type"]) if data.get("selected_server_type") is not None else None

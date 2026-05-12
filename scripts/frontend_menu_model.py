@@ -125,6 +125,13 @@ class MenuFlowBootstrap:
     character_configured: bool
 
 
+@dataclass(frozen=True)
+class RouteActionTargets:
+    primary_target_route_id: str
+    secondary_target_route_id: str
+    back_target_route_id: str | None
+
+
 def menu_route(registry: DataRegistry, menu_route_id: str) -> MenuRoute:
     record = registry.menu_routes.get(menu_route_id)
     if record is None:
@@ -160,6 +167,43 @@ def ordered_routes(registry: DataRegistry) -> list[MenuRoute]:
         (menu_route(registry, route_id) for route_id in registry.menu_routes),
         key=lambda route: route.route_order,
     )
+
+
+def transition_targets(state: MenuFlowState) -> RouteActionTargets:
+    if state.route_id == "menu_title_shell":
+        return RouteActionTargets("menu_server_browser", "menu_title_shell", None)
+    if state.route_id == "menu_server_browser":
+        next_route = resolve_next_route(state)
+        return RouteActionTargets(next_route, "menu_server_browser", "menu_title_shell")
+    if state.route_id == "menu_character_selection":
+        next_route = resolve_next_route(state)
+        return RouteActionTargets(next_route, "menu_character_selection", "menu_server_browser")
+    if state.route_id == "menu_faction_selection":
+        return RouteActionTargets("menu_character_setup", "menu_faction_selection", "menu_server_browser")
+    if state.route_id == "menu_character_setup":
+        next_route = resolve_next_route(state)
+        return RouteActionTargets(next_route, "menu_character_setup", "menu_faction_selection")
+    if state.route_id == "menu_main_player_hub":
+        return RouteActionTargets("menu_deploy_panel", "menu_stash_panel", "menu_server_browser")
+    if state.route_id == "menu_deploy_panel":
+        return RouteActionTargets("menu_deploy_panel", "menu_main_player_hub", "menu_main_player_hub")
+    if state.route_id == "menu_stash_panel":
+        return RouteActionTargets("menu_stash_panel", "menu_main_player_hub", "menu_main_player_hub")
+    if state.route_id == "menu_settings_panel":
+        return RouteActionTargets("menu_settings_panel", "menu_main_player_hub", "menu_main_player_hub")
+    raise RegistryError(f"Unsupported route transition targets for {state.route_id}")
+
+
+def navigate_route(registry: DataRegistry, state: MenuFlowState, target_route_id: str) -> str:
+    current_route = menu_route(registry, state.route_id)
+    if target_route_id == state.route_id:
+        return state.route_id
+    if target_route_id in current_route.next_route_ids:
+        return target_route_id
+    action_targets = transition_targets(state)
+    if target_route_id == action_targets.back_target_route_id:
+        return target_route_id
+    raise RegistryError(f"Unsupported navigation from {state.route_id} to {target_route_id}")
 
 
 def route_breadcrumb(route_id: str) -> str:

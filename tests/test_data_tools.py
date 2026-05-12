@@ -24,8 +24,10 @@ from frontend_menu_model import (
     build_title_shell_copy,
     character_setup_defaults,
     faction_lock_warning,
+    navigate_route,
     ordered_routes,
     resolve_next_route,
+    transition_targets,
 )
 from inventory_model import InventoryContainer, InventoryError, build_player_inventory
 from item_registry import index_by, load_registry
@@ -627,9 +629,77 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(settings_panel.secondary_action_label, "Return to Main Menu")
         self.assertIn("Deploy", deploy_panel.breadcrumb_text)
 
+    def test_frontend_transition_targets_follow_route_roles(self):
+        title_targets = transition_targets(MenuFlowState("menu_title_shell", None, False, False, False))
+        self.assertEqual(title_targets.primary_target_route_id, "menu_server_browser")
+        self.assertEqual(title_targets.secondary_target_route_id, "menu_title_shell")
+        self.assertIsNone(title_targets.back_target_route_id)
+
+        server_targets = transition_targets(
+            MenuFlowState("menu_server_browser", "official_north_america_01", True, False, False)
+        )
+        self.assertEqual(server_targets.primary_target_route_id, "menu_character_selection")
+        self.assertEqual(server_targets.back_target_route_id, "menu_title_shell")
+
+        hub_targets = transition_targets(
+            MenuFlowState("menu_main_player_hub", "official_north_america_01", True, True, True)
+        )
+        self.assertEqual(hub_targets.primary_target_route_id, "menu_deploy_panel")
+        self.assertEqual(hub_targets.secondary_target_route_id, "menu_stash_panel")
+
+        settings_targets = transition_targets(
+            MenuFlowState("menu_settings_panel", "official_north_america_01", True, True, True)
+        )
+        self.assertEqual(settings_targets.secondary_target_route_id, "menu_main_player_hub")
+        self.assertEqual(settings_targets.back_target_route_id, "menu_main_player_hub")
+
+    def test_frontend_navigation_allows_expected_route_hops_and_rejects_invalid_ones(self):
+        self.assertEqual(
+            navigate_route(
+                self.registry,
+                MenuFlowState("menu_title_shell", None, False, False, False),
+                "menu_server_browser",
+            ),
+            "menu_server_browser",
+        )
+        self.assertEqual(
+            navigate_route(
+                self.registry,
+                MenuFlowState("menu_server_browser", "official_north_america_01", True, False, False),
+                "menu_title_shell",
+            ),
+            "menu_title_shell",
+        )
+        self.assertEqual(
+            navigate_route(
+                self.registry,
+                MenuFlowState("menu_main_player_hub", "official_north_america_01", True, True, True),
+                "menu_deploy_panel",
+            ),
+            "menu_deploy_panel",
+        )
+        self.assertEqual(
+            navigate_route(
+                self.registry,
+                MenuFlowState("menu_stash_panel", "official_north_america_01", True, True, True),
+                "menu_main_player_hub",
+            ),
+            "menu_main_player_hub",
+        )
+        with self.assertRaises(Exception):
+            navigate_route(
+                self.registry,
+                MenuFlowState("menu_title_shell", None, False, False, False),
+                "menu_main_player_hub",
+            )
+
     def test_frontend_session_round_trips_menu_state(self):
         session = FrontendSessionState(
             current_route_id="menu_main_player_hub",
+            next_route_id="menu_deploy_panel",
+            primary_target_route_id="menu_deploy_panel",
+            secondary_target_route_id="menu_stash_panel",
+            back_target_route_id="menu_server_browser",
             selected_realm_id="official_north_america_01",
             selected_server_type="official",
             selected_faction_id="meg",
@@ -647,6 +717,8 @@ class DataToolTests(unittest.TestCase):
             restored = load_frontend_session(path)
 
         self.assertEqual(restored.current_route_id, "menu_main_player_hub")
+        self.assertEqual(restored.next_route_id, "menu_deploy_panel")
+        self.assertEqual(restored.primary_target_route_id, "menu_deploy_panel")
         self.assertEqual(restored.selected_realm_id, "official_north_america_01")
         self.assertEqual(restored.selected_server_type, "official")
         self.assertTrue(restored.has_existing_character)

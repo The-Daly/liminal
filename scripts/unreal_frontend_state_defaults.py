@@ -10,6 +10,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from frontend_menu_model import (
+    MenuFlowState,
     bootstrap_menu_flow,
     build_character_selection_snapshot,
     build_main_player_menu_snapshot,
@@ -18,6 +19,7 @@ from frontend_menu_model import (
     build_title_shell_copy,
     character_setup_defaults,
     faction_lock_warning,
+    transition_targets,
 )
 from item_registry import load_registry
 from persistent_world_model import create_character_profile
@@ -90,12 +92,42 @@ def main() -> None:
     stash_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_stash_panel")
     settings_snapshot = build_subpanel_snapshot(registry, preview_profile, "menu_settings_panel")
     lock_warning = faction_lock_warning(registry, DEFAULT_REALM_ID, DEFAULT_FACTION_ID)
+    title_targets = transition_targets(
+        MenuFlowState("menu_title_shell", DEFAULT_REALM_ID, False, False, False)
+    )
+    server_targets = transition_targets(
+        MenuFlowState("menu_server_browser", DEFAULT_REALM_ID, bootstrap.has_existing_character, False, False)
+    )
+    character_selection_targets = transition_targets(
+        MenuFlowState("menu_character_selection", DEFAULT_REALM_ID, True, True, True)
+    )
+    faction_targets = transition_targets(
+        MenuFlowState("menu_faction_selection", DEFAULT_REALM_ID, False, True, False)
+    )
+    setup_targets = transition_targets(
+        MenuFlowState("menu_character_setup", DEFAULT_REALM_ID, False, True, True)
+    )
+    hub_targets = transition_targets(
+        MenuFlowState("menu_main_player_hub", DEFAULT_REALM_ID, True, True, True)
+    )
+    deploy_targets = transition_targets(
+        MenuFlowState("menu_deploy_panel", DEFAULT_REALM_ID, True, True, True)
+    )
+    stash_targets = transition_targets(
+        MenuFlowState("menu_stash_panel", DEFAULT_REALM_ID, True, True, True)
+    )
+    settings_targets = transition_targets(
+        MenuFlowState("menu_settings_panel", DEFAULT_REALM_ID, True, True, True)
+    )
 
     set_properties(
         "/Game/Blueprints/BP_MenuFlowController",
         {
             "CurrentRouteId": bootstrap.current_route_id,
             "NextRouteId": bootstrap.next_route_id,
+            "PrimaryTargetRouteId": title_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": title_targets.secondary_target_route_id,
+            "BackTargetRouteId": title_targets.back_target_route_id or "",
             "SelectedRealmId": bootstrap.selected_realm_id,
             "SelectedServerType": bootstrap.selected_server_type,
             "SelectedFactionId": setup_defaults.selected_faction_id,
@@ -127,6 +159,8 @@ def main() -> None:
             "SubheadText": title_copy.subhead_text,
             "CurrentRouteId": title_copy.current_route_id,
             "NextRouteId": bootstrap.next_route_id,
+            "PrimaryTargetRouteId": title_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": title_targets.secondary_target_route_id,
             "PrimaryActionLabel": title_copy.primary_action_label,
             "SecondaryActionLabel": title_copy.secondary_action_label,
             "StageCounterText": title_copy.stage_counter_text,
@@ -146,6 +180,9 @@ def main() -> None:
             "FactionPopulationSummary": server_snapshot.faction_population_summary,
             "QueueSummaryText": server_snapshot.queue_summary_text,
             "CreationStatusText": server_snapshot.creation_status_text,
+            "PrimaryTargetRouteId": server_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": server_targets.secondary_target_route_id,
+            "BackTargetRouteId": server_targets.back_target_route_id or "",
             "PrimaryActionLabel": server_snapshot.primary_action_label,
             "SecondaryActionLabel": server_snapshot.secondary_action_label,
             "BreadcrumbText": server_snapshot.breadcrumb_text,
@@ -160,6 +197,9 @@ def main() -> None:
             "SelectedCharacterId": character_selection_snapshot.selected_character_id,
             "ExistingCharacterStatusText": character_selection_snapshot.existing_character_status_text,
             "CharacterSummaryText": character_selection_snapshot.character_summary_text,
+            "PrimaryTargetRouteId": character_selection_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": character_selection_targets.secondary_target_route_id,
+            "BackTargetRouteId": character_selection_targets.back_target_route_id or "",
             "PrimaryActionLabel": character_selection_snapshot.primary_action_label,
             "SecondaryActionLabel": character_selection_snapshot.secondary_action_label,
             "BreadcrumbText": character_selection_snapshot.breadcrumb_text,
@@ -173,6 +213,9 @@ def main() -> None:
             "SelectedFactionId": DEFAULT_FACTION_ID,
             "FactionLockWarningText": lock_warning,
             "WipeSummaryText": server_snapshot.wipe_summary_text,
+            "PrimaryTargetRouteId": faction_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": faction_targets.secondary_target_route_id,
+            "BackTargetRouteId": faction_targets.back_target_route_id or "",
             "BreadcrumbText": "Title Shell / Server Browser / Faction Selection",
             "RouteSummaryText": "Faction choice becomes a long-term commitment on this realm until the next wipe.",
         },
@@ -185,6 +228,9 @@ def main() -> None:
             "SelectedAppearanceId": setup_defaults.selected_appearance_id,
             "CharacterCallsign": setup_defaults.character_callsign,
             "IdentityItemId": setup_defaults.identity_item_id,
+            "PrimaryTargetRouteId": setup_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": setup_targets.secondary_target_route_id,
+            "BackTargetRouteId": setup_targets.back_target_route_id or "",
             "PrimaryActionLabel": setup_defaults.primary_action_label,
             "BreadcrumbText": setup_defaults.breadcrumb_text,
             "RouteSummaryText": setup_defaults.route_summary_text,
@@ -203,6 +249,9 @@ def main() -> None:
             "FactionPopulationSummary": menu_snapshot.faction_population_summary,
             "CharacterSummaryText": menu_snapshot.character_summary_text,
             "DeployEnabled": menu_snapshot.deploy_enabled,
+            "PrimaryTargetRouteId": hub_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": hub_targets.secondary_target_route_id,
+            "BackTargetRouteId": hub_targets.back_target_route_id or "",
             "PrimaryActionLabel": menu_snapshot.primary_action_label,
             "SecondaryActionLabel": menu_snapshot.secondary_action_label,
             "BreadcrumbText": menu_snapshot.breadcrumb_text,
@@ -218,6 +267,9 @@ def main() -> None:
             "SelectedFactionId": deploy_snapshot.selected_faction_id,
             "PanelTitleText": deploy_snapshot.panel_title_text,
             "PanelSummaryText": deploy_snapshot.panel_summary_text,
+            "PrimaryTargetRouteId": deploy_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": deploy_targets.secondary_target_route_id,
+            "BackTargetRouteId": deploy_targets.back_target_route_id or "",
             "PrimaryActionLabel": deploy_snapshot.primary_action_label,
             "SecondaryActionLabel": deploy_snapshot.secondary_action_label,
             "BreadcrumbText": deploy_snapshot.breadcrumb_text,
@@ -232,6 +284,9 @@ def main() -> None:
             "SelectedFactionId": stash_snapshot.selected_faction_id,
             "PanelTitleText": stash_snapshot.panel_title_text,
             "PanelSummaryText": stash_snapshot.panel_summary_text,
+            "PrimaryTargetRouteId": stash_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": stash_targets.secondary_target_route_id,
+            "BackTargetRouteId": stash_targets.back_target_route_id or "",
             "PrimaryActionLabel": stash_snapshot.primary_action_label,
             "SecondaryActionLabel": stash_snapshot.secondary_action_label,
             "BreadcrumbText": stash_snapshot.breadcrumb_text,
@@ -246,6 +301,9 @@ def main() -> None:
             "SelectedFactionId": settings_snapshot.selected_faction_id,
             "PanelTitleText": settings_snapshot.panel_title_text,
             "PanelSummaryText": settings_snapshot.panel_summary_text,
+            "PrimaryTargetRouteId": settings_targets.primary_target_route_id,
+            "SecondaryTargetRouteId": settings_targets.secondary_target_route_id,
+            "BackTargetRouteId": settings_targets.back_target_route_id or "",
             "PrimaryActionLabel": settings_snapshot.primary_action_label,
             "SecondaryActionLabel": settings_snapshot.secondary_action_label,
             "BreadcrumbText": settings_snapshot.breadcrumb_text,
