@@ -48,6 +48,8 @@ BLUEPRINT_VARIABLES = {
         ("FactionPopulationSummary", STRING, False),
         ("FactionLockWarningText", STRING, False),
         ("DeployEnabled", BOOL, False),
+        ("PrimaryActionLabel", STRING, False),
+        ("SecondaryActionLabel", STRING, False),
     ],
     "/Game/Blueprints/BP_CharacterPreviewAnchor": [
         ("AppearanceId", STRING, True),
@@ -135,6 +137,8 @@ BLUEPRINT_VARIABLES = {
         ("SubheadText", STRING, False),
         ("CurrentRouteId", STRING, False),
         ("NextRouteId", STRING, False),
+        ("PrimaryActionLabel", STRING, False),
+        ("SecondaryActionLabel", STRING, False),
     ],
     "/Game/UI/WBP_ServerBrowser": [
         ("CurrentRouteId", STRING, False),
@@ -147,6 +151,17 @@ BLUEPRINT_VARIABLES = {
         ("FactionPopulationSummary", STRING, False),
         ("QueueSummaryText", STRING, False),
         ("CreationStatusText", STRING, False),
+        ("PrimaryActionLabel", STRING, False),
+        ("SecondaryActionLabel", STRING, False),
+    ],
+    "/Game/UI/WBP_CharacterSelection": [
+        ("CurrentRouteId", STRING, False),
+        ("SelectedRealmId", STRING, False),
+        ("SelectedCharacterId", STRING, False),
+        ("ExistingCharacterStatusText", STRING, False),
+        ("CharacterSummaryText", STRING, False),
+        ("PrimaryActionLabel", STRING, False),
+        ("SecondaryActionLabel", STRING, False),
     ],
     "/Game/UI/WBP_FactionSelection": [
         ("CurrentRouteId", STRING, False),
@@ -161,6 +176,7 @@ BLUEPRINT_VARIABLES = {
         ("SelectedAppearanceId", STRING, False),
         ("CharacterCallsign", STRING, False),
         ("IdentityItemId", STRING, False),
+        ("PrimaryActionLabel", STRING, False),
     ],
     "/Game/UI/WBP_MainPlayerMenu": [
         ("CurrentRouteId", STRING, False),
@@ -173,6 +189,8 @@ BLUEPRINT_VARIABLES = {
         ("FactionPopulationSummary", STRING, False),
         ("CharacterSummaryText", STRING, False),
         ("DeployEnabled", BOOL, False),
+        ("PrimaryActionLabel", STRING, False),
+        ("SecondaryActionLabel", STRING, False),
     ],
     "/Game/UI/WBP_RunResult": [
         ("RunOutcomeLabel", STRING, False),

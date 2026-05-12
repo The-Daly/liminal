@@ -44,6 +44,7 @@ BLUEPRINTS = [
 WIDGETS = [
     "WBP_TitleShell",
     "WBP_ServerBrowser",
+    "WBP_CharacterSelection",
     "WBP_FactionSelection",
     "WBP_CharacterSetup",
     "WBP_MainPlayerMenu",

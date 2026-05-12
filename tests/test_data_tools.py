@@ -17,6 +17,7 @@ from faction_model import build_new_realm_inventory, hub_upgrade_focus, reset_re
 from frontend_menu_model import (
     MenuFlowState,
     bootstrap_menu_flow,
+    build_character_selection_snapshot,
     build_main_player_menu_snapshot,
     build_server_browser_snapshot,
     build_title_shell_copy,
@@ -553,6 +554,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(title_copy.current_route_id, "menu_title_shell")
         self.assertEqual(title_copy.headline_text, "Liminal Dominion")
         self.assertIn("mass wipe", title_copy.subhead_text.lower())
+        self.assertEqual(title_copy.primary_action_label, "Enter Server Browser")
 
         server_snapshot = build_server_browser_snapshot(
             self.registry,
@@ -563,6 +565,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(server_snapshot.selected_server_type, "official")
         self.assertIn("Official Realm", server_snapshot.server_name_text)
         self.assertIn("Population 82/90 | Queue 7", server_snapshot.queue_summary_text)
+        self.assertEqual(server_snapshot.primary_action_label, "Select Realm")
 
         warning = faction_lock_warning(self.registry, "official_north_america_01", "meg")
         self.assertIn("M.E.G.", warning)
@@ -594,6 +597,11 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(bootstrap.selected_character_id, profile.character_id)
         self.assertEqual(bootstrap.selected_faction_id, "meg")
 
+        character_selection = build_character_selection_snapshot(profile)
+        self.assertEqual(character_selection.selected_character_id, profile.character_id)
+        self.assertIn("Existing character found", character_selection.existing_character_status_text)
+        self.assertEqual(character_selection.primary_action_label, "Enter Character Menu")
+
         snapshot = build_main_player_menu_snapshot(
             self.registry,
             profile,
@@ -604,6 +612,7 @@ class DataToolTests(unittest.TestCase):
         self.assertEqual(snapshot.selected_character_id, profile.character_id)
         self.assertIn("Archive-Delta", snapshot.character_summary_text)
         self.assertIn("MEG 27/30 Q2", snapshot.faction_population_summary)
+        self.assertEqual(snapshot.primary_action_label, "Deploy Operator")
 
     def test_frontend_session_round_trips_menu_state(self):
         session = FrontendSessionState(

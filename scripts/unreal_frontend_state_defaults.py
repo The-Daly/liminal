@@ -11,6 +11,7 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from frontend_menu_model import (
     bootstrap_menu_flow,
+    build_character_selection_snapshot,
     build_main_player_menu_snapshot,
     build_server_browser_snapshot,
     build_title_shell_copy,
@@ -105,8 +106,12 @@ def main() -> None:
             "FactionPopulationSummary": server_snapshot.faction_population_summary,
             "FactionLockWarningText": lock_warning,
             "DeployEnabled": False,
+            "PrimaryActionLabel": title_copy.primary_action_label,
+            "SecondaryActionLabel": title_copy.secondary_action_label,
         },
     )
+
+    character_selection_snapshot = build_character_selection_snapshot(preview_profile)
 
     set_properties(
         "/Game/UI/WBP_TitleShell",
@@ -115,6 +120,8 @@ def main() -> None:
             "SubheadText": title_copy.subhead_text,
             "CurrentRouteId": title_copy.current_route_id,
             "NextRouteId": bootstrap.next_route_id,
+            "PrimaryActionLabel": title_copy.primary_action_label,
+            "SecondaryActionLabel": title_copy.secondary_action_label,
         },
     )
     set_properties(
@@ -130,6 +137,20 @@ def main() -> None:
             "FactionPopulationSummary": server_snapshot.faction_population_summary,
             "QueueSummaryText": server_snapshot.queue_summary_text,
             "CreationStatusText": server_snapshot.creation_status_text,
+            "PrimaryActionLabel": server_snapshot.primary_action_label,
+            "SecondaryActionLabel": server_snapshot.secondary_action_label,
+        },
+    )
+    set_properties(
+        "/Game/UI/WBP_CharacterSelection",
+        {
+            "CurrentRouteId": character_selection_snapshot.current_route_id,
+            "SelectedRealmId": character_selection_snapshot.selected_realm_id,
+            "SelectedCharacterId": character_selection_snapshot.selected_character_id,
+            "ExistingCharacterStatusText": character_selection_snapshot.existing_character_status_text,
+            "CharacterSummaryText": character_selection_snapshot.character_summary_text,
+            "PrimaryActionLabel": character_selection_snapshot.primary_action_label,
+            "SecondaryActionLabel": character_selection_snapshot.secondary_action_label,
         },
     )
     set_properties(
@@ -150,6 +171,7 @@ def main() -> None:
             "SelectedAppearanceId": setup_defaults.selected_appearance_id,
             "CharacterCallsign": setup_defaults.character_callsign,
             "IdentityItemId": setup_defaults.identity_item_id,
+            "PrimaryActionLabel": setup_defaults.primary_action_label,
         },
     )
     set_properties(
@@ -165,6 +187,8 @@ def main() -> None:
             "FactionPopulationSummary": menu_snapshot.faction_population_summary,
             "CharacterSummaryText": menu_snapshot.character_summary_text,
             "DeployEnabled": menu_snapshot.deploy_enabled,
+            "PrimaryActionLabel": menu_snapshot.primary_action_label,
+            "SecondaryActionLabel": menu_snapshot.secondary_action_label,
         },
     )
 

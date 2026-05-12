@@ -34,6 +34,8 @@ class TitleShellCopy:
     headline_text: str
     subhead_text: str
     current_route_id: str
+    primary_action_label: str
+    secondary_action_label: str
 
 
 @dataclass(frozen=True)
@@ -48,6 +50,19 @@ class ServerBrowserSnapshot:
     faction_population_summary: str
     queue_summary_text: str
     creation_status_text: str
+    primary_action_label: str
+    secondary_action_label: str
+
+
+@dataclass(frozen=True)
+class CharacterSelectionSnapshot:
+    current_route_id: str
+    selected_realm_id: str
+    selected_character_id: str
+    existing_character_status_text: str
+    character_summary_text: str
+    primary_action_label: str
+    secondary_action_label: str
 
 
 @dataclass(frozen=True)
@@ -57,6 +72,7 @@ class CharacterSetupDefaults:
     selected_appearance_id: str
     character_callsign: str
     identity_item_id: str
+    primary_action_label: str
 
 
 @dataclass(frozen=True)
@@ -71,6 +87,8 @@ class MainPlayerMenuSnapshot:
     faction_population_summary: str
     character_summary_text: str
     deploy_enabled: bool
+    primary_action_label: str
+    secondary_action_label: str
 
 
 @dataclass(frozen=True)
@@ -130,6 +148,8 @@ def build_title_shell_copy(route_id: str = "menu_title_shell") -> TitleShellCopy
             "where you stood until the next mass wipe."
         ),
         current_route_id=route_id,
+        primary_action_label="Enter Server Browser",
+        secondary_action_label="Review Wipe Terms",
     )
 
 
@@ -163,6 +183,26 @@ def build_server_browser_snapshot(
         faction_population_summary=summary.faction_population_summary,
         queue_summary_text=queue_summary_text,
         creation_status_text=creation_status_text,
+        primary_action_label="Select Realm",
+        secondary_action_label="Compare Populations",
+    )
+
+
+def build_character_selection_snapshot(
+    profile: CharacterProfile,
+    route_id: str = "menu_character_selection",
+) -> CharacterSelectionSnapshot:
+    slot = slot_summary(profile)
+    return CharacterSelectionSnapshot(
+        current_route_id=route_id,
+        selected_realm_id=slot.realm_id,
+        selected_character_id=slot.character_id,
+        existing_character_status_text="Existing character found on selected realm.",
+        character_summary_text=(
+            f"{slot.callsign} | {slot.faction_id.upper()} | Slot {slot.slot_index} | Wipe {slot.wipe_id}"
+        ),
+        primary_action_label="Enter Character Menu",
+        secondary_action_label="Review Faction Lock",
     )
 
 
@@ -199,6 +239,7 @@ def character_setup_defaults(
         selected_appearance_id=appearance["appearance_id"],
         character_callsign=f"{callsign_prefix}-{slot_index:02d}",
         identity_item_id=appearance["identity_item_id"],
+        primary_action_label="Confirm Character",
     )
 
 
@@ -230,6 +271,8 @@ def build_main_player_menu_snapshot(
         faction_population_summary=summary.faction_population_summary,
         character_summary_text=character_summary_text,
         deploy_enabled=not menu_route(registry, route_id).blocks_deploy,
+        primary_action_label="Deploy Operator",
+        secondary_action_label="Open Stash",
     )
 
 

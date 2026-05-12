@@ -40,6 +40,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - `BP_MenuFlowController`
   - `WBP_TitleShell`
   - `WBP_ServerBrowser`
+  - `WBP_CharacterSelection`
   - `WBP_FactionSelection`
   - `WBP_CharacterSetup`
   - `WBP_MainPlayerMenu`
