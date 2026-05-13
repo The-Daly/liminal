@@ -52,6 +52,8 @@ This file replaces the old starter-pack mental model with the current repo state
   - rebuilds `WBP_MainPlayerMenu` into the current operations-console layout with live Level 1 backdrop framing
 - `scripts/run_unreal_ingame_menu_spawn.ps1`
   - rebuilds and places the working Level 1 menu-boot path, including `BP_MainMenuPawn` and the current operations overlay render path
+- `scripts/run_v01_smoke_check.ps1`
+  - validates seed data, exports Unreal CSVs, runs unit tests, and prints the exact manual smoke-test route
 - `scripts/run_unreal_frontend_state_defaults.ps1`
   - stamps default title/server/faction/character/main-menu values into the frontend controller and widgets
 - `WBP_CharacterSelection`
@@ -82,13 +84,14 @@ This file replaces the old starter-pack mental model with the current repo state
 - the menu boot path now works in-editor and has been backtested with captured Unreal camera frames
 - `BP_MainMenuPawn` now exists as the working menu-boot pawn in `LD_Level1_ServiceHalls_Greybox`
 - `BP_LDGameMode` now boots into a menu presentation state instead of dropping the player directly into a live gameplay character
+- repo-side smoke-test preparation now has a single repeatable command plus a written manual checklist
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
 
 - DataTables are still not safely imported into Unreal as assets under `Content/Data`.
 - The serious frontend exists as a repo-side shell target, not yet as a fully interactive menu implementation.
-- The serious frontend now has repo-backed state and summary helpers, but its UMG graphs are still shell-level rather than interactive.
+- The serious frontend now has repo-backed state and summary helpers plus runtime menu-state switching, but its UMG graphs are still shell-level rather than a final viewport-driven implementation.
 - The serious frontend now has an in-world staging space and preview-anchor placements, but it is still not a clickable UMG flow yet.
 - Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
 - The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
@@ -102,6 +105,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - Automated Python DataTable import is now reproducibly crashing in UE 5.7 during `DT_Items` import when Python-generated row structs are used.
 - `Content/Python/ld_datatable_rows.py` now covers the first eight loop-critical table shapes, but it remains a field reference, not the safe final import path.
 - `scripts/run_unreal_data_bootstrap.ps1` is useful for regression-checking the crash, but the practical next move is still to replace the row-struct path with editor-authored or native structs.
+- `docs/technical/DATATABLE_IMPORT_FIX_PLAN.md` now defines the safe editor-authored struct replacement path for the loop-critical tables.
 
 ### Blueprint Wiring
 

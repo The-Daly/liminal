@@ -13,6 +13,7 @@ This file is the recommended execution order for the next Codex work on the repo
 ## Task 1: Replace the DataTable Row-Struct Path
 
 - Read `docs/handoff/UNREAL_DATATABLE_IMPORT_PLAN.md`.
+- Read `docs/technical/DATATABLE_IMPORT_FIX_PLAN.md`.
 - Treat the current Python row structs in `Content/Python/ld_datatable_rows.py` as field references only.
 - Keep `scripts/run_unreal_data_bootstrap.ps1` as the validation harness for the import pass, but do not rely on it until the row structs are replaced.
 - Create the safe Unreal-side import path using editor-authored row structs or a native struct path.
@@ -27,6 +28,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - `DT_PlayerState`
   - `DT_RunState`
 - Then continue with the broader prototype-support tables.
+- Note that starter loadouts are currently derived from `DT_Factions` + `scripts/faction_model.py`; there is not yet a separate exported `DT_Loadouts.csv`.
 
 ## Task 2: Turn the Serious Frontend Shell Into Real Menu Flow
 
@@ -68,6 +70,7 @@ This file is the recommended execution order for the next Codex work on the repo
   - footer telemetry copy
 - The frontend shell pass now also rebuilds `WBP_MainPlayerMenu` into the current operations-console layout before wiring variables and defaults.
 - The frontend shell pass now also rebuilds and places `BP_MainMenuPawn` in `LD_Level1_ServiceHalls_Greybox`, and `BP_LDGameMode` now boots directly into that menu pawn so the selection screen does not drop into a live player character.
+- The current graybox menu path also has a repo-owned runtime state controller in `Content/Python/ld_menu_runtime.py` for keyboard/click-driven shell navigation while the final UMG graph path is unfinished.
 - Wire the title -> server browser -> faction selection -> character setup -> main player hub sequence in Unreal.
 - Keep it shell-simple but functional.
 
@@ -118,6 +121,7 @@ This file is the recommended execution order for the next Codex work on the repo
 ## Task 6: Smoke-Test and Update Docs
 
 - Run the loop in-editor on Windows.
+- Start each pass from `powershell -ExecutionPolicy Bypass -File .\scripts\run_v01_smoke_check.ps1`.
 - Note what works, what fakes it, and what is still broken.
 - Update:
   - `docs/handoff/CURRENT_STATUS.md`
