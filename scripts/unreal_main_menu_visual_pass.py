@@ -188,10 +188,6 @@ def build_main_menu_layout():
     widget = recreate_widget()
     root = add_widget(widget, unreal.CanvasPanel, "RootCanvas", "")
 
-    screen_bg = add_widget(widget, unreal.Image, "ScreenBackground", "RootCanvas")
-    fullscreen_canvas_slot(screen_bg, z_order=0)
-    style_image(screen_bg, unreal.LinearColor(0.01, 0.02, 0.02, 0.60))
-
     top_left = panel_overlay(widget, "RootCanvas", "TopLeftPanel", (28.0, 20.0), (370.0, 118.0))
     top_left_box = add_widget(widget, unreal.VerticalBox, "TopLeftBox", "TopLeftPanel_Content")
     overlay_slot(top_left_box)
@@ -254,7 +250,7 @@ def build_main_menu_layout():
 
     center_fill = add_widget(widget, unreal.Image, "CenterPreviewFill", "CenterCanvas")
     canvas_slot(center_fill, (2.0, 2.0), (948.0, 521.0), z_order=0)
-    style_image(center_fill, unreal.LinearColor(0.02, 0.05, 0.04, 0.28))
+    style_image(center_fill, unreal.LinearColor(0.02, 0.05, 0.04, 0.10))
 
     center_title = add_widget(widget, unreal.TextBlock, "CenterOperationTitle", "CenterCanvas")
     canvas_slot(center_title, (24.0, 24.0), (620.0, 52.0), z_order=2)
