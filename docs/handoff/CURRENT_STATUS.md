@@ -51,7 +51,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - `scripts/run_unreal_main_menu_visual_pass.ps1`
   - rebuilds `WBP_MainPlayerMenu` into the current operations-console layout with live Level 1 backdrop framing
 - `scripts/run_unreal_ingame_menu_spawn.ps1`
-  - rebuilds and places `BP_MainMenuPawn` so the operations menu appears in playable Level 1 view
+  - rebuilds and places the working Level 1 menu-boot path, including `BP_MainMenuPawn` and the current operations overlay render path
 - `scripts/run_unreal_frontend_state_defaults.ps1`
   - stamps default title/server/faction/character/main-menu values into the frontend controller and widgets
 - `WBP_CharacterSelection`
@@ -79,9 +79,9 @@ This file replaces the old starter-pack mental model with the current repo state
 - the hub now contains a repo-owned serious frontend staging area for title/server/faction/character/main-menu visualization
 - the frontend controller and serious widgets now carry repo-owned default realm/faction/wipe/callsign state, route-target defaults, and operations-hub dashboard text in their class defaults
 - `WBP_MainPlayerMenu` now carries a deliberate three-column operations layout instead of an empty shell
-- `BP_MainMenuPawn` now exists and is placed in `LD_Level1_ServiceHalls_Greybox` with player auto-possession for in-game menu viewing
-- `BP_MainMenuPawn` now exists as the default menu-view pawn, and `MenuPlayerStart` anchors where the menu camera spawns in `LD_Level1_ServiceHalls_Greybox`
-- `BP_LDGameMode` now uses `BP_MainMenuPawn` as the default pawn for the current menu-boot flow, so launch lands on the menu-view pawn instead of a live player character
+- the menu boot path now works in-editor and has been backtested with captured Unreal camera frames
+- `BP_MainMenuPawn` now exists as the working menu-boot pawn in `LD_Level1_ServiceHalls_Greybox`
+- `BP_LDGameMode` now boots into a menu presentation state instead of dropping the player directly into a live gameplay character
 - repo-side simulation of the intended loop exists
 
 ## What Is Not Done Yet
