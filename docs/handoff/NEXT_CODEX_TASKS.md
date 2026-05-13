@@ -17,7 +17,7 @@ This file is the recommended execution order for the next Codex work on the repo
 - Treat the current Python row structs in `Content/Python/ld_datatable_rows.py` as field references only.
 - Keep `scripts/run_unreal_data_bootstrap.ps1` as the validation harness for the import pass, but do not rely on it until the row structs are replaced.
 - Create the safe Unreal-side import path using editor-authored row structs or a native struct path.
-- The repo now already contains a dormant minimal native row-struct module under `Source/LiminalDominion/`; use it after the Windows MSVC toolchain is updated, or continue with editor-authored struct assets immediately.
+- The repo now already contains a dormant minimal native row-struct module under `Source_DormantDataRows/`; move it back into an active `Source/` path only after the Windows MSVC toolchain is updated, or continue with editor-authored struct assets immediately.
 - Import the exported CSVs into `Content/Data`.
 - Start with these eight loop-critical tables:
   - `DT_Items`

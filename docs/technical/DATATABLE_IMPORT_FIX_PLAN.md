@@ -41,9 +41,9 @@ If the team later decides to re-enable a native module, the same field layouts b
 
 The repo now includes a **minimal dormant native module scaffold** under:
 
-- `Source/LiminalDominion/`
-- `Source/LiminalDominion.Target.cs`
-- `Source/LiminalDominionEditor.Target.cs`
+- `Source_DormantDataRows/LiminalDominion/`
+- `Source_DormantDataRows/LiminalDominion.Target.cs`
+- `Source_DormantDataRows/LiminalDominionEditor.Target.cs`
 
 That scaffold contains native row-struct definitions for the loop-critical tables. It is intentionally **not active in the `.uproject` boot path yet** because this machine currently fails Unreal 5.7 native compilation with an outdated MSVC toolchain.
 

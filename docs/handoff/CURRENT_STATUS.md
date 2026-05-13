@@ -107,7 +107,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - `Content/Python/ld_datatable_rows.py` now covers the first eight loop-critical table shapes, but it remains a field reference, not the safe final import path.
 - `scripts/run_unreal_data_bootstrap.ps1` now supports the correct replacement targets and reports the exact missing row-struct path instead of silently succeeding.
 - `docs/technical/DATATABLE_IMPORT_FIX_PLAN.md` now defines the safe editor-authored struct replacement path for the loop-critical tables.
-- A minimal native row-struct module scaffold now exists under `Source/LiminalDominion/`, but local compilation is still blocked by the installed Visual Studio C++ toolchain version.
+- A minimal native row-struct module scaffold now exists under `Source_DormantDataRows/`, but it is archived out of the active Unreal load path and local compilation is still blocked by the installed Visual Studio C++ toolchain version.
 
 ### Blueprint Wiring
 
