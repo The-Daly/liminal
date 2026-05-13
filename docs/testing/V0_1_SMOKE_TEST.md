@@ -48,6 +48,16 @@ Expected result:
    - character setup
    - main menu
 
+Current graybox controls:
+
+- `W` / `Up`: previous menu state
+- `S` / `Down`: next menu state
+- `Enter` / `Space`: confirm
+- `E`: interact during the playable loop
+- `Q`: consume Almond Water
+- `K`: debug death
+- `Esc` / `Backspace`: back to deploy state in the menu shell
+
 ## Manual Test Checklist
 
 ### 1. Menu Boot

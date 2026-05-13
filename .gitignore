@@ -26,3 +26,4 @@ Saved/
 tmp/
 temp/
 ~$*.xlsx
+outputs/unreal_data_bootstrap_status.json

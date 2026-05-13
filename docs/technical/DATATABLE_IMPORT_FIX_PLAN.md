@@ -37,6 +37,26 @@ Do **not** keep the final import path on Python-generated row structs.
 
 If the team later decides to re-enable a native module, the same field layouts below can be moved into `FTableRowBase` structs in C++. That is a valid long-term path, but it is not required to unblock the current Blueprint-first graybox loop.
 
+## Current Repo State
+
+The repo now includes a **minimal dormant native module scaffold** under:
+
+- `Source/LiminalDominion/`
+- `Source/LiminalDominion.Target.cs`
+- `Source/LiminalDominionEditor.Target.cs`
+
+That scaffold contains native row-struct definitions for the loop-critical tables. It is intentionally **not active in the `.uproject` boot path yet** because this machine currently fails Unreal 5.7 native compilation with an outdated MSVC toolchain.
+
+Current local compiler blocker:
+
+- Unreal 5.7 requires a newer Visual Studio 2022 MSVC v143 toolchain than the one installed on this machine
+- `scripts/run_unreal_data_bootstrap.ps1` now reports that clearly and falls back to editor-authored struct assets if they exist
+
+This means the repo now supports **both** of the real replacement paths:
+
+1. native row structs after the Windows toolchain is updated
+2. editor-authored struct assets immediately, without waiting for native compile
+
 ## Loop-Critical Tables To Prioritize
 
 Import these first:

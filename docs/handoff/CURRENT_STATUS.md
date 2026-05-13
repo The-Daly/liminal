@@ -59,7 +59,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - `WBP_CharacterSelection`
   - now exists as a dedicated shell between server browser and faction selection/main player hub
 - `scripts/run_unreal_data_bootstrap.ps1`
-  - attempts the eight-table Unreal import pass and currently serves as the reproducible UE 5.7 crash harness for Python-defined row structs
+  - now attempts the eight-table Unreal import pass through either native row structs or editor-authored struct assets, and fails with a precise status message when neither path is ready
 - `scripts/run_unreal_graybox_layout.ps1`
   - stamps the current map shell, route layout, smoke-test path markers, and first-wave interaction metadata
 
@@ -84,6 +84,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - the menu boot path now works in-editor and has been backtested with captured Unreal camera frames
 - `BP_MainMenuPawn` now exists as the working menu-boot pawn in `LD_Level1_ServiceHalls_Greybox`
 - `BP_LDGameMode` now boots into a menu presentation state instead of dropping the player directly into a live gameplay character
+- `Content/Python/ld_playable_loop_runtime.py` now bridges the repo-side loop models into PIE for a graybox runtime path covering deploy, loot, sanity, extract, deposit, and board contribution flow
 - repo-side smoke-test preparation now has a single repeatable command plus a written manual checklist
 - repo-side simulation of the intended loop exists
 
@@ -93,7 +94,7 @@ This file replaces the old starter-pack mental model with the current repo state
 - The serious frontend exists as a repo-side shell target, not yet as a fully interactive menu implementation.
 - The serious frontend now has repo-backed state and summary helpers plus runtime menu-state switching, but its UMG graphs are still shell-level rather than a final viewport-driven implementation.
 - The serious frontend now has an in-world staging space and preview-anchor placements, but it is still not a clickable UMG flow yet.
-- Most Blueprint actors now have their data contracts in place, but they still need real interaction graph behavior.
+- Most Blueprint actors now have their data contracts in place, but they still need final graph-level behavior rather than the current Python-assisted graybox runtime.
 - The first full interactive deploy -> loot -> sanity -> encounter -> extract -> deposit -> contribute loop is not yet running in-editor.
 - SaveGame and persistence are not yet bridged through Blueprint runtime behavior.
 - HUD widgets exist but are not yet driving a real player loop.
@@ -104,8 +105,9 @@ This file replaces the old starter-pack mental model with the current repo state
 
 - Automated Python DataTable import is now reproducibly crashing in UE 5.7 during `DT_Items` import when Python-generated row structs are used.
 - `Content/Python/ld_datatable_rows.py` now covers the first eight loop-critical table shapes, but it remains a field reference, not the safe final import path.
-- `scripts/run_unreal_data_bootstrap.ps1` is useful for regression-checking the crash, but the practical next move is still to replace the row-struct path with editor-authored or native structs.
+- `scripts/run_unreal_data_bootstrap.ps1` now supports the correct replacement targets and reports the exact missing row-struct path instead of silently succeeding.
 - `docs/technical/DATATABLE_IMPORT_FIX_PLAN.md` now defines the safe editor-authored struct replacement path for the loop-critical tables.
+- A minimal native row-struct module scaffold now exists under `Source/LiminalDominion/`, but local compilation is still blocked by the installed Visual Studio C++ toolchain version.
 
 ### Blueprint Wiring
 
