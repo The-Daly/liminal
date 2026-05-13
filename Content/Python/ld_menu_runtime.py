@@ -3,6 +3,7 @@ import unreal
 
 BUTTONS = ["deploy", "loadout", "operators", "market", "intel", "settings", "exit"]
 BUTTON_INDEX = {name: idx for idx, name in enumerate(BUTTONS)}
+MENU_WIDGET_PATH = "/Game/UI/WBP_MainPlayerMenu"
 TEXTURE_PATHS = {
     "deploy": "/Game/UI/T_MenuDeployOverlay",
     "loadout": "/Game/UI/T_MenuLoadoutOverlay",
@@ -38,14 +39,22 @@ class MenuRuntimeController:
         self.active_world = None
         self.dynamic_material = None
         self.menu_plane = None
+        self.menu_widget = None
+        self.menu_widget_class = None
         self.session_initialized = False
         self.loaded_textures = {}
         self.last_click_down = False
 
     def reset_session(self):
+        if self.menu_widget is not None:
+            try:
+                self.menu_widget.remove_from_viewport()
+            except Exception:
+                pass
         self.active_world = None
         self.dynamic_material = None
         self.menu_plane = None
+        self.menu_widget = None
         self.session_initialized = False
         self.current_state = "deploy"
         self.last_click_down = False
@@ -67,35 +76,91 @@ class MenuRuntimeController:
                         return component
         return None
 
+    def _load_menu_widget_class(self):
+        if self.menu_widget_class is None:
+            self.menu_widget_class = unreal.EditorAssetLibrary.load_blueprint_class(MENU_WIDGET_PATH)
+        return self.menu_widget_class
+
+    def _ensure_viewport_widget(self, player_controller):
+        if self.menu_widget is not None:
+            try:
+                if self.menu_widget.is_in_viewport():
+                    return True
+            except Exception:
+                self.menu_widget = None
+
+        widget_class = self._load_menu_widget_class()
+        if widget_class is None:
+            return False
+
+        try:
+            widget = unreal.new_object(widget_class, outer=player_controller, name="LD_MainMenuViewportWidget")
+        except Exception:
+            widget = None
+
+        if widget is None:
+            return False
+
+        try:
+            widget.set_owning_player(player_controller)
+        except Exception:
+            pass
+
+        try:
+            widget.add_to_viewport(1000)
+            widget.set_position_in_viewport(unreal.Vector2D(0.0, 0.0), False)
+            self.menu_widget = widget
+            log("Added WBP_MainPlayerMenu to viewport")
+            return True
+        except Exception:
+            self.menu_widget = None
+            return False
+
     def _ensure_session(self, world, player_controller):
-        if self.active_world == world and self.dynamic_material and self.menu_plane:
+        if self.active_world == world and (
+            (self.menu_widget is not None and self.menu_widget.is_in_viewport()) or
+            (self.dynamic_material and self.menu_plane)
+        ):
             return True
 
         self.active_world = world
-        self.menu_plane = self._find_menu_plane(world)
-        if self.menu_plane is None:
-            return False
-
-        self.dynamic_material = self.menu_plane.create_dynamic_material_instance(0)
-        if self.dynamic_material is None:
-            return False
-
         player_controller.show_mouse_cursor = True
         player_controller.enable_click_events = True
         player_controller.enable_mouse_over_events = True
         player_controller.set_ignore_move_input(True)
         player_controller.set_ignore_look_input(True)
+
+        plane_candidate = self._find_menu_plane(world)
+        if plane_candidate is not None:
+            plane_candidate.set_hidden_in_game(True)
+
+        if self._ensure_viewport_widget(player_controller):
+            self.dynamic_material = None
+            self.menu_plane = plane_candidate
+            self._apply_state(self.current_state)
+            self.session_initialized = True
+            log("PIE menu runtime initialized in fullscreen viewport mode")
+            return True
+
+        self.menu_plane = plane_candidate
+        if self.menu_plane is None:
+            return False
+
+        self.menu_plane.set_hidden_in_game(False)
+        self.dynamic_material = self.menu_plane.create_dynamic_material_instance(0)
+        if self.dynamic_material is None:
+            return False
+
         self._apply_state(self.current_state)
         self.session_initialized = True
-        log("PIE menu runtime initialized")
+        log("PIE menu runtime initialized in world-plane fallback mode")
         return True
 
     def _apply_state(self, state: str):
-        texture = self.load_texture(state)
-        if texture is None or self.dynamic_material is None:
-            return
         self.current_state = state
-        self.dynamic_material.set_texture_parameter_value("MenuTexture", texture)
+        texture = self.load_texture(state)
+        if texture is not None and self.dynamic_material is not None:
+            self.dynamic_material.set_texture_parameter_value("MenuTexture", texture)
 
     def _pressed_any(self, player_controller, keys) -> bool:
         return any(player_controller.was_input_key_just_pressed(key) for key in keys)
