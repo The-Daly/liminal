@@ -8,10 +8,18 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 
 MENU_PAWN_PATH = "/Game/Blueprints/BP_MainMenuPawn"
-MENU_TEXTURE_PATH = "/Game/UI/T_MenuOperationsOverlay"
 MENU_MATERIAL_PATH = "/Game/UI/M_MenuOperationsOverlay"
 LEVEL_PATH = "/Game/Maps/LD_Level1_ServiceHalls_Greybox"
-MENU_TEXTURE_SOURCE = REPO_ROOT / "generated" / "ui" / "menu_operations_overlay.png"
+MENU_TEXTURE_DIR = REPO_ROOT / "generated" / "ui"
+MENU_TEXTURES = {
+    "deploy": ("T_MenuDeployOverlay", MENU_TEXTURE_DIR / "menu_deploy_overlay.png"),
+    "loadout": ("T_MenuLoadoutOverlay", MENU_TEXTURE_DIR / "menu_loadout_overlay.png"),
+    "operators": ("T_MenuOperatorsOverlay", MENU_TEXTURE_DIR / "menu_operators_overlay.png"),
+    "market": ("T_MenuMarketOverlay", MENU_TEXTURE_DIR / "menu_market_overlay.png"),
+    "intel": ("T_MenuIntelOverlay", MENU_TEXTURE_DIR / "menu_intel_overlay.png"),
+    "settings": ("T_MenuSettingsOverlay", MENU_TEXTURE_DIR / "menu_settings_overlay.png"),
+    "exit": ("T_MenuExitOverlay", MENU_TEXTURE_DIR / "menu_exit_overlay.png"),
+}
 
 
 def log(message: str) -> None:
@@ -26,28 +34,31 @@ def make_rotator(pitch: float, yaw: float, roll: float = 0.0) -> unreal.Rotator:
     return rotator
 
 
-def import_menu_texture():
-    if not MENU_TEXTURE_SOURCE.exists():
-        raise RuntimeError(f"Menu texture source missing: {MENU_TEXTURE_SOURCE}")
+def import_menu_textures():
+    imported = {}
+    for state, (asset_name, source_path) in MENU_TEXTURES.items():
+        if not source_path.exists():
+            raise RuntimeError(f"Menu texture source missing: {source_path}")
 
-    task = unreal.AssetImportTask()
-    task.set_editor_property("filename", str(MENU_TEXTURE_SOURCE))
-    task.set_editor_property("destination_path", "/Game/UI")
-    task.set_editor_property("destination_name", "T_MenuOperationsOverlay")
-    task.set_editor_property("replace_existing", True)
-    task.set_editor_property("automated", True)
-    task.set_editor_property("save", True)
+        task = unreal.AssetImportTask()
+        task.set_editor_property("filename", str(source_path))
+        task.set_editor_property("destination_path", "/Game/UI")
+        task.set_editor_property("destination_name", asset_name)
+        task.set_editor_property("replace_existing", True)
+        task.set_editor_property("automated", True)
+        task.set_editor_property("save", True)
+        unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
 
-    unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
-    texture = unreal.EditorAssetLibrary.load_asset(MENU_TEXTURE_PATH)
-    if texture is None:
-        raise RuntimeError(f"Failed to import menu texture to {MENU_TEXTURE_PATH}")
-
-    texture.set_editor_property("srgb", True)
-    texture.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
-    unreal.EditorAssetLibrary.save_loaded_asset(texture, only_if_is_dirty=False)
-    log(f"Imported {MENU_TEXTURE_PATH}")
-    return texture
+        texture_path = f"/Game/UI/{asset_name}"
+        texture = unreal.EditorAssetLibrary.load_asset(texture_path)
+        if texture is None:
+            raise RuntimeError(f"Failed to import menu texture to {texture_path}")
+        texture.set_editor_property("srgb", True)
+        texture.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
+        unreal.EditorAssetLibrary.save_loaded_asset(texture, only_if_is_dirty=False)
+        imported[state] = texture
+        log(f"Imported {texture_path}")
+    return imported
 
 
 def build_menu_material(texture):
@@ -71,11 +82,12 @@ def build_menu_material(texture):
 
     sample = unreal.MaterialEditingLibrary.create_material_expression(
         material,
-        unreal.MaterialExpressionTextureSample,
+        unreal.MaterialExpressionTextureSampleParameter2D,
         -360,
         0,
     )
     sample.set_editor_property("texture", texture)
+    sample.set_editor_property("parameter_name", "MenuTexture")
 
     intensity = unreal.MaterialEditingLibrary.create_material_expression(
         material,
@@ -93,86 +105,37 @@ def build_menu_material(texture):
     )
     unreal.MaterialEditingLibrary.connect_material_expressions(sample, "RGB", emissive_multiply, "A")
     unreal.MaterialEditingLibrary.connect_material_expressions(intensity, "", emissive_multiply, "B")
-
-    unreal.MaterialEditingLibrary.connect_material_property(
-        emissive_multiply,
-        "",
-        unreal.MaterialProperty.MP_EMISSIVE_COLOR,
-    )
-    unreal.MaterialEditingLibrary.connect_material_property(
-        sample,
-        "A",
-        unreal.MaterialProperty.MP_OPACITY,
-    )
+    unreal.MaterialEditingLibrary.connect_material_property(emissive_multiply, "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
+    unreal.MaterialEditingLibrary.connect_material_property(sample, "A", unreal.MaterialProperty.MP_OPACITY)
     unreal.MaterialEditingLibrary.recompile_material(material)
     unreal.EditorAssetLibrary.save_loaded_asset(material, only_if_is_dirty=False)
     log(f"Built {MENU_MATERIAL_PATH}")
     return material
 
 
-def build_menu_pawn(material):
-    if unreal.EditorAssetLibrary.does_asset_exist(MENU_PAWN_PATH):
-        unreal.EditorAssetLibrary.delete_asset(MENU_PAWN_PATH)
-        log(f"Deleted existing {MENU_PAWN_PATH}")
-
-    factory = unreal.BlueprintFactory()
-    factory.set_editor_property("parent_class", unreal.Pawn)
-    blueprint = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
-        "BP_MainMenuPawn",
-        "/Game/Blueprints",
-        unreal.Blueprint,
-        factory,
-    )
+def configure_existing_menu_pawn(material):
+    blueprint = unreal.EditorAssetLibrary.load_asset(MENU_PAWN_PATH)
     if blueprint is None:
-        raise RuntimeError("Failed to create BP_MainMenuPawn")
+        raise RuntimeError(f"Missing existing menu pawn asset at {MENU_PAWN_PATH}")
 
     subsystem = unreal.get_engine_subsystem(unreal.SubobjectDataSubsystem)
     handles = subsystem.k2_gather_subobject_data_for_blueprint(blueprint)
-    root_handle = handles[1]
-
-    camera_params = unreal.AddNewSubobjectParams()
-    camera_params.set_editor_property("parent_handle", root_handle)
-    camera_params.set_editor_property("new_class", unreal.CameraComponent)
-    camera_params.set_editor_property("blueprint_context", blueprint)
-    camera_params.set_editor_property("conform_transform_to_parent", True)
-    camera_handle, _ = subsystem.add_new_subobject(params=camera_params)
-
-    plane_params = unreal.AddNewSubobjectParams()
-    plane_params.set_editor_property("parent_handle", camera_handle)
-    plane_params.set_editor_property("new_class", unreal.StaticMeshComponent)
-    plane_params.set_editor_property("blueprint_context", blueprint)
-    plane_params.set_editor_property("conform_transform_to_parent", True)
-    plane_handle, _ = subsystem.add_new_subobject(params=plane_params)
-
-    camera_object = unreal.SubobjectDataBlueprintFunctionLibrary.get_object(
-        subsystem.k2_find_subobject_data_from_handle(camera_handle)
-    )
-    plane_object = unreal.SubobjectDataBlueprintFunctionLibrary.get_object(
-        subsystem.k2_find_subobject_data_from_handle(plane_handle)
-    )
-
-    camera_object.rename("MenuCamera")
-    plane_object.rename("MenuPlane")
-
-    camera_object.set_editor_property("relative_location", unreal.Vector(0.0, 0.0, 140.0))
-    camera_object.set_editor_property("relative_rotation", make_rotator(0.0, 0.0, 0.0))
-    camera_object.set_editor_property("field_of_view", 50.0)
-
-    plane_mesh = unreal.EditorAssetLibrary.load_asset("/Engine/BasicShapes/Plane")
-    plane_object.set_editor_property("static_mesh", plane_mesh)
-    plane_object.set_editor_property("relative_location", unreal.Vector(520.0, 0.0, 0.0))
-    plane_object.set_editor_property("relative_rotation", make_rotator(90.0, 0.0, 0.0))
-    plane_object.set_editor_property("relative_scale3d", unreal.Vector(2.55, 4.5, 1.0))
-    plane_object.set_material(0, material)
-    plane_object.set_editor_property("cast_shadow", False)
-    plane_object.set_editor_property("visible", True)
-    plane_object.set_editor_property("owner_no_see", False)
-    plane_object.set_editor_property("only_owner_see", False)
-    plane_object.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
+    for handle in handles:
+        data = subsystem.k2_find_subobject_data_from_handle(handle)
+        obj = unreal.SubobjectDataBlueprintFunctionLibrary.get_object(data)
+        if obj and obj.get_name() == "MenuWidget":
+            obj.set_editor_property("visible", False)
+        if obj and obj.get_name() == "MenuPlane":
+            obj.set_material(0, material)
+            obj.set_editor_property("visible", True)
+            obj.set_editor_property("hidden_in_game", False)
+            obj.set_collision_enabled(unreal.CollisionEnabled.QUERY_ONLY)
+            obj.set_collision_response_to_all_channels(unreal.CollisionResponse.IGNORE)
+            obj.set_collision_response_to_channel(unreal.CollisionChannel.ECC_VISIBILITY, unreal.CollisionResponse.BLOCK)
 
     unreal.BlueprintEditorLibrary.compile_blueprint(blueprint)
     unreal.EditorAssetLibrary.save_loaded_asset(blueprint, only_if_is_dirty=False)
-    log(f"Built {MENU_PAWN_PATH}")
+    log("Updated existing BP_MainMenuPawn with runtime menu material")
 
 
 def configure_game_mode() -> None:
@@ -190,7 +153,7 @@ def configure_game_mode() -> None:
     log("Configured BP_LDGameMode for placed menu pawn boot")
 
 
-def place_menu_start() -> None:
+def place_menu_scene() -> None:
     unreal.EditorLevelLibrary.load_level(LEVEL_PATH)
     menu_pawn_class = unreal.EditorAssetLibrary.load_blueprint_class(MENU_PAWN_PATH)
     if menu_pawn_class is None:
@@ -214,6 +177,7 @@ def place_menu_start() -> None:
     )
     menu_pawn.set_actor_label("MenuBootPawn")
     menu_pawn.set_editor_property("auto_possess_player", unreal.AutoReceiveInput.PLAYER0)
+    menu_pawn.set_editor_property("is_spatially_loaded", False)
 
     capture_camera = unreal.EditorLevelLibrary.spawn_actor_from_class(
         unreal.CameraActor,
@@ -221,6 +185,8 @@ def place_menu_start() -> None:
         make_rotator(0.0, 0.0, 0.0),
     )
     capture_camera.set_actor_label("MenuCaptureCamera")
+    capture_camera.set_editor_property("is_spatially_loaded", False)
+    capture_camera.set_editor_property("auto_activate_for_player", unreal.AutoReceiveInput.PLAYER0)
 
     unreal.EditorLevelLibrary.save_current_level()
     unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
@@ -228,11 +194,11 @@ def place_menu_start() -> None:
 
 
 def main():
-    texture = import_menu_texture()
-    material = build_menu_material(texture)
-    build_menu_pawn(material)
+    textures = import_menu_textures()
+    material = build_menu_material(textures["deploy"])
+    configure_existing_menu_pawn(material)
     configure_game_mode()
-    place_menu_start()
+    place_menu_scene()
 
 
 if __name__ == "__main__":
