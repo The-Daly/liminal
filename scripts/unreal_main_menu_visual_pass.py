@@ -192,7 +192,7 @@ def build_main_menu_layout():
     top_left_box = add_widget(widget, unreal.VerticalBox, "TopLeftBox", "TopLeftPanel_Content")
     overlay_slot(top_left_box)
     for name, text, color in (
-        ("NetworkHeader", "REER-LIMINAL OPS NETWORK", TEXT_MUTED),
+        ("NetworkHeader", "LIMINAL OPS NETWORK", TEXT_MUTED),
         ("ConnectionText", "CONNECTION: LOCAL", TEXT_MAIN),
         ("ZoneAccessText", "ZONE ACCESS: RESTRICTED", TEXT_ACCENT),
         ("SignalText", "SIGNAL STABILITY: DEGRADED", TEXT_MUTED),

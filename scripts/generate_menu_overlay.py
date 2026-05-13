@@ -57,12 +57,12 @@ PANEL_COPY = {
     },
     "operators": {
         "title": "OPERATORS // ROSTER",
-        "tag": "FACTION // REER",
+        "tag": "FACTION // M.E.G.",
         "feed": "OPERATOR PROFILE // ACTIVE CHARACTER",
         "body": "Review the active operator identity, faction lock, and current service record.",
         "metrics": [
             ("CALLSIGN", "GHOST-7", "FIELD-CLEARED"),
-            ("FACTION", "REER", "LOCKED TO REALM"),
+            ("FACTION", "M.E.G.", "LOCKED TO REALM"),
             ("STATUS", "ACTIVE", "LAST LOGIN: TODAY"),
             ("REPUTATION", "TIER III", "RELIANT"),
             ("WIPE", "2-YEAR CYCLE", "NEXT WIPE TRACKED"),
@@ -144,7 +144,7 @@ def build_state(selected: str) -> Image.Image:
     draw = ImageDraw.Draw(image)
 
     panel(draw, (36, 26, 402, 154), fill=(8, 11, 9, 170))
-    txt(draw, (58, 52), "REER-LIMINAL OPS NETWORK", TEXT_MUTED, FONT_UI)
+    txt(draw, (58, 52), "LIMINAL OPS NETWORK", TEXT_MUTED, FONT_UI)
     txt(draw, (58, 84), "CONNECTION: LOCAL", TEXT_MAIN, FONT_UI)
     txt(draw, (58, 114), "ZONE ACCESS: RESTRICTED", TEXT_ACCENT, FONT_UI)
     txt(draw, (58, 144), "SIGNAL STABILITY: DEGRADED", TEXT_MUTED, FONT_UI)
@@ -201,7 +201,7 @@ def build_state(selected: str) -> Image.Image:
     txt(draw, (1486, 214), "// OPERATOR STATUS", TEXT_MUTED, FONT_UI)
     cards = [
         ("OPERATOR NAME", "GHOST-7", "ID: 7GH-4X2-19K"),
-        ("FACTION", "REER", "RESEARCH & EXTRACTION ENFORCEMENT REGIME"),
+        ("FACTION", "M.E.G.", "MAJOR EXPLORER GROUP"),
         ("HEALTH CONDITION", "GOOD", "100%"),
         ("REPUTATION", "TIER III - RELIANT", "2,458 / 5,000"),
         ("CURRENCY / RESOURCES", "18,420 CREDITS", "450 RESEARCH | 12 TOKENS"),
